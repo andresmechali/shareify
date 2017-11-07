@@ -5,7 +5,6 @@ import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
 import App from './containers/App';
 
-import logo from './logo.svg';
 import './App.css';
 
 const target = document.querySelector("#root");
