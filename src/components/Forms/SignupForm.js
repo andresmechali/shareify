@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { push } from 'react-router-redux';
 
 import Input from '../Inputs/Input';
 
@@ -78,10 +81,10 @@ class SignupForm extends React.Component {
                 repeatPassword: this.state.repeatPassword
             })
                 .then(
-                    ({ data }) => this.setState({errors: data, isLoading: false,})
+                    ({ data }) => this.props.dispatch(push('/')),
                 )
                 .catch(
-                    ({ data }) => this.setState({errors: data, isLoading: false})
+                    ( data ) => this.setState({errors: data.response.data.errors, isLoading: false}),
                 );
         }
     }
@@ -190,8 +193,14 @@ class SignupForm extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        store: state
+    }
+};
+
 SignupForm.propTypes = {
     userSignupRequest: PropTypes.func.isRequired
-}
+};
 
-export default SignupForm;
+export default connect(mapStateToProps)(SignupForm);
