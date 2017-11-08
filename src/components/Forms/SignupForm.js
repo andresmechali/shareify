@@ -81,7 +81,13 @@ class SignupForm extends React.Component {
                 repeatPassword: this.state.repeatPassword
             })
                 .then(
-                    ({ data }) => this.props.dispatch(push('/')),
+                    () => {
+                        this.props.addFlashMessage({
+                            type: 'success',
+                            text: 'You have signed up successfully!'
+                        });
+                        this.props.dispatch(push('/'));
+                    }
                 )
                 .catch(
                     ( data ) => this.setState({errors: data.response.data.errors, isLoading: false}),
@@ -200,7 +206,8 @@ const mapStateToProps = (state) => {
 };
 
 SignupForm.propTypes = {
-    userSignupRequest: PropTypes.func.isRequired
+    userSignupRequest: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps)(SignupForm);
