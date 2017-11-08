@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Input from '../Inputs/Input';
+
+import validateInput from '../../utils/formValidation';
+
 class SignupForm extends React.Component {
 
     constructor(props) {
@@ -12,21 +16,74 @@ class SignupForm extends React.Component {
             username: "",
             password: "",
             repeatPassword: "",
-
+            errors: {},
+            focus: "",
+            isLoading: false,
         };
         this.onChange = this.onChange.bind(this);
+        this.onFocus = this.onFocus.bind(this);
+        this.onBlur = this.onBlur.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChange(e) {
         this.setState({
+            errors: {...this.state.errors, [e.target.name]: ""},
             [e.target.name]: e.target.value
         })
     }
 
+    onFocus(e) {
+        this.setState({
+            focus: e.target.name
+        })
+    }
+
+    onBlur(e) {
+        this.setState({
+            focus: ""
+        })
+    }
+
+    isValid() {
+        const { errors, isValid} = validateInput({
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            username: this.state.username,
+            password: this.state.password,
+            repeatPassword: this.state.repeatPassword
+        });
+
+        if (!isValid) {
+            this.setState({ errors });
+        }
+
+        return isValid;
+    }
+
     onSubmit(e) {
         e.preventDefault();
-        this.props.userSignupRequest(this.state);
+
+        if(this.isValid()) {
+            this.setState({
+                isLoading: true,
+            });
+            this.props.userSignupRequest({
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                username: this.state.username,
+                password: this.state.password,
+                repeatPassword: this.state.repeatPassword
+            })
+                .then(
+                    ({ data }) => this.setState({errors: data, isLoading: false,})
+                )
+                .catch(
+                    ({ data }) => this.setState({errors: data, isLoading: false})
+                );
+        }
     }
 
     render() {
@@ -39,51 +96,92 @@ class SignupForm extends React.Component {
                     <div className="ui-block-content">
                         <form onSubmit={this.onSubmit}>
                             <div className="row">
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <div className="form-group label-floating">
-                                        <label className="control-label">First Name</label>
-                                        <input name="firstName" onChange={this.onChange} className="form-control taller-input" placeholder="" type="text" value={this.state.firstName} />
-                                        <span className="material-input" />
-                                    </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <div className="form-group label-floating">
-                                        <label className="control-label">Last Name</label>
-                                        <input name="lastName" onChange={this.onChange} className="form-control taller-input" placeholder="" type="text" value={this.state.lastName} />
-                                        <span className="material-input" />
-                                    </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <div className="form-group label-floating">
-                                        <label className="control-label">Email</label>
-                                        <input name="email" onChange={this.onChange} className="form-control taller-input" placeholder="" type="text" value={this.state.email} />
-                                        <span className="material-input" />
-                                    </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <div className="form-group label-floating">
-                                        <label className="control-label">Username</label>
-                                        <input name="username" onChange={this.onChange} className="form-control taller-input" placeholder="" type="text" value={this.state.username} />
-                                        <span className="material-input" />
-                                    </div>
-                                </div>
-                                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <div className="form-group label-floating">
-                                        <label className="control-label">Password</label>
-                                        <input name="password" onChange={this.onChange} className="form-control taller-input" placeholder="" type="password" value={this.state.password} />
-                                        <span className="material-input" />
-                                    </div>
-                                    <div className="form-group label-floating">
-                                        <label className="control-label">Repeat password</label>
-                                        <input name="repeatPassword" onChange={this.onChange} className="form-control taller-input" placeholder="" type="password" value={this.state.repeatPassword} />
-                                        <span className="material-input" />
-                                    </div>
-                                    <button className="btn btn-primary btn-lg full-width taller-input">
-                                        Sign up
-                                        <div className="ripple-container" />
-                                    </button>
-                                </div>
+
+                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                                        name='firstName'
+                                        label= 'First name'
+                                        type='text'
+                                        errors={this.state.errors}
+                                        focus={this.state.focus}
+                                        value={this.state.firstName}
+                                        onChange={this.onChange}
+                                        onFocus={this.onFocus}
+                                        onBlur={this.onBlur}
+                                />
+
+                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                                       name='lastName'
+                                       label= 'Last name'
+                                       type='text'
+                                       errors={this.state.errors}
+                                       focus={this.state.focus}
+                                       value={this.state.lastName}
+                                       onChange={this.onChange}
+                                       onFocus={this.onFocus}
+                                       onBlur={this.onBlur}
+                                />
+
+                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                                       name='email'
+                                       label= 'Email'
+                                       type='text'
+                                       errors={this.state.errors}
+                                       focus={this.state.focus}
+                                       value={this.state.email}
+                                       onChange={this.onChange}
+                                       onFocus={this.onFocus}
+                                       onBlur={this.onBlur}
+                                />
+
+                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                                       name='username'
+                                       label= 'Username'
+                                       type='text'
+                                       errors={this.state.errors}
+                                       focus={this.state.focus}
+                                       value={this.state.username}
+                                       onChange={this.onChange}
+                                       onFocus={this.onFocus}
+                                       onBlur={this.onBlur}
+                                />
+
+                                <Input className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                       name='password'
+                                       label= 'Password'
+                                       type='password'
+                                       errors={this.state.errors}
+                                       focus={this.state.focus}
+                                       value={this.state.password}
+                                       onChange={this.onChange}
+                                       onFocus={this.onFocus}
+                                       onBlur={this.onBlur}
+                                />
+
+                                <Input className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                       name='repeatPassword'
+                                       label= 'Repeat password'
+                                       type='password'
+                                       errors={this.state.errors}
+                                       focus={this.state.focus}
+                                       value={this.state.repeatPassword}
+                                       onChange={this.onChange}
+                                       onFocus={this.onFocus}
+                                       onBlur={this.onBlur}
+                                />
+
                             </div>
+
+                            <button
+                                className="btn btn-primary btn-lg full-width taller-input"
+                                disabled={this.state.isLoading}
+                            >
+                                {!this.state.isLoading?
+                                    "Sign up"
+                                    :
+                                    "Loading"
+                                }
+                                <div className="ripple-container" />
+                            </button>
                         </form>
                     </div>
                 </div>

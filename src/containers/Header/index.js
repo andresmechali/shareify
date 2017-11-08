@@ -12,7 +12,7 @@ export default () => {
                     <div className="control-block">
                         <div className="author-page author vcard inline-items more">
                             <div className="author-thumb">
-                                <img src={profilePicture} alt="Profile picture" className="avatar"/>
+                                <img src={profilePicture} alt="Profile" className="avatar"/>
                             </div>
                         </div>
                     </div>
