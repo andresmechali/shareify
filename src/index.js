@@ -13,7 +13,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
 
-const httpLink = new HttpLink({ uri: 'https://api.graph.cool/simple/v1/cj9sasgcc8ptt0101i0r37dgq' });
+const httpLink = new HttpLink({ uri: 'http://localhost:3001/graphql' });
 
 const client = new ApolloClient({
     link: httpLink,

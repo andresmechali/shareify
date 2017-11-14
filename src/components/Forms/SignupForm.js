@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
-import { push } from 'react-router-redux';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Input from '../Inputs/Input';
 
 import validateInput from '../../utils/formValidation';
+import FlashMessageList from "../FlashMessages/FlashMessageList";
 
 class SignupForm extends React.Component {
 
@@ -68,32 +68,48 @@ class SignupForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        if(this.isValid()) {
+        if (this.isValid()) {
             this.setState({
                 isLoading: true,
             });
-            this.props.userSignupRequest({
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                email: this.state.email,
-                username: this.state.username,
-                password: this.state.password,
-                repeatPassword: this.state.repeatPassword
+            this.props.mutate({
+                variables: {
+                    username: this.state.username,
+                    email: this.state.email,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    password: this.state.password
+                }
             })
-                .then(
-                    () => {
-                        this.props.addFlashMessage({
-                            type: 'success',
-                            text: 'You have signed up successfully!'
-                        });
-                        this.props.dispatch(push('/'));
-                    }
-                )
+                .then(({data}) => {
+                    this.props.addFlashMessage({
+                        type: 'success',
+                        text: 'You have signed up successfully!'
+                    });
+                    console.log(this.props.push);
+                    this.props.push('/');
+                })
+                .catch((error) => {
+                    console.log(error)
+                    this.props.addFlashMessage({
+                        type: 'error',
+                        text: error.message
+                    });
+                    this.setState({flashMessage: 'error', isLoading: false})
+
+                });
+        }
+    }
+
+
+/*
+
+
                 .catch(
                     ( data ) => this.setState({errors: data.response.data.errors, isLoading: false}),
                 );
         }
-    }
+    }*/
 
     render() {
         return(
@@ -180,6 +196,10 @@ class SignupForm extends React.Component {
 
                             </div>
 
+                            {this.props.flashMessages?
+                                <FlashMessageList messages={this.props.flashMessages}/> : ''
+                            }
+
                             <button
                                 className="btn btn-primary btn-lg full-width taller-input"
                                 disabled={this.state.isLoading}
@@ -199,15 +219,38 @@ class SignupForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        store: state
+const createUser = gql`
+    mutation createUser(
+        $username: String!
+        $email: String!
+        $firstName: String!
+        $lastName: String!
+        $password: String!
+    ) {
+        createUser(
+            username: $username
+            email: $email
+            firstName: $firstName
+            lastName: $lastName
+            password: $password
+        )
+        {
+            _id
+            username
+            email
+            firstName
+            lastName
+            address
+        }
     }
-};
+`;
+
+SignupForm = graphql(createUser)(SignupForm);
 
 SignupForm.propTypes = {
     userSignupRequest: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
+    flashMessages: PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps)(SignupForm);
+export default SignupForm;
