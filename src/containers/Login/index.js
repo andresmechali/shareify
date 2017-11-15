@@ -3,24 +3,22 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import SignupForm from '../../components/Forms/SignupForm';
+import LoginForm from '../../components/Forms/LoginForm';
 
-import { userSignupRequest } from '../../redux/actions/signupActions';
 import { addFlashMessage } from "../../redux/actions/flashMessages";
 
-class SignupPage extends React.Component {
+class LoginPage extends React.Component {
     render() {
-        const { userSignupRequest, addFlashMessage } = this.props;
         return(
-            <SignupForm userSignupRequest={userSignupRequest} addFlashMessage={addFlashMessage} flashMessages={this.props.flashMessages} push={this.props.push}/>
+            <LoginForm addFlashMessage={this.props.addFlashMessage} flashMessages={this.props.flashMessages} push={this.props.push}/>
         )
     }
 }
 
-SignupPage.propTypes = {
-    userSignupRequest: PropTypes.func.isRequired,
+LoginPage.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
-    flashMessages: PropTypes.array.isRequired
+    flashMessages: PropTypes.array.isRequired,
+    push: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => {
@@ -31,7 +29,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        userSignupRequest: () => dispatch(userSignupRequest),
         addFlashMessage: () => dispatch(addFlashMessage),
         push: (path) => dispatch(push(path))
     }
@@ -40,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-    )(SignupPage);
+)(LoginPage);

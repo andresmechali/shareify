@@ -17,7 +17,6 @@ const query = gql`
 
 
 let Home = props => {
-    console.log(props)
     return(
         <div className="container">
             <ul>

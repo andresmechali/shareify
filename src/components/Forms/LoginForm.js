@@ -8,17 +8,13 @@ import Input from '../Inputs/Input';
 import validateInput from '../../utils/formValidation';
 import FlashMessageList from "../FlashMessages/FlashMessageList";
 
-class SignupForm extends React.Component {
+class LoginForm extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            username: "",
+            usernameOrEmail: "",
             password: "",
-            repeatPassword: "",
             errors: {},
             focus: "",
             isLoading: false,
@@ -50,12 +46,8 @@ class SignupForm extends React.Component {
 
     isValid() {
         const { errors, isValid} = validateInput({
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            username: this.state.username,
+            usernameOrEmail: this.state.usernameOrEmail,
             password: this.state.password,
-            repeatPassword: this.state.repeatPassword
         });
 
         if (!isValid) {
@@ -74,19 +66,15 @@ class SignupForm extends React.Component {
             });
             this.props.mutate({
                 variables: {
-                    username: this.state.username,
-                    email: this.state.email,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
+                    usernameOrEmail: this.state.usernameOrEmail,
                     password: this.state.password
                 }
             })
                 .then(({data}) => {
                     this.props.addFlashMessage({
                         type: 'success',
-                        text: 'You have signed up successfully!'
+                        text: 'You have logged in successfully!'
                     });
-                    console.log(this.props.push);
                     this.props.push('/');
                 })
                 .catch((error) => {
@@ -105,55 +93,19 @@ class SignupForm extends React.Component {
             <div className="show">
                 <div className="modal-dialog ui-block window-popup register-popup">
                     <div className="ui-block-title">
-                        <h6 className="title bold">Register new user</h6>
+                        <h6 className="title bold">Log in</h6>
                     </div>
                     <div className="ui-block-content">
                         <form onSubmit={this.onSubmit}>
                             <div className="row">
 
-                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-                                        name='firstName'
-                                        label= 'First name'
-                                        type='text'
-                                        errors={this.state.errors}
-                                        focus={this.state.focus}
-                                        value={this.state.firstName}
-                                        onChange={this.onChange}
-                                        onFocus={this.onFocus}
-                                        onBlur={this.onBlur}
-                                />
-
-                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-                                       name='lastName'
-                                       label= 'Last name'
+                                <Input className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                       name='usernameOrEmail'
+                                       label= 'Username or Email'
                                        type='text'
                                        errors={this.state.errors}
                                        focus={this.state.focus}
-                                       value={this.state.lastName}
-                                       onChange={this.onChange}
-                                       onFocus={this.onFocus}
-                                       onBlur={this.onBlur}
-                                />
-
-                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-                                       name='email'
-                                       label= 'Email'
-                                       type='text'
-                                       errors={this.state.errors}
-                                       focus={this.state.focus}
-                                       value={this.state.email}
-                                       onChange={this.onChange}
-                                       onFocus={this.onFocus}
-                                       onBlur={this.onBlur}
-                                />
-
-                                <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-                                       name='username'
-                                       label= 'Username'
-                                       type='text'
-                                       errors={this.state.errors}
-                                       focus={this.state.focus}
-                                       value={this.state.username}
+                                       value={this.state.firstName}
                                        onChange={this.onChange}
                                        onFocus={this.onFocus}
                                        onBlur={this.onBlur}
@@ -171,18 +123,6 @@ class SignupForm extends React.Component {
                                        onBlur={this.onBlur}
                                 />
 
-                                <Input className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                       name='repeatPassword'
-                                       label= 'Repeat password'
-                                       type='password'
-                                       errors={this.state.errors}
-                                       focus={this.state.focus}
-                                       value={this.state.repeatPassword}
-                                       onChange={this.onChange}
-                                       onFocus={this.onFocus}
-                                       onBlur={this.onBlur}
-                                />
-
                             </div>
 
                             {this.props.flashMessages?
@@ -194,7 +134,7 @@ class SignupForm extends React.Component {
                                 disabled={this.state.isLoading}
                             >
                                 {!this.state.isLoading?
-                                    "Sign up"
+                                    "Log in"
                                     :
                                     "Loading"
                                 }
@@ -208,19 +148,13 @@ class SignupForm extends React.Component {
     }
 }
 
-const createUser = gql`
-    mutation createUser(
-        $username: String!
-        $email: String!
-        $firstName: String!
-        $lastName: String!
+const login = gql`
+    query userByUsernameOrEmail(
+        $usernameOrEmail: String!
         $password: String!
     ) {
-        createUser(
-            username: $username
-            email: $email
-            firstName: $firstName
-            lastName: $lastName
+        userByUsernameOrEmail(
+            usernameOrEmail: $usernameOrEmail
             password: $password
         )
         {
@@ -229,17 +163,16 @@ const createUser = gql`
             email
             firstName
             lastName
-            address
         }
     }
 `;
 
-SignupForm = graphql(createUser)(SignupForm);
+LoginForm = graphql(login)(LoginForm);
 
-SignupForm.propTypes = {
-    userSignupRequest: PropTypes.func.isRequired,
+LoginForm.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
-    flashMessages: PropTypes.array.isRequired
+    flashMessages: PropTypes.array.isRequired,
+    push: PropTypes.func.isRequired
 };
 
-export default SignupForm;
+export default LoginForm;

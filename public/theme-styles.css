@@ -1837,3 +1837,22 @@ blockquote {
 button.btn {
   padding: .5rem 1rem; }
 
+/*------------- CUSTOM --------------*/
+
+.no-underline {
+  text-decoration: none !important;
+}
+
+.no-user {
+  cursor: pointer;
+  line-height: 30px;
+  color: white !important;
+}
+
+.no-user:hover {
+  background-color: transparent !important;
+}
+
+.main-title {
+  line-height: 0 !important;
+}
