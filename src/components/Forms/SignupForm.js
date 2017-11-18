@@ -68,6 +68,8 @@ class SignupForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
+        this.props.flashMessages.map(message => this.props.deleteFlashMessage(message.id));
+
         if (this.isValid()) {
             this.setState({
                 isLoading: true,
@@ -81,22 +83,22 @@ class SignupForm extends React.Component {
                     password: this.state.password
                 }
             })
-                .then(({data}) => {
-                    this.props.addFlashMessage({
-                        type: 'success',
-                        text: 'You have signed up successfully!'
-                    });
-                    console.log(this.props.push);
-                    this.props.push('/');
-                })
-                .catch((error) => {
-                    this.props.addFlashMessage({
-                        type: 'error',
-                        text: error.message
-                    });
-                    this.setState({flashMessage: 'error', isLoading: false})
-
+            .then(({data}) => {
+                this.props.addFlashMessage({
+                    type: 'success',
+                    text: 'You have signed up successfully!'
                 });
+                console.log(this.props.push);
+                this.props.push('/');
+            })
+            .catch((error) => {
+                this.props.addFlashMessage({
+                    type: 'error',
+                    text: error.message
+                });
+                this.setState({flashMessage: 'error', isLoading: false})
+
+            });
         }
     }
 
@@ -185,10 +187,6 @@ class SignupForm extends React.Component {
 
                             </div>
 
-                            {this.props.flashMessages?
-                                <FlashMessageList messages={this.props.flashMessages}/> : ''
-                            }
-
                             <button
                                 className="btn btn-primary btn-lg full-width taller-input"
                                 disabled={this.state.isLoading}
@@ -200,6 +198,11 @@ class SignupForm extends React.Component {
                                 }
                                 <div className="ripple-container" />
                             </button>
+
+                            {this.props.flashMessages?
+                                <FlashMessageList messages={this.props.flashMessages}/> : ''
+                            }
+
                         </form>
                     </div>
                 </div>
@@ -237,7 +240,6 @@ const createUser = gql`
 SignupForm = graphql(createUser)(SignupForm);
 
 SignupForm.propTypes = {
-    userSignupRequest: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired
 };

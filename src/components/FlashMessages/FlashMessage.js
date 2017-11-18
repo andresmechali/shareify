@@ -14,14 +14,14 @@ class FlashMessage extends React.Component {
     }
 
     render() {
-        const {text} = this.props.message;
+        const {text, type} = this.props.message;
         return(
             <div>
                 <div className={classnames('alert', {
-                    "alert-success": type => 'success',
-                    "alert-danger": type => 'error'
+                    "alert-success": type === 'success',
+                    "alert-danger": type === 'error'
                 })}>
-                    <button onClick={this.onClick} className="close"><span>&times;</span></button>
+                    <button type="button" onClick={this.onClick} className="close"><span>&times;</span></button>
                     {text}
                 </div>
 

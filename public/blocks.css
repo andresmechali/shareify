@@ -6142,3 +6142,10 @@ ol ol li {
   .col-4-width {
     width: 100%; } }
 
+
+
+/*------------- CUSTOM --------------*/
+
+span.toggle-description {
+  padding-left: 10px;
+}

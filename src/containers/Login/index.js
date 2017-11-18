@@ -6,11 +6,12 @@ import { push } from 'react-router-redux';
 import LoginForm from '../../components/Forms/LoginForm';
 
 import { addFlashMessage } from "../../redux/actions/flashMessages";
+import { deleteFlashMessage } from "../../redux/actions/flashMessages";
 
 class LoginPage extends React.Component {
     render() {
         return(
-            <LoginForm addFlashMessage={this.props.addFlashMessage} flashMessages={this.props.flashMessages} push={this.props.push}/>
+            <LoginForm addFlashMessage={this.props.addFlashMessage} deleteFlashMessage={this.props.deleteFlashMessage} flashMessages={this.props.flashMessages} push={this.props.push}/>
         )
     }
 }
@@ -29,7 +30,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addFlashMessage: () => dispatch(addFlashMessage),
+        addFlashMessage: (m) => dispatch(addFlashMessage(m)),
+        deleteFlashMessage: (m) => dispatch(deleteFlashMessage(m)),
         push: (path) => dispatch(push(path))
     }
 };

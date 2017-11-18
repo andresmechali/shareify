@@ -13,6 +13,7 @@ class FlashMessageList extends React.Component {
         );
         return(
             <div>
+                {messages.length? <hr/> : ''}
                 {messages}
             </div>
         )

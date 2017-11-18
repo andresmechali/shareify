@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+//import { withApollo } from 'react-apollo';
 
 import Input from '../Inputs/Input';
+import Checkbox from '../Inputs/Checkbox';
 
 import validateInput from '../../utils/formValidation';
 import FlashMessageList from "../FlashMessages/FlashMessageList";
@@ -18,10 +20,12 @@ class LoginForm extends React.Component {
             errors: {},
             focus: "",
             isLoading: false,
+            remember: false
         };
         this.onChange = this.onChange.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
+        this.toggleRemember = this.toggleRemember.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -44,6 +48,12 @@ class LoginForm extends React.Component {
         })
     }
 
+    toggleRemember() {
+        this.setState({
+            remember: !this.state.remember
+        })
+    }
+
     isValid() {
         const { errors, isValid} = validateInput({
             usernameOrEmail: this.state.usernameOrEmail,
@@ -60,6 +70,8 @@ class LoginForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
+        this.props.flashMessages.map(message => this.props.deleteFlashMessage(message.id));
+
         if (this.isValid()) {
             this.setState({
                 isLoading: true,
@@ -70,21 +82,25 @@ class LoginForm extends React.Component {
                     password: this.state.password
                 }
             })
-                .then(({data}) => {
-                    this.props.addFlashMessage({
-                        type: 'success',
-                        text: 'You have logged in successfully!'
-                    });
-                    this.props.push('/');
-                })
-                .catch((error) => {
-                    this.props.addFlashMessage({
-                        type: 'error',
-                        text: error.message
-                    });
-                    this.setState({flashMessage: 'error', isLoading: false})
+            .then(({data}) => {
+                if (this.state.remember) {
+                    window.localStorage.setItem('token', data.signinUser.token)
+                }
+                else {
+                    window.sessionStorage.setItem('token', data.signinUser.token)
+                }
+                this.setState({flashMessage: 'error', isLoading: false})
 
+                //this.props.push('/');
+            })
+            .catch((error) => {
+                this.props.addFlashMessage({
+                    type: 'error',
+                    text: error.message
                 });
+                this.setState({flashMessage: 'error', isLoading: false})
+
+            });
         }
     }
 
@@ -105,7 +121,7 @@ class LoginForm extends React.Component {
                                        type='text'
                                        errors={this.state.errors}
                                        focus={this.state.focus}
-                                       value={this.state.firstName}
+                                       value={this.state.usernameOrEmail}
                                        onChange={this.onChange}
                                        onFocus={this.onFocus}
                                        onBlur={this.onBlur}
@@ -123,11 +139,12 @@ class LoginForm extends React.Component {
                                        onBlur={this.onBlur}
                                 />
 
-                            </div>
+                                <Checkbox checked={this.state.remember}
+                                          text='Remember me'
+                                          onToggle={this.toggleRemember}
+                                />
 
-                            {this.props.flashMessages?
-                                <FlashMessageList messages={this.props.flashMessages}/> : ''
-                            }
+                            </div>
 
                             <button
                                 className="btn btn-primary btn-lg full-width taller-input"
@@ -140,6 +157,11 @@ class LoginForm extends React.Component {
                                 }
                                 <div className="ripple-container" />
                             </button>
+
+                            {this.props.flashMessages?
+                                <FlashMessageList messages={this.props.flashMessages}/> : ''
+                            }
+
                         </form>
                     </div>
                 </div>
@@ -149,30 +171,42 @@ class LoginForm extends React.Component {
 }
 
 const login = gql`
-    query userByUsernameOrEmail(
+    mutation signinUser(
         $usernameOrEmail: String!
         $password: String!
     ) {
-        userByUsernameOrEmail(
+        signinUser(
             usernameOrEmail: $usernameOrEmail
             password: $password
         )
         {
-            _id
-            username
-            email
-            firstName
-            lastName
+            token
+            user {
+                _id
+                username
+                email
+                firstName
+                lastName
+             }
         }
     }
 `;
 
-LoginForm = graphql(login)(LoginForm);
+/*LoginForm = graphql(login, {
+    options: (ownProps) => ({
+        variables: {
+            usernameOrEmail: ownProps.usernameOrEmail,
+            password: ownProps.password
+        }
+    })
+})(LoginForm);*/
 
 LoginForm.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
     push: PropTypes.func.isRequired
 };
+
+LoginForm = graphql(login)(LoginForm);
 
 export default LoginForm;
