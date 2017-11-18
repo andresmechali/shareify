@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
+import jwt from 'jsonwebtoken';
 
 import Input from '../Inputs/Input';
 
@@ -80,15 +81,19 @@ class SignupForm extends React.Component {
                     email: this.state.email,
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
-                    password: this.state.password
+                    password: this.state.password,
+                    picturePath: 'no-image.jpg',
+                    status: 'NEW MEMBER'
                 }
             })
             .then(({data}) => {
+                console.log(data);
+                this.props.setCurrentUser(jwt.decode(data.createUser.token));
+                window.sessionStorage.setItem('token', data.createUser.token)
                 this.props.addFlashMessage({
                     type: 'success',
                     text: 'You have signed up successfully!'
                 });
-                console.log(this.props.push);
                 this.props.push('/');
             })
             .catch((error) => {
@@ -218,6 +223,8 @@ const createUser = gql`
         $firstName: String!
         $lastName: String!
         $password: String!
+        $picturePath: String!
+        $status: String!
     ) {
         createUser(
             username: $username
@@ -225,14 +232,20 @@ const createUser = gql`
             firstName: $firstName
             lastName: $lastName
             password: $password
+            picturePath: $picturePath
+            status: $status
         )
         {
-            _id
-            username
-            email
-            firstName
-            lastName
-            address
+            token
+            user {
+                _id
+                username
+                email
+                firstName
+                lastName
+                picturePath
+                status
+            }
         }
     }
 `;
@@ -241,7 +254,8 @@ SignupForm = graphql(createUser)(SignupForm);
 
 SignupForm.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
-    flashMessages: PropTypes.array.isRequired
+    flashMessages: PropTypes.array.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
 };
 
 export default SignupForm;

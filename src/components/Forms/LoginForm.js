@@ -93,8 +93,7 @@ class LoginForm extends React.Component {
                     window.sessionStorage.setItem('token', data.signinUser.token)
                 }
                 this.setState({isLoading: false})
-
-                //this.props.push('/');
+                this.props.push('/');
             })
             .catch((error) => {
                 this.props.addFlashMessage({
@@ -190,6 +189,7 @@ const login = gql`
                 email
                 firstName
                 lastName
+                picturePath
              }
         }
     }
