@@ -7,11 +7,18 @@ import LoginForm from '../../components/Forms/LoginForm';
 
 import { addFlashMessage } from "../../redux/actions/flashMessages";
 import { deleteFlashMessage } from "../../redux/actions/flashMessages";
+import { setCurrentUser } from "../../redux/actions/authActions";
 
 class LoginPage extends React.Component {
     render() {
         return(
-            <LoginForm addFlashMessage={this.props.addFlashMessage} deleteFlashMessage={this.props.deleteFlashMessage} flashMessages={this.props.flashMessages} push={this.props.push}/>
+            <LoginForm
+                addFlashMessage={this.props.addFlashMessage}
+                deleteFlashMessage={this.props.deleteFlashMessage}
+                flashMessages={this.props.flashMessages}
+                push={this.props.push}
+                setCurrentUser={this.props.setCurrentUser}
+            />
         )
     }
 }
@@ -32,7 +39,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         addFlashMessage: (m) => dispatch(addFlashMessage(m)),
         deleteFlashMessage: (m) => dispatch(deleteFlashMessage(m)),
-        push: (path) => dispatch(push(path))
+        push: (path) => dispatch(push(path)),
+        setCurrentUser: (user) => dispatch(setCurrentUser(user))
     }
 };
 

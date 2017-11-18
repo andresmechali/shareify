@@ -10,6 +10,8 @@ import Checkbox from '../Inputs/Checkbox';
 import validateInput from '../../utils/formValidation';
 import FlashMessageList from "../FlashMessages/FlashMessageList";
 
+import jwt from 'jsonwebtoken';
+
 class LoginForm extends React.Component {
 
     constructor(props) {
@@ -83,13 +85,14 @@ class LoginForm extends React.Component {
                 }
             })
             .then(({data}) => {
+                this.props.setCurrentUser(jwt.decode(data.signinUser.token));
                 if (this.state.remember) {
                     window.localStorage.setItem('token', data.signinUser.token)
                 }
                 else {
                     window.sessionStorage.setItem('token', data.signinUser.token)
                 }
-                this.setState({flashMessage: 'error', isLoading: false})
+                this.setState({isLoading: false})
 
                 //this.props.push('/');
             })
@@ -204,7 +207,8 @@ const login = gql`
 LoginForm.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
-    push: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
 };
 
 LoginForm = graphql(login)(LoginForm);
