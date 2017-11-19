@@ -119,15 +119,16 @@ class SignupForm extends React.Component {
                             <div className="row">
 
                                 <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"
-                                        name='firstName'
-                                        label= 'First name'
-                                        type='text'
-                                        errors={this.state.errors}
-                                        focus={this.state.focus}
-                                        value={this.state.firstName}
-                                        onChange={this.onChange}
-                                        onFocus={this.onFocus}
-                                        onBlur={this.onBlur}
+                                       name='firstName'
+                                       label= 'First name'
+                                       type='text'
+                                       errors={this.state.errors}
+                                       focus={this.state.focus}
+                                       value={this.state.firstName}
+                                       onChange={this.onChange}
+                                       onFocus={this.onFocus}
+                                       onBlur={this.onBlur}
+                                       autoFocus={true}
                                 />
 
                                 <Input className="col-lg-6 col-md-6 col-sm-12 col-xs-12"

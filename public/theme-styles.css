@@ -1727,7 +1727,9 @@ ul {
 a {
   transition: all .15s ease; }
   a:hover {
-    color: #ff5e3a; }
+    color: #ff5e3a !important;
+    text-decoration: none !important;
+  }
 
 select,
 input,

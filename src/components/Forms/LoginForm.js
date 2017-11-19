@@ -127,6 +127,7 @@ class LoginForm extends React.Component {
                                        onChange={this.onChange}
                                        onFocus={this.onFocus}
                                        onBlur={this.onBlur}
+                                       autoFocus={true}
                                 />
 
                                 <Input className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12"

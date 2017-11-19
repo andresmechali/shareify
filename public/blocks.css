@@ -45,8 +45,8 @@
     float: right;
     margin-top: 6px;
     padding-left: 0; }
-  .ui-block-title + .ui-block-title {
-    border-bottom: none; }
+  /*.ui-block-title + .ui-block-title {
+    border-bottom: none; }*/
   .ui-block-title .icon-add {
     margin-right: 0; }
 
@@ -2344,6 +2344,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
 
 /*------------- #OVERLAY-MENU --------------*/
 body {
+  background-color: #edf2f6;
   overflow-x: hidden; }
   body:before {
     content: '';
@@ -6148,4 +6149,8 @@ ol ol li {
 
 span.toggle-description {
   padding-left: 10px;
+}
+
+.settings-title {
+  height: 19px;
 }
