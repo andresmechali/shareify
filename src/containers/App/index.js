@@ -1,6 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
+import requireAuth from '../../utils/requireAuth';
+
 import Header from '../Header';
 import Home from '../Home';
 import About from '../About';
@@ -17,7 +19,7 @@ const App = () => (
             <Route exact path="/about" component={About}/>
             <Route exact path="/signup" component={Signup}/>
             <Route exact path="/login" component={Login}/>
-            <Route path="/settings" component={Settings} />
+            <Route path="/settings" component={requireAuth(Settings)} />
         </main>
     </div>
 );
