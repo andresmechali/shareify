@@ -15,6 +15,9 @@ import jwt from 'jsonwebtoken';
 class LoginForm extends React.Component {
 
     constructor(props) {
+        if (props.isAuthenticated) {
+            props.push('/')
+        }
         super(props);
         this.state = {
             usernameOrEmail: "",
@@ -210,6 +213,7 @@ LoginForm.propTypes = {
     flashMessages: PropTypes.array.isRequired,
     push: PropTypes.func.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 LoginForm = graphql(login)(LoginForm);

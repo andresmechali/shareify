@@ -20,19 +20,17 @@ class Header extends React.Component {
                         </Link>
                     </div>
                     <div className="header-content-wrapper">
-                        <div className="control-block">
-                            {isAuthenticated ?
-                                <User
-                                    image={this.props.auth.user.picturePath}
-                                    firstName={this.props.auth.user.firstName}
-                                    lastName={this.props.auth.user.lastName}
-                                    status={this.props.auth.user.status}
-                                    removeCurrentUser={this.props.removeCurrentUser}
-                                />
-                                :
-                                <NoUser />
-                            }
-                        </div>
+                        {isAuthenticated ?
+                            <User
+                                image={this.props.auth.user.picturePath}
+                                firstName={this.props.auth.user.firstName}
+                                lastName={this.props.auth.user.lastName}
+                                status={this.props.auth.user.status}
+                                removeCurrentUser={this.props.removeCurrentUser}
+                            />
+                            :
+                            <NoUser />
+                        }
                     </div>
                 </header>
             </div>

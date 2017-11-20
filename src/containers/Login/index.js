@@ -18,6 +18,7 @@ class LoginPage extends React.Component {
                 flashMessages={this.props.flashMessages}
                 push={this.props.push}
                 setCurrentUser={this.props.setCurrentUser}
+                isAuthenticated={this.props.isAuthenticated}
             />
         )
     }
@@ -26,12 +27,14 @@ class LoginPage extends React.Component {
 LoginPage.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
-    push: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {
     return {
-        flashMessages: state.flashMessages
+        flashMessages: state.flashMessages,
+        isAuthenticated: state.auth.isAuthenticated,
     }
 };
 

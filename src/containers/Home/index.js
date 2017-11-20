@@ -1,37 +1,33 @@
 import React from 'react';
 import { push } from 'react-router-redux';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-
-const query = gql`
-    { 
-        users {
-            _id
-            username
-        } 
-    }
-`;
-
+import RowWithButton from '../../components/RowWithButton/RowWithButton';
 
 let Home = props => {
     return(
         <div className="container">
-            <ul>
-                {props.data.users? props.data.users.map(u => <li key={u._id}>{u.username}</li>) : 'loading'}
-            </ul>
-            <button onClick={() => props.history.push('/signup')}>Sign up</button>
+            <RowWithButton
+                color="#1ed760"
+                link="/ask/new"
+                title="Need anything?"
+                buttonText="Ask for it!"
+            />
+            <RowWithButton
+                color="#38a9ff"
+                link="/offer/new"
+                title="Anything to offer?"
+                buttonText="Start sharing it!"
+            />
         </div>
     )
 };
 
-Home = graphql(query)(Home);
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-    changePage: () => push('/signup')
-});
+const mapDispatchToProps = dispatch => {
+    return {
+        push: (path) => dispatch(push(path)),
+    }
+};
 
 export default connect(
     null,

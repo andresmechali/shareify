@@ -12,6 +12,9 @@ import FlashMessageList from "../FlashMessages/FlashMessageList";
 class SignupForm extends React.Component {
 
     constructor(props) {
+        if (props.isAuthenticated) {
+            props.push('/')
+        }
         super(props);
         this.state = {
             firstName: "",
@@ -257,6 +260,7 @@ SignupForm.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default SignupForm;

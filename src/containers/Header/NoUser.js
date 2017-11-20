@@ -4,10 +4,12 @@ import Li from '../../components/List/Li';
 class NoUser extends React.Component {
     render() {
         return (
-            <ul className="nav navbar-nav navbar-right">
-                <Li link="/signup" text="Sign up" />
-                <Li link="/login" text="Login" />
-            </ul>
+            <div className="control-block no-user">
+                <ul className="nav navbar-nav navbar-right inline-list">
+                    <Li link="/signup" text="Sign up" />
+                    <Li link="/login" text="Login" />
+                </ul>
+            </div>
 
         )
     }

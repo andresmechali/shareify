@@ -332,23 +332,27 @@ class Profile extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <button onClick={this.onRestore}
-                                            className="btn btn-secondary btn-lg full-width"
-                                            disabled={this.state.isLoading}
-                                    >
-                                        Restore values
-                                        <div className="ripple-container" />
-                                    </button>
+                                    <div className="form-group">
+                                        <button onClick={this.onRestore}
+                                                className="btn btn-secondary btn-lg full-width"
+                                                disabled={this.state.isLoading}
+                                        >
+                                            Restore values
+                                            <div className="ripple-container" />
+                                        </button>
+                                    </div>
 
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <button onClick={this.onSubmit}
-                                            className="btn btn-primary btn-lg full-width"
-                                            disabled={this.state.isLoading || !this.state.hasChanges}
-                                    >
-                                        Save changes
-                                        <div className="ripple-container" />
-                                    </button>
+                                    <div className="form-group">
+                                        <button onClick={this.onSubmit}
+                                                className="btn btn-primary btn-lg full-width"
+                                                disabled={this.state.isLoading || !this.state.hasChanges}
+                                        >
+                                            Save changes
+                                            <div className="ripple-container" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             {this.props.flashMessages?

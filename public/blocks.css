@@ -2367,7 +2367,7 @@ body {
 
 /*------------- #POPUP-WINDOWS --------------*/
 .window-popup {
-  max-width: calc(100% - 40px); }
+ /* max-width: calc(100% - 40px);*/ }
   .window-popup .icon-close {
     opacity: 1;
     margin-top: 0;
@@ -6153,4 +6153,8 @@ span.toggle-description {
 
 .settings-title {
   height: 19px;
+}
+
+.ui-block-title.row-with-button {
+  line-height: 5;
 }

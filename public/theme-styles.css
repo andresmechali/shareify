@@ -1232,7 +1232,7 @@
 /*    float: none;*/
     display: block;
     height: auto;
-    padding: 15px 20px 0; }
+    padding: 17px 0 0; }
   .author-page .author-name {
     display: inline-block; }
   .control-block .author-title {
@@ -1849,6 +1849,8 @@ button.btn {
   text-decoration: none !important;
 }
 
+
+
 .no-user {
   cursor: pointer;
   line-height: 30px;
@@ -1859,6 +1861,21 @@ button.btn {
   background-color: transparent !important;
 }
 
+.control-block.no-user {
+  padding: 0px;
+}
+
 .main-title {
-  line-height: 0 !im;
+  line-height: 0;
+}
+
+.inline-list li{
+  display: inline-block;
+  height: 55px;
+  padding-top: 7px;
+}
+
+.white-button {
+  color: white;
+  line-height: 35px;
 }
