@@ -15,7 +15,7 @@ import {
 import Profile from './Profile';
 import Preferences from './Preferences';
 
-const routes = [
+/*const routes = [
     {
         path: '/settings/profile',
         exact: true,
@@ -26,7 +26,7 @@ const routes = [
         exact: true,
         main: () => <Preferences />
     },
-];
+];*/
 
 
 class Settings extends React.Component {
@@ -63,6 +63,16 @@ class Settings extends React.Component {
                             path={'/settings/profile'}
                             exact={true}
                             component={() => <Profile user={this.props.user}
+                                                      push={this.props.push}
+                                                      addFlashMessage={this.props.addFlashMessage}
+                                                      flashMessages={this.props.flashMessages}
+                                                      setCurrentUser={this.props.setCurrentUser}/>}
+                        />
+
+                        <Route
+                            path={'/settings/preferences'}
+                            exact={true}
+                            component={() => <Preferences user={this.props.user}
                                                       push={this.props.push}
                                                       addFlashMessage={this.props.addFlashMessage}
                                                       flashMessages={this.props.flashMessages}

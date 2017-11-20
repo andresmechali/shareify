@@ -8,8 +8,12 @@ import jwt from 'jsonwebtoken';
 import validateInput from '../../utils/formValidation';
 
 import Input from '../../components/Inputs/Input';
+import Select from '../../components/Inputs/Select';
 
 import FlashMessageList from '../../components/FlashMessages/FlashMessageList';
+
+const profileSettings = ['dateOfBirth', 'countryOfBirth', 'countryOfResidence', 'cityOfResidence', 'postalCode',
+    'gender', 'phoneCode', 'phoneNumber', 'address', 'apartment', 'description'];
 
 class Profile extends React.Component {
     constructor(props) {
@@ -19,34 +23,64 @@ class Profile extends React.Component {
             errors: {},
             focus: '',
             isLoading: false,
+            defaultSettings: props.user,
+            hasChanges: false
         };
         this.onChange = this.onChange.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.omit = ['username', 'email', 'firstName', 'lastName', 'password', 'iat', 'picturePath', 'status', 'errors', 'focus', 'isLoading']
+        this.onRestore = this.onRestore.bind(this);
+        this.omit = ['username', 'email', 'firstName', 'lastName', 'password', 'iat', 'picturePath', 'status', 'errors', 'focus', 'isLoading', 'defaultSettings', 'hasChanges']
 
     }
 
+    componentWillMount() {
+        profileSettings.map((setting) => {
+            if (!this.state.defaultSettings[setting]) {
+                this.setState({
+                    [setting]: ''
+                })
+            }
+            return null
+        })
+    }
+
     onChange(e) {
-        console.log('change');
+        console.log(e.target.name)
         this.setState({
+            hasChanges: true,
             errors: {...this.state.errors, [e.target.name]: ""},
             [e.target.name]: e.target.value
         })
     }
 
     onFocus(e) {
-        console.log('focus');
         this.setState({
             focus: e.target.name
         })
     }
 
     onBlur(e) {
-        console.log('blur');
         this.setState({
             focus: ""
+        })
+    }
+
+    onRestore(e) {
+        e.preventDefault();
+        profileSettings.map((setting) => {
+            if (this.state.defaultSettings[setting]) {
+                this.setState({
+                    [setting]: this.state.defaultSettings[setting]
+                })
+            }
+            else {
+                this.setState({
+                    [setting]: ''
+                })
+            }
+            return null
         })
     }
 
@@ -63,12 +97,13 @@ class Profile extends React.Component {
     }
 
     onSubmit(e) {
+        console.log(this.state)
         e.preventDefault();
-
+        this.setState({
+            isLoading: true,
+            hasChanges: false,
+        });
         if (this.isValid()) {
-            this.setState({
-                isLoading: true,
-            });
             this.props.mutate({
                 variables: _.omit({
                     ...this.state
@@ -96,6 +131,11 @@ class Profile extends React.Component {
 
                 });
         }
+        else {
+            this.setState({
+                isLoading: false
+            })
+        }
 
     }
 
@@ -107,7 +147,7 @@ class Profile extends React.Component {
                         PROFILE SETTINGS
                     </div>
                     <div className="ui-block-content">
-                        <form action="">
+                        <form action="" onSubmit={this.onSubmit}>
                             <div className="row">
                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                     <Input name='firstName'
@@ -266,18 +306,18 @@ class Profile extends React.Component {
                                            onBlur={this.onBlur}
                                     />
                                 </div>
+
                                 <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                    <Input name='gender'
-                                           label= 'Gender'
-                                           type='text'
-                                           errors={this.state.errors}
-                                           focus={this.state.focus}
-                                           value={this.state.gender}
-                                           onChange={this.onChange}
-                                           onFocus={this.onFocus}
-                                           onBlur={this.onBlur}
+                                    <Select name="gender"
+                                            label="Gender"
+                                            onChange={this.onChange}
+                                            onFocus={this.onFocus}
+                                            onBlur={this.onBlur}
+                                            options={["", "Male", "Female", "LGBT"]}
+                                            defaultValue={this.state.gender}
                                     />
                                 </div>
+
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <div className="form-group label-floating">
                                         <label className="control-label">Description</label>
@@ -292,14 +332,20 @@ class Profile extends React.Component {
                                     </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <button className="btn btn-secondary btn-lg full-width">
+                                    <button onClick={this.onRestore}
+                                            className="btn btn-secondary btn-lg full-width"
+                                            disabled={this.state.isLoading}
+                                    >
                                         Restore values
                                         <div className="ripple-container" />
                                     </button>
 
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                    <button onClick={this.onSubmit} className="btn btn-primary btn-lg full-width">
+                                    <button onClick={this.onSubmit}
+                                            className="btn btn-primary btn-lg full-width"
+                                            disabled={this.state.isLoading || !this.state.hasChanges}
+                                    >
                                         Save changes
                                         <div className="ripple-container" />
                                     </button>

@@ -1,5 +1,5 @@
 import shortid from 'shortid';
-import findIndex from 'lodash/findIndex';
+//import findIndex from 'lodash/findIndex';
 
 import {
     ADD_FLASH_MESSAGE,

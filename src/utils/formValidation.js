@@ -3,10 +3,6 @@ const isEmpty = require('lodash/isEmpty');
 const moment = require('moment');
 const _ = require('lodash');
 
-console.log(moment('02-12-2000', 'DD-MM-YYYY').date());
-console.log(moment('02-01-2000', 'DD-MM-YYYY').month());
-console.log(moment('02-12-2000', 'DD-MM-YYYY').year());
-
 const alphanumeric = [
     'username',
     'postalCode',
@@ -20,8 +16,6 @@ const alpha = [
     'countryOfBirth',
     'countryOfResidence',
     'cityOfResidence',
-    'gender',
-
 ];
 
 const numeric = [
@@ -33,6 +27,7 @@ const numeric = [
 const blacklist = [' áéíóúñ'];
 
 function validateInput(data, allowEmpty=false) {
+
     let errors = {};
 
     let keys = Object.keys(data);
@@ -57,7 +52,20 @@ function validateInput(data, allowEmpty=false) {
                 errors[k] = 'Invalid format.'
             }
             else {
-                console.log('asd')
+                if (!moment(data[k], 'DD-MM-YYYY').isValid()) {
+                    errors[k] = 'Invalid date. Probably you messed up date and month.'
+                } else if (moment(data[k], 'DD-MM-YYYY').isBefore('1900-01-01')) {
+                    errors[k] = 'Invalid date. Too old.'
+                } else if (moment(data[k], 'DD-MM-YYYY').isAfter(moment())) {
+                    errors[k] = 'Invalid date. It\'s on the future.'
+                }
+
+            }
+        }
+
+        if (k === 'gender') {
+            if (data[k] !== 'Male' && data[k] !== 'Female' && data[k] !== 'LGBT' && data[k] !== '') {
+                errors[k] = 'Invalid gender'
             }
         }
 
@@ -82,6 +90,10 @@ function validateInput(data, allowEmpty=false) {
         if (allowEmpty === false) {
             if (Validator.isEmpty(data[k])) {
                 errors[k] = k + ' is required';
+            }
+        } else {
+            if (data[k] === "") {
+                delete errors[k]
             }
         }
 
