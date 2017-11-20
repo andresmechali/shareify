@@ -47,7 +47,6 @@ class Profile extends React.Component {
     }
 
     onChange(e) {
-        console.log(e.target.name)
         this.setState({
             hasChanges: true,
             errors: {...this.state.errors, [e.target.name]: ""},
@@ -97,8 +96,10 @@ class Profile extends React.Component {
     }
 
     onSubmit(e) {
-        console.log(this.state)
         e.preventDefault();
+
+        this.props.deleteFlashMessage();
+
         this.setState({
             isLoading: true,
             hasChanges: false,
@@ -134,7 +135,7 @@ class Profile extends React.Component {
         else {
             this.setState({
                 isLoading: false
-            })
+            });
         }
 
     }
@@ -425,6 +426,7 @@ Profile.propTypes = {
     push: PropTypes.func.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
+    deleteFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
 };
 

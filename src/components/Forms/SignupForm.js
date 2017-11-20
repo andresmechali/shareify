@@ -72,7 +72,7 @@ class SignupForm extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        this.props.flashMessages.map(message => this.props.deleteFlashMessage(message.id));
+        this.props.deleteFlashMessage();
 
         if (this.isValid()) {
             this.setState({

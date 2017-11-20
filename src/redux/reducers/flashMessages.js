@@ -45,7 +45,7 @@ export default (
                     }
                 ];
             case DELETE_FLASH_MESSAGE:
-                return [{}];
+                return [];
             default:
                 return state;
         }

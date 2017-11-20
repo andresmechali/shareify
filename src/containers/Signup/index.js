@@ -26,6 +26,7 @@ class SignupPage extends React.Component {
 
 SignupPage.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
+    deleteFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
@@ -41,7 +42,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         addFlashMessage: (m) => dispatch(addFlashMessage(m)),
-        deleteFlashMessage: (m) => dispatch(deleteFlashMessage(m)),
+        deleteFlashMessage: () => dispatch(deleteFlashMessage()),
         push: (path) => dispatch(push(path)),
         setCurrentUser: (user) => dispatch(setCurrentUser(user))
     }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { push } from 'react-router-redux';
 import { addFlashMessage } from "../../redux/actions/flashMessages";
+import { deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
 
 import {
@@ -65,6 +66,7 @@ class Settings extends React.Component {
                             component={() => <Profile user={this.props.user}
                                                       push={this.props.push}
                                                       addFlashMessage={this.props.addFlashMessage}
+                                                      deleteFlashMessage={this.props.deleteFlashMessage}
                                                       flashMessages={this.props.flashMessages}
                                                       setCurrentUser={this.props.setCurrentUser}/>}
                         />
@@ -75,6 +77,7 @@ class Settings extends React.Component {
                             component={() => <Preferences user={this.props.user}
                                                       push={this.props.push}
                                                       addFlashMessage={this.props.addFlashMessage}
+                                                      deleteFlashMessage={this.props.deleteFlashMessage}
                                                       flashMessages={this.props.flashMessages}
                                                       setCurrentUser={this.props.setCurrentUser}/>}
                         />
@@ -88,6 +91,7 @@ class Settings extends React.Component {
 Settings.propTypes = {
     push: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
+    deleteFlashMessage: PropTypes.func.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
 };
@@ -104,6 +108,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         push: (path) => dispatch(push(path)),
         addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
+        deleteFlashMessage: () => dispatch(deleteFlashMessage()),
         setCurrentUser: (user) => dispatch(setCurrentUser(user)),
     }
 };
