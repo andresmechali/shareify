@@ -1,6 +1,11 @@
 import React from 'react';
-//import PropTypes from 'prop-types';
-//import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { push } from 'react-router-redux';
+import { addFlashMessage } from "../../redux/actions/flashMessages";
+import { setCurrentUser } from "../../redux/actions/authActions";
+
 import {
     BrowserRouter,
     Route,
@@ -54,14 +59,15 @@ class Settings extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        {routes.map((route, index) => (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                exact={route.exact}
-                                component={route.main}
-                            />
-                        ))}
+                        <Route
+                            path={'/settings/profile'}
+                            exact={true}
+                            component={() => <Profile user={this.props.user}
+                                                      push={this.props.push}
+                                                      addFlashMessage={this.props.addFlashMessage}
+                                                      flashMessages={this.props.flashMessages}
+                                                      setCurrentUser={this.props.setCurrentUser}/>}
+                        />
                     </div>
                 </div>
             </BrowserRouter>
@@ -69,4 +75,27 @@ class Settings extends React.Component {
     }
 }
 
-export default Settings;
+Settings.propTypes = {
+    push: PropTypes.func.isRequired,
+    addFlashMessage: PropTypes.func.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
+    flashMessages: PropTypes.array.isRequired,
+};
+
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user,
+        flashMessages: state.flashMessages,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        push: (path) => dispatch(push(path)),
+        addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
+        setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

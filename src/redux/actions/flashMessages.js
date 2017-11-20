@@ -10,9 +10,8 @@ export function addFlashMessage(message) {
     }
 }
 
-export function deleteFlashMessage(id) {
+export function deleteFlashMessage() {
     return {
         type: DELETE_FLASH_MESSAGE,
-        id
     }
 }

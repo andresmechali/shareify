@@ -101,7 +101,7 @@ class SignupForm extends React.Component {
                     type: 'error',
                     text: error.message
                 });
-                this.setState({flashMessage: 'error', isLoading: false})
+                this.setState({isLoading: false})
 
             });
         }

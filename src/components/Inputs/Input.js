@@ -22,6 +22,7 @@ const Input = (props) => {
                     onFocus={props.onFocus? props.onFocus : ''}
                     onBlur={props.onBlur? props.onBlur : ''}
                     autoFocus={props.autoFocus}
+                    disabled={props.disabled? props.disabled : false}
                 />
                 <span className="material-input" />
             </div>

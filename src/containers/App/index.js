@@ -8,7 +8,7 @@ import Home from '../Home';
 import About from '../About';
 import Signup from '../Signup';
 import Login from '../Login';
-import Settings from '../Settings/SideMenu';
+import Settings from '../Settings/Settings';
 
 const App = () => (
     <div>
