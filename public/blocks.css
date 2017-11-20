@@ -1909,7 +1909,7 @@ fieldset[disabled] .checkbox, fieldset[disabled] .checkbox input[type=checkbox],
     visibility: visible;
     opacity: 1; }
   .responsive-display-none {
-    display: none; } }
+     } }
 
 /*------------- #NOTIFICATION --------------*/
 .notification-list {
