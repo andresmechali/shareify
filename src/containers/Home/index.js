@@ -17,7 +17,7 @@ let Home = props => {
                 color="#38a9ff"
                 link="/offer/new"
                 title="Anything to offer?"
-                buttonText="Start sharing it!"
+                buttonText="Start sharing!"
             />
         </div>
     )

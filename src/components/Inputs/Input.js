@@ -11,7 +11,11 @@ const Input = (props) => {
                     "is-empty":(props.value === ""),
                     "is-focused": (props.focus === `${props.name}`)})}
             >
-                <label className="control-label">{props.label}</label>
+                {props.placeholder?
+                    ''
+                    :
+                    <label className="control-label">{props.label}</label>
+                }
                 <input
                     className="form-control taller-input"
                     name={props.name}

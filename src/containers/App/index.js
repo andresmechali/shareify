@@ -9,6 +9,7 @@ import About from '../About';
 import Signup from '../Signup';
 import Login from '../Login';
 import Settings from '../Settings/Settings';
+import Offer from '../Offer';
 
 const App = () => (
     <div>
@@ -19,6 +20,7 @@ const App = () => (
             <Route exact path="/about" component={About}/>
             <Route exact path="/signup" component={Signup}/>
             <Route exact path="/login" component={Login}/>
+            <Route exact path="/offer/new" component={Offer}/>
             <Route path="/settings" component={requireAuth(Settings)} />
         </main>
     </div>

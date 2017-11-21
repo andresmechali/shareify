@@ -16,7 +16,7 @@ const User = (props) => {
                         alt="Profile"
                         className="avatar"/>
                 </div>
-                <Link to='/' className="author-name fn">
+                <Link to='' className="author-name fn">
                     <div className="author-title">
                         {props.firstName} {props.lastName}
                     </div>

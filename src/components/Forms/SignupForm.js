@@ -90,7 +90,6 @@ class SignupForm extends React.Component {
                 }
             })
             .then(({data}) => {
-                console.log(data);
                 this.props.setCurrentUser(jwt.decode(data.createUser.token));
                 window.sessionStorage.setItem('token', data.createUser.token)
                 this.props.addFlashMessage({
