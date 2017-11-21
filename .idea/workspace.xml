@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07287256-9ff5-4f67-a47f-aec09681a286" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/FlashMessages/FlashMessage.js" afterPath="$PROJECT_DIR$/src/components/FlashMessages/FlashMessage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/FlashMessages/FlashMessageList.js" afterPath="$PROJECT_DIR$/src/components/FlashMessages/FlashMessageList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Forms/LoginForm.js" afterPath="$PROJECT_DIR$/src/components/Forms/LoginForm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Forms/SignupForm.js" afterPath="$PROJECT_DIR$/src/components/Forms/SignupForm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Login/index.js" afterPath="$PROJECT_DIR$/src/containers/Login/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Settings/Profile.js" afterPath="$PROJECT_DIR$/src/containers/Settings/Profile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Settings/Settings.js" afterPath="$PROJECT_DIR$/src/containers/Settings/Settings.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Signup/index.js" afterPath="$PROJECT_DIR$/src/containers/Signup/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/redux/reducers/flashMessages.js" afterPath="$PROJECT_DIR$/src/redux/reducers/flashMessages.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,16 +28,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="flashMessages.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/redux/actions/flashMessages.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="12" column="16" lean-forward="true" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Profile.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/containers/Settings/Profile.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -55,6 +36,26 @@
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="20" column="71" lean-forward="false" selection-start-line="20" selection-start-column="71" selection-end-line="20" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="react-dom-server.node.development.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/node_modules/react-dom/cjs/react-dom-server.node.development.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,7 +82,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FlashMessageList.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FlashMessageList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/FlashMessages/FlashMessageList.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
@@ -123,16 +124,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/containers/Login/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="44" column="62" lean-forward="true" selection-start-line="44" selection-start-column="62" selection-end-line="44" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -144,7 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>for</find>
       <find>consol</find>
       <find>andresmech</find>
       <find>logout</find>
@@ -174,6 +164,7 @@
       <find>mapdispatch</find>
       <find>deleteFlashMessage</find>
       <find>flashmessagelist</find>
+      <find>3001</find>
     </findStrings>
     <replaceStrings>
       <replace>email</replace>
@@ -212,7 +203,6 @@
         <option value="$PROJECT_DIR$/src/containers/Settings/index.js" />
         <option value="$PROJECT_DIR$/src/containers/Settings/Preferences.js" />
         <option value="$PROJECT_DIR$/src/containers/Settings/General.js" />
-        <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/utils/requireAuth.js" />
         <option value="$PROJECT_DIR$/src/containers/Header/Dropdown.js" />
         <option value="$PROJECT_DIR$/src/containers/Settings/SideMenu.js" />
@@ -240,6 +230,7 @@
         <option value="$PROJECT_DIR$/src/components/FlashMessages/FlashMessage.js" />
         <option value="$PROJECT_DIR$/src/containers/Settings/Profile.js" />
         <option value="$PROJECT_DIR$/src/components/FlashMessages/FlashMessageList.js" />
+        <option value="$PROJECT_DIR$/src/index.js" />
       </list>
     </option>
   </component>
@@ -462,12 +453,12 @@
       <option name="presentableId" value="Default" />
       <updated>1510051146431</updated>
       <workItem from="1510051147721" duration="39750000" />
-      <workItem from="1510428964570" duration="108669000" />
+      <workItem from="1510428964570" duration="110039000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148419000" />
+    <option name="totallyTimeSpent" value="149789000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="-4" width="1857" height="1092" extended-state="6" />
@@ -504,14 +495,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/redux/src/createStore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3070">
-          <caret line="38" column="24" lean-forward="false" selection-start-line="38" selection-start-column="24" selection-end-line="38" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/history/createBrowserHistory.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="72">
@@ -717,16 +700,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="7" lean-forward="false" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#26#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="573">
-          <caret line="37" column="33" lean-forward="false" selection-start-line="37" selection-start-column="19" selection-end-line="37" selection-end-column="33" />
           <folding>
             <element signature="e#0#26#0" expanded="false" />
           </folding>
@@ -941,6 +914,22 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="20" column="71" lean-forward="false" selection-start-line="20" selection-start-column="71" selection-end-line="20" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-dom/cjs/react-dom-server.node.development.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
