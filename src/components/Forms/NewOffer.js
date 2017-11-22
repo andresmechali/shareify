@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
+
+import classNames from 'classnames';
+
 import validateInput from '../../utils/formValidation';
 import Input from '../../components/Inputs/Input';
 
@@ -11,15 +16,16 @@ class NewOffer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            item: "",
-            location: "",
-            latitude: 55.6760968,
-            longitude: 12.568337199999974,
+            name: "",
+            location: props.auth.user.lastLocation? props.auth.user.lastLocation : "",
+            latitude: props.auth.user.lastLatitude? props.auth.user.lastLatitude : 55.6760968,
+            longitude: props.auth.user.lastLongitude? props.auth.user.lastLongitude : 12.568337199999974,
             description: "",
             isLoading: false,
             errors: {},
             focus: "",
             flashMessage: "",
+            validLocation: true
         };
         this.onChange = this.onChange.bind(this);
         this.onFocus = this.onFocus.bind(this);
@@ -28,9 +34,14 @@ class NewOffer extends React.Component {
     }
 
     onChange(e) {
+        if (e.target.name === 'location') {
+            this.setState({
+                validLocation: false,
+            })
+        }
         this.setState({
             errors: {...this.state.errors, [e.target.name]: ""},
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         })
     }
 
@@ -53,23 +64,29 @@ class NewOffer extends React.Component {
     }
 
     isValid() {
-        const { errors, isValid} = validateInput({
-            item: this.state.item,
+        let { errors, isValid} = validateInput({
+            name: this.state.name,
             location: this.state.location,
+            latitude: String(this.state.latitude),
+            longitude: String(this.state.longitude),
             description: this.state.description,
         });
+
+        if (!this.state.validLocation) {
+            isValid = false
+            errors['location'] = 'Invalid location'
+        }
 
         if (!isValid) {
             this.setState({ errors });
         }
 
+        console.log(errors)
         return isValid;
     }
 
     onSubmit(e) {
         e.preventDefault();
-
-        console.log('asdsad')
 
         this.props.deleteFlashMessage();
 
@@ -79,14 +96,17 @@ class NewOffer extends React.Component {
             });
             this.props.mutate({
                 variables: {
-                    item: this.state.item,
+                    name: this.state.name,
                     location: this.state.location,
-                    description: this.state.description,
                     latitude: this.state.latitude,
-                    longitude: this.state.longitude
+                    longitude: this.state.longitude,
+                    description: this.state.description,
+                    userId: this.props.auth.user._id,
                 }
             })
                 .then(({data}) => {
+                    console.log('data:');
+                    console.log(data);
                     this.setState({isLoading: false});
                     //this.props.push('/');
                 })
@@ -113,12 +133,12 @@ class NewOffer extends React.Component {
                             <form onSubmit={this.onSubmit}>
                                 <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        <Input name='item'
+                                        <Input name='name'
                                                label= 'What do you want to offer?'
                                                type='text'
                                                errors={this.state.errors}
                                                focus={this.state.focus}
-                                               value={this.state.item}
+                                               value={this.state.name}
                                                onChange={this.onChange}
                                                onFocus={this.onFocus}
                                                onBlur={this.onBlur}
@@ -127,7 +147,10 @@ class NewOffer extends React.Component {
                                         />
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                        <div className="form-group label-floating">
+                                        <div className={classNames("form-group label-floating",
+                                            {"has-error": this.state.errors['location']}
+                                            )}
+                                        >
                                             <PlacesSearchBox
                                                 googleMapURL= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA8zfwWQ-K9UXLe64adjv_dn8ELzk6yLdA&libraries=geometry,drawing,places'
                                                 loadingElement= '<div style={{ height: `100%` }} />'
@@ -142,11 +165,15 @@ class NewOffer extends React.Component {
                                                 onFocus={this.onFocus}
                                                 onBlur={this.onBlur}
                                                 setState={this.setState.bind(this)}
+                                                validLocation={this.state.validLocation}
                                             />
                                         </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div className="form-group label-floating">
+                                        <div className={classNames("form-group label-floating",
+                                            {"has-error": this.state.errors['description']}
+                                        )}
+                                        >
                                             <label className="control-label">Description</label>
                                             <textarea
                                                 name="description"
@@ -159,19 +186,18 @@ class NewOffer extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit"></button>
                             </form>
                         </div>
                     </div>
                 </div>
                 <OfferPreview
-                    item={this.state.item}
-                    quantity={this.state.quantity}
+                    name={this.state.name}
                     description={this.state.description}
                     location={this.state.location}
-                    latitude={this.state.latitude}
-                    longitude={this.state.longitude}
-                    radiusOfSearch={15}
+                    latitude={Number(this.state.latitude)}
+                    longitude={Number(this.state.longitude)}
+                    radiusOfSearch={20}
+                    onSubmit={this.onSubmit}
                 />
             </div>
         )
@@ -179,9 +205,48 @@ class NewOffer extends React.Component {
 }
 
 NewOffer.propTypes = {
+    auth: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
     deleteFlashMessage: PropTypes.func.isRequired,
 };
+
+
+const createItem = gql`
+    mutation createItem(
+        $name: String!
+        $location: String!
+        $latitude: Float!
+        $longitude: Float!
+        $description: String!
+        $userId: String!
+    ) {
+        createItem(
+            name: $name
+            location: $location
+            latitude: $latitude
+            longitude: $longitude
+            description: $description
+            userId: $userId
+        )
+        {
+            _id
+            name
+            location
+            latitude
+            longitude
+            description
+            user {
+                _id
+                firstName
+                lastLocation
+                lastLatitude
+                lastLongitude
+            }
+        }
+    }
+`;
+
+NewOffer = graphql(createItem)(NewOffer);
 
 export default NewOffer;

@@ -12,6 +12,7 @@ class Offer extends React.Component {
         return (
             <div className="container">
                 <NewOffer
+                    auth={this.props.auth}
                     push={this.props.push}
                     addFlashMessage={this.props.addFlashMessage}
                     deleteFlashMessage={this.props.deleteFlashMessage}
@@ -22,15 +23,15 @@ class Offer extends React.Component {
 }
 
 Offer.propTypes = {
+    auth: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
     deleteFlashMessage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
-    console.log(state)
     return {
-
+        auth: state.auth
     }
 };
 

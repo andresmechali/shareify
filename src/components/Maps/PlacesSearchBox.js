@@ -101,7 +101,8 @@ const PlacesSearchBox = compose(
                     this.props.setState({
                         latitude: this.state.places[0].geometry.location.lat(),
                         longitude: this.state.places[0].geometry.location.lng(),
-                        location: this.state.places[0].formatted_address
+                        location: this.state.places[0].formatted_address,
+                        validLocation: true,
                     });
                 },
             })
@@ -114,7 +115,14 @@ const PlacesSearchBox = compose(
             bounds={props.bounds}
             onPlacesChanged={props.onPlacesChanged}
         >
-            <input type="text" name="location" className="form-control taller-input" placeholder="Where do you have it?" onChange={props.onChange}/>
+            <input
+                type="text"
+                name="location"
+                className="form-control taller-input"
+                placeholder="Where do you have it?"
+                onChange={props.onChange}
+                value={props.value? props.value: ''}
+            />
         </StandaloneSearchBox>
     </div>
 );
