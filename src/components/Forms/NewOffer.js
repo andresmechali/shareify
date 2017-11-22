@@ -102,6 +102,7 @@ class NewOffer extends React.Component {
                     longitude: this.state.longitude,
                     description: this.state.description,
                     userId: this.props.auth.user._id,
+                    picturePath: 'item-no-image.jpeg'
                 }
             })
                 .then(({data}) => {
@@ -112,11 +113,11 @@ class NewOffer extends React.Component {
                         this.props.setCurrentUser(jwt.decode(data.createItem.token));
                     }
                     else if (sessionStorage.getItem('token')) {
-                        sessionStorage.setItem('token', data.createItem.token)
+                        sessionStorage.setItem('token', data.createItem.token);
                         this.props.setCurrentUser(jwt.decode(data.createItem.token));
                     }
 
-                    //this.props.push('/');
+                    this.props.push('/profile');
                 })
                 .catch((error) => {
                     this.props.addFlashMessage({
@@ -227,6 +228,7 @@ const createItem = gql`
         $latitude: Float!
         $longitude: Float!
         $description: String!
+        $picturePath: String!
         $userId: String!
     ) {
         createItem(
@@ -235,6 +237,7 @@ const createItem = gql`
             latitude: $latitude
             longitude: $longitude
             description: $description
+            picturePath: $picturePath
             userId: $userId
         )
         {
@@ -246,6 +249,7 @@ const createItem = gql`
                 latitude
                 longitude
                 description
+                picturePath
                 user {
                     _id
                 }

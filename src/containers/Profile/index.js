@@ -9,6 +9,7 @@ import USER_QUERY from '../../utils/queries/USER_QUERY';
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 
 import Loading from '../../components/Loading/FadingCircle';
+import ItemOffered from '../../components/Cards/ItemOffered';
 
 class Profile extends React.Component {
 
@@ -47,13 +48,22 @@ class Profile extends React.Component {
             )
         }
         return (
-            <div className="container">
-                <ul>
-                    {this.state.user.offered.map(offered => (
-                        <li>{offered.name}</li>
-                        )
-                    )}
-                </ul>
+            <div>
+                <div className="container">
+                    <div className="row">
+
+                        {this.state.user.offered.map((offered, key) => (
+                            <ItemOffered
+                                key={key}
+                                name={offered.name}
+                                description={offered.description}
+                                location={offered.location}
+                                image={offered.picturePath}
+                            />
+                            )
+                        )}
+                    </div>
+                </div>
             </div>
         )
 
@@ -78,5 +88,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-//export default withUser(connect(mapStateToProps, mapDispatchToProps)(Profile));
 export default withApollo(connect(mapStateToProps, mapDispatchToProps)(Profile));

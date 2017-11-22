@@ -13,6 +13,7 @@ const USER_QUERY = gql`
                 latitude
                 longitude
                 description
+                picturePath
             }
         }
     }
