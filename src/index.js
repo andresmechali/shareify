@@ -17,8 +17,8 @@ import store, { history } from './store';
 import { setCurrentUser } from "./redux/actions/authActions";
 import jwt from 'jsonwebtoken';
 
-//const httpLink = new HttpLink({ uri: 'http://localhost:3001/graphql' });
-const httpLink = new HttpLink({ uri: 'https://cool-server.herokuapp.com/graphql' });
+const httpLink = new HttpLink({ uri: 'http://localhost:3001/graphql' });
+//const httpLink = new HttpLink({ uri: 'https://cool-server.herokuapp.com/graphql' });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
     operation.setContext({

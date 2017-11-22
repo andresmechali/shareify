@@ -10,6 +10,11 @@ import { deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
 
 class SignupPage extends React.Component {
+
+    componentWillMount() {
+        this.props.deleteFlashMessage()
+    }
+
     render() {
         return(
             <SignupForm

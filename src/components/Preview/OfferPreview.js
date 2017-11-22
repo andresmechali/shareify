@@ -13,7 +13,7 @@ class OfferPreview extends React.Component {
                     </div>
                     <div className="ui-block-title" style={{borderBottom:"none"}}>
                         <h6>
-                            <span className="bold">Item:</span> {this.props.item}
+                            <span className="bold">Item:</span> {this.props.name}
                         </h6>
                     </div>
                     <div className="ui-block-title" style={{borderBottom:"none", borderTop:"none"}}>

@@ -86,7 +86,9 @@ class SignupForm extends React.Component {
                     lastName: this.state.lastName,
                     password: this.state.password,
                     picturePath: 'no-image.jpg',
-                    status: 'NEW MEMBER'
+                    status: 'NEW MEMBER',
+                    offered: [],
+                    requested: [],
                 }
             })
             .then(({data}) => {
@@ -228,6 +230,8 @@ const createUser = gql`
         $password: String!
         $picturePath: String!
         $status: String!
+        $offered: [String]
+        $requested: [String]
     ) {
         createUser(
             username: $username
@@ -237,6 +241,8 @@ const createUser = gql`
             password: $password
             picturePath: $picturePath
             status: $status
+            offered: $offered
+            requested: $requested
         )
         {
             token

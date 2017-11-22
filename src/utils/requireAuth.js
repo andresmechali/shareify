@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
-import { addFlashMessage } from "../redux/actions/flashMessages";
+import { addFlashMessage, deleteFlashMessage } from "../redux/actions/flashMessages";
 
 export default function(ComposedComponent) {
     class Authenticate extends React.Component {
@@ -34,6 +34,7 @@ export default function(ComposedComponent) {
     Authenticate.propTypes = {
         isAuthenticated: PropTypes.bool.isRequired,
         addFlashMessage: PropTypes.func.isRequired,
+        deleteFlashMessage: PropTypes.func.isRequired,
         push: PropTypes.func.isRequired
     };
 
@@ -43,5 +44,13 @@ export default function(ComposedComponent) {
         }
     };
 
-    return connect(mapStateToProps, {addFlashMessage, push})(Authenticate);
+    const mapDispatchToProps = (dispatch) => {
+        return {
+            push: (path) => dispatch(push(path)),
+            addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
+            deleteFlashMessage: () => dispatch(deleteFlashMessage()),
+        }
+    };
+
+    return connect(mapStateToProps, mapDispatchToProps)(Authenticate);
 }

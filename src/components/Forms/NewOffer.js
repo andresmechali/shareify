@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import jwt from 'jsonwebtoken';
 import classNames from 'classnames';
 
 import validateInput from '../../utils/formValidation';
@@ -73,15 +74,14 @@ class NewOffer extends React.Component {
         });
 
         if (!this.state.validLocation) {
-            isValid = false
-            errors['location'] = 'Invalid location'
+            isValid = false;
+            errors['location'] = 'Invalid location';
         }
 
         if (!isValid) {
             this.setState({ errors });
         }
 
-        console.log(errors)
         return isValid;
     }
 
@@ -105,9 +105,17 @@ class NewOffer extends React.Component {
                 }
             })
                 .then(({data}) => {
-                    console.log('data:');
-                    console.log(data);
                     this.setState({isLoading: false});
+
+                    if (localStorage.getItem('token')) {
+                        localStorage.setItem('token', data.createItem.token);
+                        this.props.setCurrentUser(jwt.decode(data.createItem.token));
+                    }
+                    else if (sessionStorage.getItem('token')) {
+                        sessionStorage.setItem('token', data.createItem.token)
+                        this.props.setCurrentUser(jwt.decode(data.createItem.token));
+                    }
+
                     //this.props.push('/');
                 })
                 .catch((error) => {
@@ -230,18 +238,17 @@ const createItem = gql`
             userId: $userId
         )
         {
-            _id
-            name
-            location
-            latitude
-            longitude
-            description
-            user {
+            token
+            item {
                 _id
-                firstName
-                lastLocation
-                lastLatitude
-                lastLongitude
+                name
+                location
+                latitude
+                longitude
+                description
+                user {
+                    _id
+                }
             }
         }
     }

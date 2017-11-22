@@ -31,6 +31,11 @@ import Preferences from './Preferences';
 
 
 class Settings extends React.Component {
+
+    componentWillMount() {
+        this.props.deleteFlashMessage()
+    }
+
     render() {
         return (
             <BrowserRouter>
