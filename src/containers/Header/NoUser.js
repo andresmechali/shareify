@@ -6,8 +6,8 @@ class NoUser extends React.Component {
         return (
             <div className="control-block no-user">
                 <ul className="nav navbar-nav navbar-right inline-list">
-                    <Li link="/signup" text="Sign up" />
-                    <Li link="/login" text="Login" />
+                    <Li link="/signup" text="Sign up" className="no-user" />
+                    <Li link="/login" text="Login" className="no-user" />
                 </ul>
             </div>
 

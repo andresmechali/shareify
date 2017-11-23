@@ -1127,7 +1127,7 @@
 
 @media (max-width: 1150px) {
   .author-page .author-name {
-    display: none; }
+    display: inline-block; }
   .author-page .more-dropdown {
     right: -8px;
     top: calc(100% + 10px); } }
@@ -1236,7 +1236,7 @@
   .author-page .author-name {
     display: inline-block; }
   .control-block .author-title {
-    color: #515365; }
+    color: #fff; }
   .control-block .author-thumb {
     position: relative; }
   .author-thumb .icon-status {
@@ -2015,4 +2015,50 @@ button.btn {
 @keyframes sk-circleFadeDelay {
   0%, 39%, 100% { opacity: 0; }
   40% { opacity: 1; }
+}
+
+.spinner {
+  margin: 100px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% {
+      -webkit-transform: scale(1.0);
+      transform: scale(1.0);
+    }
+}
+
+.status {
+  font-size: 12px;
 }

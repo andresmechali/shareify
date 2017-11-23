@@ -89,6 +89,11 @@ class SignupForm extends React.Component {
                     status: 'NEW MEMBER',
                     offered: [],
                     requested: [],
+                    registered: new Date().toISOString(),
+                    lastConnection: new Date().toISOString(),
+                    radiusOfSearch: 20,
+                    isAdmin: false,
+                    isSuperAdmin: false,
                 }
             })
             .then(({data}) => {
@@ -232,6 +237,11 @@ const createUser = gql`
         $status: String!
         $offered: [String]
         $requested: [String]
+        $registered: String!
+        $lastConnection: String!
+        $radiusOfSearch: Int!
+        $isAdmin: Boolean!
+        $isSuperAdmin: Boolean!
     ) {
         createUser(
             username: $username
@@ -243,6 +253,11 @@ const createUser = gql`
             status: $status
             offered: $offered
             requested: $requested
+            registered: $registered
+            lastConnection: $lastConnection
+            radiusOfSearch: $radiusOfSearch
+            isAdmin: $isAdmin
+            isSuperAdmin: $isSuperAdmin
         )
         {
             token

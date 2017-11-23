@@ -6036,9 +6036,6 @@ ol ol li {
 .c-spotify {
   color: #1ed760; }
 
-.bold {
-  font-weight: 800; }
-
 .weight-normal {
   font-weight: 400; }
 
@@ -6157,4 +6154,35 @@ span.toggle-description {
 
 .ui-block-title.row-with-button {
   line-height: 5;
+}
+
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}
+
+.right-top-menu {
+  float: right;
+}
+
+@media (max-width: 768px) {
+  .right-top-menu {
+    float: inherit;
+    padding-top: 20px;
+  }
+}
+
+.user-profile {
+  padding-top: 60px;
+}
+
+.bold {
+  font-weight: 800; }
+
+.title.bold {
+  font-weight: 800!important;
+  width: 40%!important;
 }

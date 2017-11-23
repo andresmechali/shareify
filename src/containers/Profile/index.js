@@ -8,8 +8,10 @@ import USER_QUERY from '../../utils/queries/USER_QUERY';
 
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 
-import Loading from '../../components/Loading/FadingCircle';
+import Loading from '../../components/Loading/Bounce';
 import ItemOffered from '../../components/Cards/ItemOffered';
+import TopHeader from '../../components/Profile/TopHeader';
+import About from '../../components/Profile/About';
 
 class Profile extends React.Component {
 
@@ -49,8 +51,16 @@ class Profile extends React.Component {
         }
         return (
             <div>
-                <div className="container">
+                <div className="container user-profile">
                     <div className="row">
+                        <TopHeader
+                            user={this.state.user}
+                        />
+
+                        <About
+                            title="Personal"
+                            user={this.state.user}
+                        />
 
                         {this.state.user.offered.map((offered, key) => (
                             <ItemOffered

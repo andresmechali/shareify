@@ -12,8 +12,23 @@ class Dropdown extends React.Component {
                     </div>
                     <ul className="account-settings">
                         <li>
+                            <Link to="/profile">
+                                <span>Profile</span>
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/settings/profile">
-                                <span>Profile settings</span>
+                                <span>Settings</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/ask/new">
+                                <span>Ask something</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/offer/new">
+                                <span>Offer something</span>
                             </Link>
                         </li>
                         <li>

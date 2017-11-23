@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Li = (props) => {
   return (
       <li>
-          <Link to={props.link} className="no-user">
+          <Link to={props.link} className={props.className}>
               {props.text}
           </Link>
       </li>

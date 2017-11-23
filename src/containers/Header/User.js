@@ -16,7 +16,7 @@ const User = (props) => {
                         alt="Profile"
                         className="avatar"/>
                 </div>
-                <Link to='/profile' className="author-name fn">
+                <a className="author-name fn">
                     <div className="author-title">
                         {props.firstName} {props.lastName}
                     </div>
@@ -24,7 +24,7 @@ const User = (props) => {
                         {props.status}
                     </span>
 
-                </Link>
+                </a>
                 <Dropdown
                     removeCurrentUser={props.removeCurrentUser}
                 />

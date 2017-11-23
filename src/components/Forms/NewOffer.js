@@ -162,7 +162,12 @@ class NewOffer extends React.Component {
                                         >
                                             <PlacesSearchBox
                                                 googleMapURL= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA8zfwWQ-K9UXLe64adjv_dn8ELzk6yLdA&libraries=geometry,drawing,places'
-                                                loadingElement= '<div style={{ height: `100%` }} />'
+                                                loadingElement= {<input
+                                                                    type="text"
+                                                                    name="location"
+                                                                    className="form-control taller-input"
+                                                                    placeholder="Where do you have it?"
+                                                                />}
                                                 containerElement= '<div style={{ height: `400px` }} />'
                                                 name='location'
                                                 label= 'Where do you have it?'
