@@ -12,12 +12,12 @@ class Dropdown extends React.Component {
                     </div>
                     <ul className="account-settings">
                         <li>
-                            <Link to="/profile">
+                            <Link to="/profile/main">
                                 <span>Profile</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/settings/profile">
+                            <Link to="/profile/settings">
                                 <span>Settings</span>
                             </Link>
                         </li>

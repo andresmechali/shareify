@@ -42,7 +42,7 @@ class TopHeader extends React.Component {
                                             text='Main'
                                             className={this.state.active==='main'?'active':''}
                                         />
-                                        <Li link='/settings'
+                                        <Li link='/profile/settings'
                                             text='Settings'
                                             className={this.state.active==='settings'?'active':''}
                                         />
@@ -60,7 +60,7 @@ class TopHeader extends React.Component {
                                             className={this.state.active==='offered'?'active':''}
                                         />
                                         <Li link='/profile/requested'
-                                            text='requested'
+                                            text='Requested'
                                             className={this.state.active==='requested'?'active':''}
                                         />
                                         <Li link='/profile/messages'

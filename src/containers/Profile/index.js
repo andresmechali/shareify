@@ -2,17 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import { BrowserRouter, Route} from 'react-router-dom';
+
 import { withApollo } from 'react-apollo';
 
 import USER_QUERY from '../../utils/queries/USER_QUERY';
 
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
+import { setCurrentUser } from "../../redux/actions/authActions";
 
 import Loading from '../../components/Loading/Bounce';
 import TopHeader from '../../components/Profile/TopHeader';
-import About from '../../components/Profile/About';
-import LastOffered from '../../components/Profile/LastOffered';
-import LastRequested from '../../components/Profile/LastRequested';
+
+import Main from './Main';
+import Settings from './Settings';
 
 class Profile extends React.Component {
 
@@ -50,48 +53,38 @@ class Profile extends React.Component {
             )
         }
         return (
-            <div>
+            <BrowserRouter>
                 <div className="container user-profile">
                     <div className="row">
                         <TopHeader
                             user={this.state.user}
                         />
                     </div>
-                    
-                    <div className="row">
 
-                        <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            <About
-                                title="Personal"
-                                user={this.state.user}
-                            />
-                        </div>
+                    <Route
+                        path='/profile/main'
+                        exact={true}
+                        component={() => <Main
+                                            user={this.state.user}
+                                         />}
+                    />
 
-                        <div className="col-xl-6 order-xl-2 col-lg-6 order-lg-1 col-md-6 col-sm-12 col-xs-12">
-                            <div className="newsfeed-items-grid">
-                                <div className="ui-block">
-                                    <div className="ui-block-title">
-                                        <h6 className="title bold">
-                                            Asaadssadsad
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <Route
+                        path='/profile/settings'
+                        exact={true}
+                        component={() => <Settings
+                                            user={this.state.user}
+                                            auth={this.props.auth}
+                                            flashMessages={this.props.flashMessages}
+                                            push={this.props.push}
+                                            setCurrentUser={this.props.setCurrentUser}
+                                            addFlashMessage={this.props.addFlashMessage}
+                                            deleteFlashMessage={this.props.deleteFlashMessage}
+                                         />}
+                    />
 
-                        <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            <LastOffered
-                                user={this.state.user}
-                            />
-
-                            <LastRequested
-                                user={this.state.user}
-                            />
-                        </div>
-
-                    </div>
                 </div>
-            </div>
+            </BrowserRouter>
         )
 
     }
@@ -103,13 +96,15 @@ Profile.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        flashMessages: state.flashMessages,
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         push: (path) => dispatch(push(path)),
+        setCurrentUser: (user) => dispatch(setCurrentUser(user)),
         addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
         deleteFlashMessage: () => dispatch(deleteFlashMessage()),
     }

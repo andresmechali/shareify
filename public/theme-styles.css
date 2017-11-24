@@ -2062,3 +2062,18 @@ button.btn {
 .status {
   font-size: 12px;
 }
+
+.btn-submit {
+  background-color: #ff5e3a !important;
+  border-color: #ff5e3a !important;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+.btn-submit:hover{
+  cursor: unset;
+}
+
+.btn-reset {
+  background-color: #9a9fbf;
+  border-color: #9a9fbf;
+}

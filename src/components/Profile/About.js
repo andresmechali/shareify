@@ -40,13 +40,19 @@ const About = (props) => {
                         <span className="title bold personal">Last connection:</span>
                         <span className="text">{new Date(props.user.lastConnection).toLocaleDateString()}</span>
                     </li>
-                    {props.user.country ?
+                    {props.user.countryOfBirth ?
+                        <li>
+                            <span className="title bold personal">Country of birth:</span>
+                            <span className="text">{props.user.countryOfBirth}</span>
+                        </li> : ''
+                    }
+                    {props.user.countryOfResidence ?
                         <li>
                             <span className="title bold personal">Country:</span>
                             <span className="text">{props.user.countryOfResidence}</span>
                         </li> : ''
                     }
-                    {props.user.city ?
+                    {props.user.cityOfResidence ?
                         <li>
                             <span className="title bold personal">City:</span>
                             <span className="text">{props.user.cityOfResidence}</span>

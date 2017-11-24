@@ -8,7 +8,7 @@ import Home from '../Home';
 import About from '../About';
 import Signup from '../Signup';
 import Login from '../Login';
-import Settings from '../Settings/Settings';
+import Settings from '../Profile/Settings';
 import Offer from '../Offer';
 import Profile from '../Profile';
 
