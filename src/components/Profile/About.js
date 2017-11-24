@@ -92,7 +92,7 @@ const About = (props) => {
                                 </span>
                             </span>
                         </div>
-                        <Link to='/settings/profile' className="btn btn-lg-2 btn-border-think custom-color c-grey full-width">
+                        <Link to='/profile/settings' className="btn btn-lg-2 btn-border-think custom-color c-grey full-width">
                             Complete it now
                         </Link>
                     </div>
