@@ -29,7 +29,7 @@ const LastOffered = (props) => {
                     <div>
                         No items offered yet
                         <Link to='/offer/new'>
-                            <button className="btn btn-lg-2 btn-blue full-width" style={{marginTop: "15px"}}>Ask for something</button>
+                            <button className="btn btn-lg-2 btn-blue full-width" style={{marginTop: "15px"}}>Start offering</button>
                         </Link>
                     </div>
                 }
