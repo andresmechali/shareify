@@ -6182,7 +6182,7 @@ span.toggle-description {
 .bold {
   font-weight: 800; }
 
-.title.bold {
+.title.bold.personal {
   font-weight: 800!important;
   width: 40%!important;
 }

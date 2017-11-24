@@ -102,7 +102,8 @@ class NewOffer extends React.Component {
                     longitude: this.state.longitude,
                     description: this.state.description,
                     userId: this.props.auth.user._id,
-                    picturePath: 'item-no-image.jpeg'
+                    picturePath: 'item-no-image.jpeg',
+                    created: new Date().toISOString(),
                 }
             })
                 .then(({data}) => {
@@ -235,6 +236,7 @@ const createItem = gql`
         $description: String!
         $picturePath: String!
         $userId: String!
+        $created: String!
     ) {
         createItem(
             name: $name
@@ -244,6 +246,7 @@ const createItem = gql`
             description: $description
             picturePath: $picturePath
             userId: $userId
+            created: $created
         )
         {
             token
@@ -258,6 +261,7 @@ const createItem = gql`
                 user {
                     _id
                 }
+                created
             }
         }
     }

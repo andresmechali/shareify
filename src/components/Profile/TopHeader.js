@@ -21,6 +21,7 @@ class TopHeader extends React.Component {
                                 <div className="top-header-author">
                                     <a className="author-thumb">
                                         <img src={require(`../../images/${this.props.user.picturePath}`)}
+                                             alt="profile"
                                              width="124px"
                                              height="124px"
                                         />
@@ -30,7 +31,6 @@ class TopHeader extends React.Component {
                                             {this.props.user.firstName} {this.props.user.lastName}
                                         </a>
                                         <div className="country status">
-                                            {console.log(this.props.user)}
                                             {this.props.user.status}
                                         </div>
                                     </div>
@@ -80,5 +80,9 @@ class TopHeader extends React.Component {
     }
 
 }
+
+TopHeader.propTypes = {
+    user: PropTypes.object.isRequired,
+};
 
 export default TopHeader
