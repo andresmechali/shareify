@@ -6,6 +6,7 @@ import _ from 'lodash';
 import jwt from 'jsonwebtoken';
 
 import validateInput from '../../utils/formValidation';
+import parseGraphQLError from '../../utils/parseGraphQLError';
 
 import Input from '../../components/Inputs/Input';
 import Select from '../../components/Inputs/Select';
@@ -127,7 +128,7 @@ class Profile extends React.Component {
                 .catch((error) => {
                     this.props.addFlashMessage({
                         type: 'error',
-                        text: error.message
+                        text: parseGraphQLError(error.message)
                     });
                     this.setState({isLoading: false})
 
@@ -145,7 +146,9 @@ class Profile extends React.Component {
         return (
             <div className="ui-block">
                 <div className="ui-block-title">
-                    Profile settings
+                    <h6 className="title bold">
+                        Profile settings
+                    </h6>
                 </div>
                 <div className="ui-block-content">
                     <form onSubmit={this.onSubmit}>
@@ -332,31 +335,21 @@ class Profile extends React.Component {
                                     />
                                 </div>
                             </div>
-                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div className="form-group">
-                                    <div onClick={this.onRestore}
-                                            className="btn btn-reset btn-lg-2 full-width"
-                                    >
-                                        Restore values
-                                        <div className="ripple-container" />
-                                    </div>
-                                </div>
 
-                            </div>
-                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div className="form-group">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                     <button onClick={this.onSubmit}
-                                            className="btn btn-submit btn-lg-2 full-width"
+                                            className="btn btn-submit btn-lg full-width"
                                             disabled={this.state.isLoading || !this.state.hasChanges}
                                     >
                                         Save changes
                                         <div className="ripple-container" />
                                     </button>
-                                </div>
                             </div>
                         </div>
                         {this.props.flashMessages?
-                            <FlashMessageList messages={this.props.flashMessages}/> : ''
+                            <FlashMessageList messages={this.props.flashMessages}
+                                              deleteFlashMessage={this.props.deleteFlashMessage}
+                            /> : ""
                         }
                     </form>
                 </div>

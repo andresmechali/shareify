@@ -16,6 +16,7 @@ import TopHeader from '../../components/Profile/TopHeader';
 
 import Main from './Main';
 import Settings from './Settings';
+import ChangePassword from "./ChangePassword";
 
 class Profile extends React.Component {
 
@@ -39,7 +40,7 @@ class Profile extends React.Component {
                 })
             })
             .catch(err => {
-                console.log('error:')
+                console.log('error:');
                 console.log(err)
             })
     }
@@ -81,6 +82,20 @@ class Profile extends React.Component {
                                             addFlashMessage={this.props.addFlashMessage}
                                             deleteFlashMessage={this.props.deleteFlashMessage}
                                          />}
+                    />
+
+                    <Route
+                        path='/profile/settings/password'
+                        exact={true}
+                        component={() => <ChangePassword
+                            user={this.state.user}
+                            auth={this.props.auth}
+                            flashMessages={this.props.flashMessages}
+                            push={this.props.push}
+                            setCurrentUser={this.props.setCurrentUser}
+                            addFlashMessage={this.props.addFlashMessage}
+                            deleteFlashMessage={this.props.deleteFlashMessage}
+                        />}
                     />
 
                 </div>

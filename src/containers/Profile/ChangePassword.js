@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
-
 import About from '../../components/Profile/About';
-import ProfileSettings from '../../components/Profile/ProfileSettings';
+import Password from '../../components/Profile/Password';
 
-const Settings = props => {
+const ChangePassword = props => {
     return (
         <div className="row">
             <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 order-sm-3 col-xs-12 order-xs-3">
@@ -15,26 +13,12 @@ const Settings = props => {
                     user={props.user}
                     completeButton={true}
                 />
-
-                <div className="ui-block">
-                    <div className="ui-block-content">
-                        <Link to="/profile/settings/password"
-                              className="btn btn-change-password btn-lg full-width"
-                        >
-                            Change password
-                        </Link>
-                    </div>
-                </div>
-
             </div>
 
             <div className="col-xl-9 order-xl-1 col-lg-9 order-lg-1 col-md-9 col-sm-12 order-sm-1 col-xs-12 order-xs-1">
-                <ProfileSettings
+                <Password
                     user={props.user}
-                    setCurrentUser={props.setCurrentUser}
-                    auth={props.auth}
                     flashMessages={props.flashMessages}
-                    push={props.push}
                     addFlashMessage={props.addFlashMessage}
                     deleteFlashMessage={props.deleteFlashMessage}
                 />
@@ -43,7 +27,7 @@ const Settings = props => {
     )
 };
 
-Settings.propTypes = {
+ChangePassword.propTypes = {
     user: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
@@ -52,4 +36,4 @@ Settings.propTypes = {
     flashMessages: PropTypes.array.isRequired,
 };
 
-export default Settings;
+export default ChangePassword;

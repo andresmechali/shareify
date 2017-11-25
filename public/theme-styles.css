@@ -2066,14 +2066,19 @@ button.btn {
 .btn-submit {
   background-color: #ff5e3a !important;
   border-color: #ff5e3a !important;
-  padding-top: 6px !important;
-  padding-bottom: 6px !important;
 }
 .btn-submit:hover{
   cursor: unset;
 }
 
-.btn-reset {
-  background-color: #9a9fbf;
-  border-color: #9a9fbf;
+.btn-change-password {
+  background-color: #38a9ff !important;
+  border-color: #38a9ff !important;
+}
+.btn-change-password:hover{
+  cursor: unset;
+}
+
+.completed {
+  background-color: #1ed760 !important;
 }

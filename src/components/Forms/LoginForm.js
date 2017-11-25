@@ -95,7 +95,7 @@ class LoginForm extends React.Component {
                 else {
                     window.sessionStorage.setItem('token', data.signinUser.token)
                 }
-                this.setState({isLoading: false})
+                this.setState({isLoading: false});
                 this.props.push('/profile/main');
             })
             .catch((error) => {

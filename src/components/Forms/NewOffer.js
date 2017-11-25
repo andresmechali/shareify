@@ -117,8 +117,7 @@ class NewOffer extends React.Component {
                         sessionStorage.setItem('token', data.createItem.token);
                         this.props.setCurrentUser(jwt.decode(data.createItem.token));
                     }
-
-                    this.props.push('/profile');
+                    this.props.push('/profile/main');
                 })
                 .catch((error) => {
                     this.props.addFlashMessage({
@@ -224,6 +223,7 @@ NewOffer.propTypes = {
     push: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
     deleteFlashMessage: PropTypes.func.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
 };
 
 

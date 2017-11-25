@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
+import { setCurrentUser } from "../../redux/actions/authActions";
 
 import NewOffer from '../../components/Forms/NewOffer';
 
@@ -16,6 +17,7 @@ class Offer extends React.Component {
                     push={this.props.push}
                     addFlashMessage={this.props.addFlashMessage}
                     deleteFlashMessage={this.props.deleteFlashMessage}
+                    setCurrentUser={this.props.setCurrentUser}
                 />
             </div>
         )
@@ -27,6 +29,7 @@ Offer.propTypes = {
     push: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
     deleteFlashMessage: PropTypes.func.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -40,6 +43,7 @@ const mapDispatchToProps = dispatch => {
         push: (path) => dispatch(push(path)),
         addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
         deleteFlashMessage: () => dispatch(deleteFlashMessage()),
+        setCurrentUser: (user) => dispatch(setCurrentUser(user)),
     }
 };
 

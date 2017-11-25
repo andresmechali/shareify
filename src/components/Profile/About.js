@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
+import ProgressBar from './ProgressBar';
 
 import percentageCompleted from '../../utils/percentageCompleted';
 
@@ -71,33 +71,10 @@ const About = (props) => {
                         </li> : ''
                     }
 
-                    <div className="skills-item" style={{paddingTop: "45px"}}>
-
-                        <div className="skills-item-meter">
-                            <span className="skills-item-meter-active bg-primary skills-animate"
-                                  style={{width: `${percentageCompleted(props.user)}%`, opacity: "1"}}
-                            />
-                        </div>
-                        <div className="skills-item-info">
-                            <span className="skills-item-title">
-                                <label>
-                                    Profile completed
-                                </label>
-                            </span>
-
-                            <span className="skills-item-count">
-                                <span className="count-animate" />
-                                <span className="units">
-                                    {`${percentageCompleted(props.user)}%`}
-                                </span>
-                            </span>
-                        </div>
-                        {percentageCompleted(props.user) === 100?
-                            <Link to='/profile/settings' className="btn btn-lg-2 btn-border-think custom-color c-grey full-width">
-                                Complete it now
-                            </Link>:''
-                        }
-                    </div>
+                    <ProgressBar
+                        percentageCompleted={percentageCompleted(props.user)}
+                        completeButton={props.completeButton}
+                    />
 
                 </ul>
             </div>

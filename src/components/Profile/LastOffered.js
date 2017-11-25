@@ -14,17 +14,22 @@ const LastOffered = (props) => {
 
             <div className="ui-block-content">
                 {props.user.offered.length > 0?
-                    <ul className="widget w-last-photo js-zoom-gallery">
-                        {props.user.offered.slice(0, 9).map((item, key) => (
-                            <li key={key}>
-                                <a>
-                                    <img src={require(`../../images/${item.picturePath}`)}
-                                         alt=""
-                                    />
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
+                    <div>
+                        <ul className="widget w-last-photo js-zoom-gallery">
+                            {props.user.offered.slice(0, 9).map((item, key) => (
+                                <li key={key}>
+                                    <a>
+                                        <img src={require(`../../images/${item.picturePath}`)}
+                                             alt=""
+                                        />
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                        {props.user.offered.length > 1?
+                            "View all" : ""
+                        }
+                    </div>
                     :
                     <div>
                         No items offered yet
