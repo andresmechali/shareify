@@ -2082,3 +2082,16 @@ button.btn {
 .completed {
   background-color: #1ed760 !important;
 }
+
+.get-location {
+  line-height: 38px;
+}
+
+.no-gelocation {
+  display: block;
+  border-radius: 4px!important;
+}
+
+.display-block {
+  display: block !important;
+}

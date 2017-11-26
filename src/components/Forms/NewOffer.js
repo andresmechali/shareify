@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import axios from 'axios';
+
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -32,6 +34,8 @@ class NewOffer extends React.Component {
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onGeoLocate = this.onGeoLocate.bind(this);
+
     }
 
     onChange(e) {
@@ -61,6 +65,29 @@ class NewOffer extends React.Component {
     toggleRemember() {
         this.setState({
             remember: !this.state.remember
+        })
+    }
+
+    onGeoLocate() {
+
+
+        navigator.geolocation.getCurrentPosition((location) => {
+            const coords = location.coords;
+
+            axios.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + coords.latitude + "," + coords.longitude + "&key=AIzaSyA8zfwWQ-K9UXLe64adjv_dn8ELzk6yLdA")
+                .then((res) => {
+                    this.setState({
+                        location: res.data.results[0].formatted_address,
+                        latitude: coords.latitude,
+                        longitude: coords.longitude,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+
+            //console.log(this.refs.searchBox.props)
+            //console.log(this.refs.searchBox.props)
         })
     }
 
@@ -160,27 +187,42 @@ class NewOffer extends React.Component {
                                             {"has-error": this.state.errors['location']}
                                             )}
                                         >
-                                            <PlacesSearchBox
-                                                googleMapURL= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA8zfwWQ-K9UXLe64adjv_dn8ELzk6yLdA&libraries=geometry,drawing,places'
-                                                loadingElement= {<input
-                                                                    type="text"
-                                                                    name="location"
-                                                                    className="form-control taller-input"
-                                                                    placeholder="Where do you have it?"
-                                                                />}
-                                                containerElement= '<div style={{ height: `400px` }} />'
-                                                name='location'
-                                                label= 'Where do you have it?'
-                                                type='text'
-                                                errors={this.state.errors}
-                                                focus={this.state.focus}
-                                                value={this.state.location}
-                                                onChange={this.onChange}
-                                                onFocus={this.onFocus}
-                                                onBlur={this.onBlur}
-                                                setState={this.setState.bind(this)}
-                                                validLocation={this.state.validLocation}
-                                            />
+                                            <div className={classNames("input-group",
+                                                {"no-geolocation": !navigator.geolocation}
+                                            )}>
+                                                <PlacesSearchBox
+                                                    googleMapURL= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA8zfwWQ-K9UXLe64adjv_dn8ELzk6yLdA&libraries=geometry,drawing,places'
+                                                    loadingElement= {<input
+                                                        type="text"
+                                                        name="location"
+                                                        className="form-control taller-input"
+                                                        placeholder="Where do you have it?"
+                                                    />}
+                                                    containerElement= '<div style={{ height: `400px` }} />'
+                                                    name='location'
+                                                    label= 'Where do you have it?'
+                                                    ref='searchBox'
+                                                    type='text'
+                                                    errors={this.state.errors}
+                                                    focus={this.state.focus}
+                                                    value={this.state.location}
+                                                    onChange={this.onChange}
+                                                    onFocus={this.onFocus}
+                                                    onBlur={this.onBlur}
+                                                    setState={this.setState.bind(this)}
+                                                    validLocation={this.state.validLocation}
+                                                    latitude={this.state.latitude}
+                                                    longitude={this.state.longitude}
+                                                />
+                                                {navigator.geolocation
+                                                    ? <span className="input-group-btn">
+                                                        <button onClick={this.onGeoLocate} className="btn btn-secondary get-location" type="button">Get</button>
+                                                      </span>
+                                                    : ""
+                                                }
+
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

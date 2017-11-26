@@ -88,6 +88,8 @@ const PlacesSearchBox = compose(
         componentWillMount() {
             const refs = {};
 
+
+
             this.setState({
                 places: [],
                 onSearchBoxMounted: ref => {
@@ -95,6 +97,7 @@ const PlacesSearchBox = compose(
                 },
                 onPlacesChanged: () => {
                     const places = refs.searchBox.getPlaces();
+                    console.log(places);
                     this.setState({
                         places,
                     });
@@ -104,8 +107,11 @@ const PlacesSearchBox = compose(
                         location: this.state.places[0].formatted_address,
                         validLocation: true,
                     });
+
                 },
+
             })
+
         },
     })
 )(props =>
@@ -114,14 +120,16 @@ const PlacesSearchBox = compose(
             ref={props.onSearchBoxMounted}
             bounds={props.bounds}
             onPlacesChanged={props.onPlacesChanged}
+            onLocate={props.onLocate}
         >
             <input
                 type="text"
                 name="location"
-                className="form-control taller-input"
+                className="form-control taller-input input-location"
                 placeholder="Where do you have it?"
                 onChange={props.onChange}
-                value={props.value? props.value: ''}
+                value={props.value || ''}
+
             />
         </StandaloneSearchBox>
     </div>
