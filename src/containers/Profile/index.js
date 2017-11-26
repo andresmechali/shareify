@@ -17,6 +17,7 @@ import TopHeader from '../../components/Profile/TopHeader';
 import Main from './Main';
 import Settings from './Settings';
 import ChangePassword from "./ChangePassword";
+import Offer from '../../containers/Offer';
 
 class Profile extends React.Component {
 
@@ -96,6 +97,12 @@ class Profile extends React.Component {
                             addFlashMessage={this.props.addFlashMessage}
                             deleteFlashMessage={this.props.deleteFlashMessage}
                         />}
+                    />
+
+                    <Route
+                        path='/offer/new'
+                        exact={true}
+                        component={() => <Offer />}
                     />
 
                 </div>

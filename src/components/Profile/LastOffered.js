@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
-
 const LastOffered = (props) => {
     return (
         <div className="ui-block">
@@ -18,7 +16,7 @@ const LastOffered = (props) => {
                         <ul className="widget w-last-photo js-zoom-gallery">
                             {props.user.offered.slice(0, 9).map((item, key) => (
                                 <li key={key}>
-                                    <a>
+                                    <a href={`/item/${item._id}`}>
                                         <img src={require(`../../images/${item.picturePath}`)}
                                              alt=""
                                         />
@@ -26,16 +24,16 @@ const LastOffered = (props) => {
                                 </li>
                             ))}
                         </ul>
-                        {props.user.offered.length > 1?
+                        {props.user.offered.length > 9?
                             "View all" : ""
                         }
                     </div>
                     :
                     <div>
                         No items offered yet
-                        <Link to='/offer/new'>
+                        <a href='/offer/new'>
                             <button className="btn btn-lg-2 btn-blue full-width" style={{marginTop: "15px"}}>Start offering</button>
-                        </Link>
+                        </a>
                     </div>
                 }
             </div>

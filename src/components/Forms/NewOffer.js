@@ -131,6 +131,9 @@ class NewOffer extends React.Component {
                     userId: this.props.auth.user._id,
                     picturePath: 'item-no-image.jpeg',
                     created: new Date().toISOString(),
+                    active: true,
+                    views: [],
+                    viewCount: 0,
                 }
             })
                 .then(({data}) => {
@@ -279,6 +282,9 @@ const createItem = gql`
         $picturePath: String!
         $userId: String!
         $created: String!
+        $active: Boolean!
+        $views: [String]!
+        $viewCount: Int!
     ) {
         createItem(
             name: $name
@@ -289,6 +295,9 @@ const createItem = gql`
             picturePath: $picturePath
             userId: $userId
             created: $created
+            active: $active
+            views: $views
+            viewCount: $viewCount
         )
         {
             token

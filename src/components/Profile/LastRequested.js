@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
-
 const LastRequested = (props) => {
     return (
         <div className="ui-block">
@@ -28,9 +26,9 @@ const LastRequested = (props) => {
                     :
                     <div>
                         No items requested yet
-                        <Link to='/ask/new'>
+                        <a href='/ask/new'>
                             <button className="btn btn-lg-2 btn-green full-width" style={{marginTop: "15px"}}>Ask for something</button>
-                        </Link>
+                        </a>
                     </div>
                 }
             </div>

@@ -11,6 +11,7 @@ import Login from '../Login';
 import Settings from '../Profile/Settings';
 import Offer from '../Offer';
 import Profile from '../Profile';
+import Item from '../Item';
 
 const App = () => (
     <div>
@@ -21,9 +22,10 @@ const App = () => (
             <Route exact path="/about" component={About}/>
             <Route exact path="/signup" component={Signup}/>
             <Route exact path="/login" component={Login}/>
-            <Route exact path="/offer/new" component={Offer}/>
+            <Route exact path="/offer/new" component={requireAuth(Offer)}/>
             <Route path="/settings" component={requireAuth(Settings)} />
             <Route path="/profile" component={requireAuth(Profile)} />
+            <Route path="/item/:id" component={requireAuth(Item)} />
         </main>
     </div>
 );
