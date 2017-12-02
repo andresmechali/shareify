@@ -8,6 +8,8 @@ import { withApollo } from 'react-apollo';
 import ITEM_QUERY from '../../utils/queries/ITEM_QUERY';
 import CREATE_VIEW from '../../utils/queries/CREATE_VIEW';
 
+import Loading from '../../components/Loading/Bounce';
+
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
 
@@ -31,7 +33,7 @@ class Item extends React.Component {
                 date: new Date().toISOString(),
             },
         })
-            .then(res => {
+            .then(viewCreated => {
                 this.props.client.query({
                     query: ITEM_QUERY,
                     variables: {
@@ -60,25 +62,54 @@ class Item extends React.Component {
 
 
     render() {
-        return (
-            <div className="container">
-                <div className="row">
-                    <div className="ui-block">
-                        <div className="ui-block-title">
-                            <h6 className="title bold">
-                                Item
-                            </h6>
-                        </div>
+        if (this.state.loading) {
+            return <Loading />
+        }
+        else {
+            return (
+                <div className="container">
+                    <div className="row">
+                        <div className="ui-block">
+                            <div className="ui-block-title">
+                                <h6 className="title bold">
+                                    Item
+                                </h6>
+                            </div>
 
-                        <div className="ui-block-content">
-                            {this.state.item.name}
-                            {this.state.item.viewCount}
+                            <div className="ui-block-content">
+                                <div>
+                                    <span className="bold">Item: </span>
+                                    {this.state.item.name}
+                                </div>
+                                <div>
+                                    <span className="bold">Description: </span>
+                                    {this.state.item.description}
+                                </div>
+                                <div>
+                                    <span className="bold">Created: </span>
+                                    {new Date(this.state.item.created).toDateString()}
+                                </div>
+                                <div>
+                                    <span className="bold">Location: </span>
+                                    {this.state.item.location} ({this.state.item.latitude}, {this.state.item.longitude})
+                                </div>
+                                <div>
+                                    <span className="bold">User: </span>
+                                    {this.state.item.user.firstName} {this.state.item.user.lastName}
+                                </div>
 
+                                <div>
+                                    <span className="bold">Views: </span>
+                                    {this.state.item.viewCount}
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }
+
     }
 }
 

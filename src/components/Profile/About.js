@@ -34,11 +34,11 @@ const About = (props) => {
                     }
                     <li>
                         <span className="title bold personal">Registered:</span>
-                        <span className="text">{new Date(props.user.registered).toLocaleDateString()}</span>
+                        <span className="text">{new Date(props.user.registered).toLocaleDateString('en-GB')}</span>
                     </li>
                     <li>
                         <span className="title bold personal">Last connection:</span>
-                        <span className="text">{new Date(props.user.lastConnection).toLocaleDateString()}</span>
+                        <span className="text">{new Date(props.user.lastConnection).toLocaleDateString('en-GB')}</span>
                     </li>
                     {props.user.countryOfBirth ?
                         <li>
