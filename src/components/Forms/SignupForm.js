@@ -94,6 +94,7 @@ class SignupForm extends React.Component {
                     radiusOfSearch: 20,
                     isAdmin: false,
                     isSuperAdmin: false,
+                    activity: [],
                 }
             })
             .then(({data}) => {
@@ -103,7 +104,7 @@ class SignupForm extends React.Component {
                     type: 'success',
                     text: 'You have signed up successfully!'
                 });
-                this.props.push('/');
+                this.props.push('/profile/main');
             })
             .catch((error) => {
                 this.props.addFlashMessage({
@@ -242,6 +243,7 @@ const createUser = gql`
         $radiusOfSearch: Int!
         $isAdmin: Boolean!
         $isSuperAdmin: Boolean!
+        $activity: [String!]
     ) {
         createUser(
             username: $username
@@ -258,6 +260,7 @@ const createUser = gql`
             radiusOfSearch: $radiusOfSearch
             isAdmin: $isAdmin
             isSuperAdmin: $isSuperAdmin
+            activity: $activity
         )
         {
             token

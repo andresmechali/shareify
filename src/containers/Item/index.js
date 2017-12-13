@@ -9,6 +9,7 @@ import ITEM_QUERY from '../../utils/queries/ITEM_QUERY';
 import CREATE_VIEW from '../../utils/queries/CREATE_VIEW';
 
 import Loading from '../../components/Loading/Bounce';
+import Map from '../../components/Maps/Map';
 
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
@@ -69,42 +70,77 @@ class Item extends React.Component {
             return (
                 <div className="container">
                     <div className="row">
-                        <div className="ui-block">
-                            <div className="ui-block-title">
-                                <h6 className="title bold">
-                                    Item
-                                </h6>
-                            </div>
-
-                            <div className="ui-block-content">
-                                <div>
-                                    <span className="bold">Item: </span>
-                                    {this.state.item.name}
-                                </div>
-                                <div>
-                                    <span className="bold">Description: </span>
-                                    {this.state.item.description}
-                                </div>
-                                <div>
-                                    <span className="bold">Created: </span>
-                                    {new Date(this.state.item.created).toDateString()}
-                                </div>
-                                <div>
-                                    <span className="bold">Location: </span>
-                                    {this.state.item.location} ({this.state.item.latitude}, {this.state.item.longitude})
-                                </div>
-                                <div>
-                                    <span className="bold">User: </span>
-                                    {this.state.item.user.firstName} {this.state.item.user.lastName}
-                                </div>
-
-                                <div>
-                                    <span className="bold">Views: </span>
-                                    {this.state.item.viewCount}
+                        <div className="col-xl-8 order-xl-1 col-lg-8 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                            <div className="ui-block">
+                                <div className="ui-block-content">
+                                    <img src={require(`../../images/${this.state.item.picturePath}`)}
+                                         alt='item'
+                                         width="100%"
+                                         height="100%"
+                                    />
                                 </div>
 
                             </div>
                         </div>
+                        <div className="col-xl-4 order-xl-1 col-lg-4 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                            <div className="ui-block">
+                                <div className="ui-block-title">
+                                    <h4 className="title bold">
+                                        {this.state.item.name}
+                                    </h4>
+                                </div>
+
+                                <div className="ui-block-content">
+                                    <div>
+                                        by <a href={`/user/${this.state.item.user._id}`}>{this.state.item.user.firstName} {this.state.item.user.lastName} </a>
+                                        <span className="fa fa-star checked" />
+                                        <span className="fa fa-star checked" />
+                                        <span className="fa fa-star checked" />
+                                        <span className="fa fa-star checked" />
+                                        <span className="fa fa-star" />
+                                    </div>
+                                    <div>
+                                        <span className="bold">Created: </span>
+                                        {new Date(this.state.item.created).toLocaleDateString("en-GB")}
+                                    </div>
+                                    <div>
+                                        <span className="bold">Views: </span>
+                                        {this.state.item.viewCount}
+                                    </div>
+                                    <br/>
+                                    <div>
+                                        <h4>
+                                            {this.state.item.description}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="ui-block">
+                                <div className="ui-block-content">
+                                    <div>
+                                        <span className="bold">Location: </span>
+                                        {this.state.item.location}
+                                    </div>
+                                    <Map
+                                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8zfwWQ-K9UXLe64adjv_dn8ELzk6yLdA&libraries=geometry,drawing,places"
+                                        loadingElement={<div></div>}
+                                        containerElement={<div style={{ height: `300px`, verticalAlign:`inherit`}} />}
+                                        mapElement={<div style={{ height: `100%` }} />}
+                                        latitude={this.state.item.latitude}
+                                        longitude={this.state.item.longitude}
+                                        radiusOfSearch={15 * 1000}
+                                    />
+                                </div>
+                            </div>
+                            <div className="ui-block">
+                                <div className="ui-block-content">
+                                    <a href="/">
+                                        <button className="btn btn-lg btn-blue full-width">Contact</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             )

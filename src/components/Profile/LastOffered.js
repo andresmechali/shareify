@@ -1,20 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const LastOffered = (props) => {
-    return (
-        <div className="ui-block">
-            <div className="ui-block-title">
-                <h6 className="title bold">
-                    Last offered
-                </h6>
-            </div>
+import { withApollo } from 'react-apollo';
+import LAST_OFFERED from '../../utils/queries/LAST_OFFERED';
 
-            <div className="ui-block-content">
-                {props.user.offered.length > 0?
-                    <div>
+class LastOffered extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            lastOffers: [],
+        }
+    }
+
+    componentWillMount() {
+        this.props.client.query({
+            query: LAST_OFFERED,
+            variables: {
+                _id: this.props.user._id
+            }
+        })
+            .then(res => {
+                this.setState({lastOffers: res.data.lastOffers})
+                }
+            )
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    render() {
+        if (this.state.lastOffers.length > 0){
+            return(
+                <div className="ui-block">
+                    <div className="ui-block-title">
+                        <h6 className="title bold">
+                            Last offers
+                        </h6>
+                    </div>
+
+                    <div className="ui-block-content">
                         <ul className="widget w-last-photo js-zoom-gallery">
-                            {props.user.offered.slice(0, 9).map((item, key) => (
+                            {this.state.lastOffers.slice(0, 9).map((item, key) => (
                                 <li key={key}>
                                     <a href={`/item/${item._id}`}>
                                         <img src={require(`../../images/${item.picturePath}`)}
@@ -24,25 +50,19 @@ const LastOffered = (props) => {
                                 </li>
                             ))}
                         </ul>
-                        {props.user.offered.length > 9?
-                            "View all" : ""
-                        }
                     </div>
-                    :
-                    <div>
-                        No items offered yet
-                        <a href='/offer/new'>
-                            <button className="btn btn-lg-2 btn-blue full-width" style={{marginTop: "15px"}}>Start offering</button>
-                        </a>
-                    </div>
-                }
-            </div>
-        </div>
-    )
-};
+                </div>
+            )
+        }
+        else {
+            return null
+        }
+
+    }
+}
 
 LastOffered.propTypes = {
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
 };
 
-export default LastOffered;
+export default withApollo(LastOffered);

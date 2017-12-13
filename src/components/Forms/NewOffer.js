@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 
 import axios from 'axios';
 
-import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
+import { withApollo } from 'react-apollo';
+
+import CREATE_ITEM from '../../utils/queries/CREATE_ITEM';
+import CREATE_ACTIVITY from '../../utils/queries/CREATE_ACTIVITY';
 
 import jwt from 'jsonwebtoken';
 import classNames from 'classnames';
+
+import { ITEM } from '../../utils/activityTypes';
 
 import validateInput from '../../utils/formValidation';
 import Input from '../../components/Inputs/Input';
@@ -121,7 +125,8 @@ class NewOffer extends React.Component {
             this.setState({
                 isLoading: true,
             });
-            this.props.mutate({
+            this.props.client.mutate({
+                mutation: CREATE_ITEM,
                 variables: {
                     name: this.state.name,
                     location: this.state.location,
@@ -134,6 +139,7 @@ class NewOffer extends React.Component {
                     active: true,
                     views: [],
                     viewCount: 0,
+                    type: "offer",
                 }
             })
                 .then(({data}) => {
@@ -147,7 +153,26 @@ class NewOffer extends React.Component {
                         sessionStorage.setItem('token', data.createItem.token);
                         this.props.setCurrentUser(jwt.decode(data.createItem.token));
                     }
-                    this.props.push('/profile/main');
+                    // Register activity for log
+                    console.log(data)
+                    this.props.client.mutate({
+                        mutation: CREATE_ACTIVITY,
+                        variables: {
+                            type: ITEM,
+                            user: this.props.auth.user._id,
+                            activityId: data.createItem.item._id,
+                            viewed: false,
+                            date: new Date().toISOString(),
+                            item: data.createItem.item._id,
+                        }
+                    })
+                        .then(({activity}) => {
+                                console.log(activity);
+                                this.props.push('/profile/main');
+                        })
+                        .catch(activityError => {
+                            console.log(activityError);
+                        })
                 })
                 .catch((error) => {
                     this.props.addFlashMessage({
@@ -271,53 +296,6 @@ NewOffer.propTypes = {
     setCurrentUser: PropTypes.func.isRequired,
 };
 
-
-const createItem = gql`
-    mutation createItem(
-        $name: String!
-        $location: String!
-        $latitude: Float!
-        $longitude: Float!
-        $description: String!
-        $picturePath: String!
-        $userId: String!
-        $created: String!
-        $active: Boolean!
-        $views: [String]!
-        $viewCount: Int!
-    ) {
-        createItem(
-            name: $name
-            location: $location
-            latitude: $latitude
-            longitude: $longitude
-            description: $description
-            picturePath: $picturePath
-            userId: $userId
-            created: $created
-            active: $active
-            views: $views
-            viewCount: $viewCount
-        )
-        {
-            token
-            item {
-                _id
-                name
-                location
-                latitude
-                longitude
-                description
-                picturePath
-                user {
-                    _id
-                }
-                created
-            }
-        }
-    }
-`;
-
-NewOffer = graphql(createItem)(NewOffer);
+NewOffer = withApollo(NewOffer);
 
 export default NewOffer;

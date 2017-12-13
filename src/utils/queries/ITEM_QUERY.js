@@ -14,6 +14,7 @@ const ITEM_QUERY = gql`
             active
             viewCount
             user {
+                _id
                 firstName
                 lastName
                 username

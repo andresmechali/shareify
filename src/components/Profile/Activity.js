@@ -2,25 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { withApollo } from 'react-apollo';
-import LAST_REQUESTED from '../../utils/queries/LAST_REQUESTED';
+import ACTIVITY_QUERY from '../../utils/queries/ACTIVITY_QUERY';
 
-class LastRequested extends React.Component {
+import { ITEM } from '../../utils/activityTypes';
+
+class Activity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            lastRequests: [],
+            activities: [],
         }
     }
 
     componentWillMount() {
         this.props.client.query({
-            query: LAST_REQUESTED,
+            query: ACTIVITY_QUERY,
             variables: {
                 _id: this.props.user._id
             }
         })
             .then(res => {
-                    this.setState({lastRequests: res.data.lastRequests})
+                    console.log(res);
+                    this.setState({activities: res.data.activityByUserId})
                 }
             )
             .catch(err => {
@@ -29,24 +32,24 @@ class LastRequested extends React.Component {
     }
 
     render() {
-        if (this.state.lastRequests.length > 0){
+        console.log(this.state)
+        if (this.state.activities.length > 0){
             return(
                 <div className="ui-block">
                     <div className="ui-block-title">
                         <h6 className="title bold">
-                            Last requests
+                            Activities
                         </h6>
                     </div>
 
                     <div className="ui-block-content">
-                        <ul className="widget w-last-photo js-zoom-gallery">
-                            {this.state.lastRequests.slice(0, 9).map((item, key) => (
+                        <ul>
+                            {this.state.activities.slice(0, 9).sort(-1).map((activity, key) => (
                                 <li key={key}>
-                                    <a href={`/item/${item._id}`}>
-                                        <img src={require(`../../images/${item.picturePath}`)}
-                                             alt=""
-                                        />
-                                    </a>
+                                    {activity.type === ITEM
+                                        ? `You have published a ${activity.item.name}`
+                                        : "no item"
+                                    }
                                 </li>
                             ))}
                         </ul>
@@ -61,8 +64,8 @@ class LastRequested extends React.Component {
     }
 }
 
-LastRequested.propTypes = {
+Activity.propTypes = {
     user: PropTypes.object.isRequired
 };
 
-export default withApollo(LastRequested);
+export default withApollo(Activity);
