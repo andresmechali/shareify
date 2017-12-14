@@ -6186,3 +6186,14 @@ span.toggle-description {
   font-weight: 800!important;
   width: 40%!important;
 }
+
+.activity {
+  display: table;
+  width: 100%;
+}
+  .activity > * {
+    display: table-cell;
+  }
+  .activity .date {
+    text-align: right;
+  }

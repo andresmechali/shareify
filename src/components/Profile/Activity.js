@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { IntlProvider } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+import moment from 'moment';
+
 import { withApollo } from 'react-apollo';
 import ACTIVITY_QUERY from '../../utils/queries/ACTIVITY_QUERY';
 
@@ -32,29 +36,37 @@ class Activity extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         if (this.state.activities.length > 0){
             return(
-                <div className="ui-block">
-                    <div className="ui-block-title">
-                        <h6 className="title bold">
-                            Activities
-                        </h6>
-                    </div>
+                <IntlProvider locale='en'>
+                    <div className="ui-block">
+                        <div className="ui-block-title">
+                            <h6 className="title bold">
+                                Activities
+                            </h6>
+                        </div>
 
-                    <div className="ui-block-content">
-                        <ul>
-                            {this.state.activities.slice(0, 9).sort(-1).map((activity, key) => (
-                                <li key={key}>
-                                    {activity.type === ITEM
-                                        ? `You have published a ${activity.item.name}`
-                                        : "no item"
-                                    }
-                                </li>
-                            ))}
-                        </ul>
+                        <div className="ui-block-content">
+                            <ul>
+                                {this.state.activities.slice(0, 9).map((activity, key) => (
+                                    <li key={key} className="activity">
+                                        {activity.type === ITEM
+                                            ? <FormattedMessage
+                                                id="activityItem"
+                                                defaultMessage='You have published a {item}'
+                                                values={{
+                                                    item: <a href={`/item/${activity.item._id}`}>{activity.item.name}</a>
+                                                }}
+                                            />
+                                            : "no item"
+                                        }
+                                        <span className="date">{moment(activity.date).fromNow()}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </IntlProvider>
             )
         }
         else {
