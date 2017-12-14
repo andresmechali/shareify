@@ -164,6 +164,7 @@ class NewOffer extends React.Component {
                             viewed: false,
                             date: new Date().toISOString(),
                             item: data.createItem.item._id,
+
                         }
                     })
                         .then(({activity}) => {

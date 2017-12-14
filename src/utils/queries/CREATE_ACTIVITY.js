@@ -9,6 +9,7 @@ const CREATE_ACTIVITY = gql`
         $date: String!
         $item: String
         $review: String
+        $message: String
     ) 
     {
         createActivity(
@@ -19,6 +20,7 @@ const CREATE_ACTIVITY = gql`
             date: $date
             item: $item
             review: $review
+            message: $message
         )
     }
 `;

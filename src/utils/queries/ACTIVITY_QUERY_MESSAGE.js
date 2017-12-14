@@ -1,33 +1,8 @@
 import gql from 'graphql-tag';
 
-const ACTIVITY_QUERY = gql`
-    query activities($_id: String!) {
-        activityByUserIdItem(_id: $_id, type: "ITEM") {
-            _id
-            type
-            date
-            activityId
-            viewed
-            user {
-                _id
-                firstName
-                lastName
-                username
-            }
-            item {
-                _id
-                name
-                created
-                type
-                user {
-                    _id
-                    firstName
-                    lastName
-                    username
-                }
-            }
-        }
-        activityByUserIdMessage(_id: $_id, type: "MESSAGE") {
+const ACTIVITY_QUERY_MESSAGE = gql`
+    query activityByUserId($_id: String!) {
+        activityByUserId(_id: $_id) {
             _id
             type
             date
@@ -66,7 +41,6 @@ const ACTIVITY_QUERY = gql`
             }
         }
     }
-   
 `;
 
-export default ACTIVITY_QUERY;
+export default ACTIVITY_QUERY_MESSAGE;

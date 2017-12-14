@@ -9,6 +9,7 @@ import { withApollo } from 'react-apollo';
 import ACTIVITY_QUERY from '../../utils/queries/ACTIVITY_QUERY';
 
 import { ITEM } from '../../utils/activityTypes';
+import { MESSAGE } from '../../utils/activityTypes';
 
 class Activity extends React.Component {
     constructor(props) {
@@ -22,12 +23,12 @@ class Activity extends React.Component {
         this.props.client.query({
             query: ACTIVITY_QUERY,
             variables: {
-                _id: this.props.user._id
+                _id: this.props.user._id,
             }
         })
             .then(res => {
-                    console.log(res);
-                    this.setState({activities: res.data.activityByUserId})
+                console.log(res.data)
+                    this.setState({activities: res.data.activityByUserIdItem.concat(res.data.activityByUserIdMessage)})
                 }
             )
             .catch(err => {
@@ -36,6 +37,7 @@ class Activity extends React.Component {
     }
 
     render() {
+        console.log(this.state.activities)
         if (this.state.activities.length > 0){
             return(
                 <IntlProvider locale='en'>
@@ -45,23 +47,48 @@ class Activity extends React.Component {
                                 Activities
                             </h6>
                         </div>
-
                         <div className="ui-block-content">
                             <ul>
-                                {this.state.activities.slice(0, 9).map((activity, key) => (
-                                    <li key={key} className="activity">
+                                {this.state.activities.slice(0, 9).sort(
+                                    function(a, b) {
+                                        if (a.date < b.date) return 1;
+                                        else if (a.date > b.date) return -1;
+                                        else return 0;
+                                    }
+                                ).map((activity, key) => (
+                                    <div key={key}>
                                         {activity.type === ITEM
-                                            ? <FormattedMessage
-                                                id="activityItem"
-                                                defaultMessage='You have published a {item}'
-                                                values={{
-                                                    item: <a href={`/item/${activity.item._id}`}>{activity.item.name}</a>
-                                                }}
-                                            />
-                                            : "no item"
+                                            ? <li className="activity">
+                                                <FormattedMessage
+                                                    id="activityItem"
+                                                    defaultMessage='You have published a {item}'
+                                                    values={{
+                                                        item: <a href={`/item/${activity.item._id}`}>{activity.item.name}</a>
+                                                    }}
+                                                />
+                                                <span className="date">{moment(activity.date).fromNow()}</span>
+                                            </li>
+                                            : ""
                                         }
-                                        <span className="date">{moment(activity.date).fromNow()}</span>
-                                    </li>
+
+
+                                        {activity.type === MESSAGE
+                                            ? <li className="activity">
+                                                <FormattedMessage
+                                                    id="activityMessage"
+                                                    defaultMessage='You have a new {message} from {user}'
+                                                    values={{
+                                                        message: <a href='/'>message</a>,
+                                                        user: <a href={`/user/${activity.message.userFrom._id}`}>{activity.message.userFrom.firstName} {activity.message.userFrom.lastName}</a>
+                                                    }}
+                                                />
+                                                <span className="date">{moment(activity.date).fromNow()}</span>
+                                            </li>
+                                            : ""
+                                        }
+
+
+                                    </div>
                                 ))}
                             </ul>
                         </div>

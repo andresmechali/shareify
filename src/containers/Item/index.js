@@ -11,6 +11,8 @@ import CREATE_VIEW from '../../utils/queries/CREATE_VIEW';
 import Loading from '../../components/Loading/Bounce';
 import Map from '../../components/Maps/Map';
 
+import Contact from '../../components/Item/Contact';
+
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
 
@@ -20,7 +22,10 @@ class Item extends React.Component {
         this.state = {
             user: props.auth.user,
             item: {},
-            loading: true
+            loading: true,
+            contact: {
+                visible: false,
+            }
         }
     }
 
@@ -60,7 +65,9 @@ class Item extends React.Component {
 
     }
 
-
+    showContact(e) {
+        this.setState({contact: {visible: true}})
+    }
 
     render() {
         if (this.state.loading) {
@@ -132,13 +139,19 @@ class Item extends React.Component {
                                     />
                                 </div>
                             </div>
-                            <div className="ui-block">
-                                <div className="ui-block-content">
-                                    <a href="/">
-                                        <button className="btn btn-lg btn-blue full-width">Contact</button>
-                                    </a>
-                                </div>
-                            </div>
+                            {this.state.item.user._id !== this.props.auth.user._id?
+                                <div className="ui-block">
+                                    <div className="ui-block-content">
+                                        <button onClick={this.showContact.bind(this)} className="btn btn-lg btn-blue full-width">Contact</button>
+                                        <Contact
+                                            visible={this.state.contact.visible}
+                                            item={this.state.item}
+                                            auth={this.props.auth}
+                                        />
+                                    </div>
+                                </div> : ""
+                            }
+
                         </div>
 
                     </div>
