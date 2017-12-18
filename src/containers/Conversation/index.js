@@ -37,7 +37,9 @@ class Conversation extends React.Component {
                         this.props.client.mutate({
                             mutation: VIEW_MESSAGE,
                             variables: {
-                                conversationId: this.state.conversation._id
+                                conversationId: this.state.conversation._id,
+                                userId: this.props.user._id,
+                                userFrom: this.state.conversation.messages[this.state.conversation.messages.length - 1].userFrom._id,
                             }
                         })
                             .catch(err => {

@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07287256-9ff5-4f67-a47f-aec09681a286" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/utils/queries/ACTIVITY_QUERY_MESSAGE.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Forms/SignupForm.js" afterPath="$PROJECT_DIR$/src/components/Forms/SignupForm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Item/Contact.js" afterPath="$PROJECT_DIR$/src/components/Item/Contact.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Profile/Activity.js" afterPath="$PROJECT_DIR$/src/components/Profile/Activity.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Profile/TopHeader.js" afterPath="$PROJECT_DIR$/src/components/Profile/TopHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/About/index.js" afterPath="$PROJECT_DIR$/src/containers/About/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/App/index.js" afterPath="$PROJECT_DIR$/src/containers/App/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Profile/ChangePassword.js" afterPath="$PROJECT_DIR$/src/containers/Profile/ChangePassword.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Profile/Main.js" afterPath="$PROJECT_DIR$/src/containers/Profile/Main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Profile/Settings.js" afterPath="$PROJECT_DIR$/src/containers/Profile/Settings.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Profile/index.js" afterPath="$PROJECT_DIR$/src/containers/Profile/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/queries/CREATE_CONVERSATION.js" afterPath="$PROJECT_DIR$/src/utils/queries/CREATE_CONVERSATION.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/queries/USER_QUERY.js" afterPath="$PROJECT_DIR$/src/utils/queries/USER_QUERY.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Conversation/index.js" afterPath="$PROJECT_DIR$/src/containers/Conversation/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/queries/VIEW_MESSAGE.js" afterPath="$PROJECT_DIR$/src/utils/queries/VIEW_MESSAGE.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/containers/Conversation/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="44" column="26" lean-forward="false" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
+            <state relative-caret-position="558">
+              <caret line="41" column="133" lean-forward="false" selection-start-line="41" selection-start-column="133" selection-end-line="41" selection-end-column="133" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -85,7 +73,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Activity.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Activity.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/Profile/Activity.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="407">
@@ -112,8 +100,8 @@
       <file leaf-file-name="VIEW_MESSAGE.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils/queries/VIEW_MESSAGE.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="25" lean-forward="true" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
+            <state relative-caret-position="198">
+              <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -250,10 +238,10 @@
         <option value="$PROJECT_DIR$/src/components/Conversation/Historial.js" />
         <option value="$PROJECT_DIR$/src/utils/queries/CONVERSATIONS_QUERY.js" />
         <option value="$PROJECT_DIR$/src/components/Conversation/MessageList.js" />
-        <option value="$PROJECT_DIR$/src/utils/queries/VIEW_MESSAGE.js" />
-        <option value="$PROJECT_DIR$/src/containers/Conversation/index.js" />
         <option value="$PROJECT_DIR$/src/containers/Profile/index.js" />
         <option value="$PROJECT_DIR$/src/components/Profile/Activity.js" />
+        <option value="$PROJECT_DIR$/src/utils/queries/VIEW_MESSAGE.js" />
+        <option value="$PROJECT_DIR$/src/containers/Conversation/index.js" />
       </list>
     </option>
   </component>
@@ -554,12 +542,12 @@
       <updated>1510051146431</updated>
       <workItem from="1510051147721" duration="39750000" />
       <workItem from="1510428964570" duration="234393000" />
-      <workItem from="1513089167356" duration="68123000" />
+      <workItem from="1513089167356" duration="69557000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="342266000" />
+    <option name="totallyTimeSpent" value="343700000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="-4" width="1857" height="1092" extended-state="6" />
@@ -998,24 +986,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/queries/VIEW_MESSAGE.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="25" lean-forward="true" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/containers/Conversation/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="44" column="26" lean-forward="false" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Profile/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="317">
@@ -1030,6 +1000,24 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="407">
           <caret line="102" column="92" lean-forward="false" selection-start-line="102" selection-start-column="92" selection-end-line="102" selection-end-column="92" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/queries/VIEW_MESSAGE.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/containers/Conversation/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="41" column="133" lean-forward="false" selection-start-line="41" selection-start-column="133" selection-end-line="41" selection-end-column="133" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
