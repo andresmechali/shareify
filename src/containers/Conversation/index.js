@@ -28,29 +28,48 @@ class Conversation extends React.Component {
             }
         })
             .then(res => {
-                this.setState(
-                    {
-                        conversations: res.data.conversationsByUserId.conversations,
-                        conversation: res.data.conversationsByUserId.conversations[0]
+                res.data.conversationsByUserId.conversations.forEach(conv => {
+                    if (conv._id === this.props.match.params.id) {
+                        this.setState(
+                            {
+                                conversations: res.data.conversationsByUserId.conversations.slice().sort(
+                                    function compare(a, b) {
+                                        if (a.lastDate < b.lastDate) return 1;
+                                        if (a.lastDate > b.lastDate) return -1;
+                                        return 0;
+                                    }
+                                ),
+                                conversation: conv,
 
-                    }, r => {
-                        this.props.client.mutate({
-                            mutation: VIEW_MESSAGE,
-                            variables: {
-                                conversationId: this.state.conversation._id,
-                                userId: this.props.user._id,
-                                userFrom: this.state.conversation.messages[this.state.conversation.messages.length - 1].userFrom._id,
-                            }
-                        })
-                            .catch(err => {
-                                console.log(err)
+                            }, r => {
+                                this.props.client.mutate({
+                                    mutation: VIEW_MESSAGE,
+                                    variables: {
+                                        conversationId: this.state.conversation._id,
+                                        userId: this.props.user._id,
+                                        userFrom: this.state.conversation.messages[this.state.conversation.messages.length - 1].userFrom._id,
+                                    }
+                                })
+                                    .catch(err => {
+                                        console.log(err)
+                                    })
                             })
-                        })
+                    }
+                })
             })
             .catch(error => {
                 console.log(error);
             })
     }
+
+    setConversation(e) {
+        this.state.conversations.forEach(conv => {
+            if (conv._id === e.target.id) {
+                this.props.push(`/profile/messages/${conv._id}`)
+            }
+        });
+    }
+
     render() {
         return (
             <div>
@@ -66,6 +85,7 @@ class Conversation extends React.Component {
                         <Historial
                             user={this.props.user}
                             conversations = {this.state.conversations}
+                            setConversation = {this.setConversation.bind(this)}
                         />
                     </div>
 

@@ -36,6 +36,10 @@ class MessageList extends React.Component {
         }
     }
 
+    componentDidUpdate() {
+        this.elem.scrollIntoView({behavior: "smooth"});
+    }
+
     onChange(e) {
         e.preventDefault();
         this.setState({message: e.target.value})
@@ -109,7 +113,11 @@ class MessageList extends React.Component {
                                 : ''
                         }
                     </ul>
-                    <form onSubmit={this.sendMessage.bind(this)}>
+                    <form
+                        onSubmit={this.sendMessage.bind(this)}
+                        id="inputMessage"
+                        ref={elem => {this.elem = elem}}
+                    >
                         <input
                             className="form-control taller-input"
                             type="text"

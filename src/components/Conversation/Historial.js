@@ -15,7 +15,11 @@ const Historial = (props) => {
                     {
                         props.conversations.map((conversation, key) => {
                             return (
-                                <li key={key}>
+                                <li
+                                    key={key}
+                                    onClick = {props.setConversation}
+                                    id={conversation._id}
+                                >
                                     {
                                         conversation.userTo.username === props.user.username
                                             ? `${conversation.userFrom.firstName} ${conversation.userFrom.lastName}`
@@ -34,6 +38,7 @@ const Historial = (props) => {
 Historial.propTypes = {
     user: PropTypes.object.isRequired,
     conversations: PropTypes.array.isRequired,
+    setConversation: PropTypes.func.isRequired,
 };
 
 export default Historial;

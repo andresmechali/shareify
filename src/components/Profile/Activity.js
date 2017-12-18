@@ -41,7 +41,7 @@ class Activity extends React.Component {
 
     componentDidUpdate() {
         const activityIdList = [];
-        this.state.activities.map(act => {activityIdList.push(act._id)});
+        this.state.activities.forEach(act => {activityIdList.push(act._id)});
         this.props.client.mutate({
             mutation: VIEW_ACTIVITY,
             variables: {

@@ -97,8 +97,8 @@ class Profile extends React.Component {
 
                     <Route
                         path='/profile/messages/:id'
-                        exact={true}
-                        component={() => <Conversation
+                        render={(props) => <Conversation
+                            {...props}
                             user={this.state.user}
                             auth={this.props.auth}
                             flashMessages={this.props.flashMessages}
