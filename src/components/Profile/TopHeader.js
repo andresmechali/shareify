@@ -7,7 +7,7 @@ class TopHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            active: 'main'
+            active: props.active
         }
     }
     render() {
@@ -83,6 +83,7 @@ class TopHeader extends React.Component {
 
 TopHeader.propTypes = {
     user: PropTypes.object.isRequired,
+    active: PropTypes.string.isRequired,
 };
 
 export default TopHeader

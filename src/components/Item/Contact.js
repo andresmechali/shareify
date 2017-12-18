@@ -33,12 +33,11 @@ class Contact extends React.Component {
                 userFrom: this.props.auth.user._id,
                 userTo: this.props.item.user._id,
                 messages: [],
+                lastDate: new Date().toISOString(),
             }
         })
             .then(
                 conversation => {
-                    console.log(conversation.data);
-
                     this.props.client.mutate({
                         mutation: CREATE_MESSAGE,
                         variables: {

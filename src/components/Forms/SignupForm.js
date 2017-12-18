@@ -95,6 +95,7 @@ class SignupForm extends React.Component {
                     isAdmin: false,
                     isSuperAdmin: false,
                     activity: [],
+                    conversations: [],
                 }
             })
             .then(({data}) => {
@@ -244,6 +245,7 @@ const createUser = gql`
         $isAdmin: Boolean!
         $isSuperAdmin: Boolean!
         $activity: [String!]
+        $conversations: [String!]
     ) {
         createUser(
             username: $username
@@ -261,6 +263,7 @@ const createUser = gql`
             isAdmin: $isAdmin
             isSuperAdmin: $isSuperAdmin
             activity: $activity
+            conversations: $conversations
         )
         {
             token

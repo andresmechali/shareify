@@ -12,11 +12,11 @@ import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMe
 import { setCurrentUser } from "../../redux/actions/authActions";
 
 import Loading from '../../components/Loading/Bounce';
-import TopHeader from '../../components/Profile/TopHeader';
 
 import Main from './Main';
 import Settings from './Settings';
 import ChangePassword from "./ChangePassword";
+import Conversation from '../../containers/Conversation';
 import Offer from '../../containers/Offer';
 
 class Profile extends React.Component {
@@ -25,7 +25,8 @@ class Profile extends React.Component {
         super(props);
         this.state = {
             user: {},
-            loading: true
+            loading: true,
+            active: 'main',
         }
     }
 
@@ -57,11 +58,6 @@ class Profile extends React.Component {
         return (
             <BrowserRouter>
                 <div className="container user-profile">
-                    <div className="row">
-                        <TopHeader
-                            user={this.state.user}
-                        />
-                    </div>
 
                     <Route
                         path='/profile/main'
@@ -89,6 +85,20 @@ class Profile extends React.Component {
                         path='/profile/settings/password'
                         exact={true}
                         component={() => <ChangePassword
+                            user={this.state.user}
+                            auth={this.props.auth}
+                            flashMessages={this.props.flashMessages}
+                            push={this.props.push}
+                            setCurrentUser={this.props.setCurrentUser}
+                            addFlashMessage={this.props.addFlashMessage}
+                            deleteFlashMessage={this.props.deleteFlashMessage}
+                        />}
+                    />
+
+                    <Route
+                        path='/profile/messages/:id'
+                        exact={true}
+                        component={() => <Conversation
                             user={this.state.user}
                             auth={this.props.auth}
                             flashMessages={this.props.flashMessages}

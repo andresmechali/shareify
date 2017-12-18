@@ -55,6 +55,13 @@ const USER_QUERY = gql`
                 description
                 picturePath
             }
+            rating
+            activity {
+                _id
+            }
+            conversations {
+                _id
+            }
         }
     }
 `;

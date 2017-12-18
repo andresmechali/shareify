@@ -6,6 +6,7 @@ const CREATE_CONVERSATION = gql`
         $userFrom: String!
         $userTo: String!
         $messages: [String!]
+        $lastDate: String!
     ) 
     {
         createConversation(
@@ -13,6 +14,7 @@ const CREATE_CONVERSATION = gql`
             userFrom: $userFrom
             userTo: $userTo
             messages: $messages
+            lastDate: $lastDate
         )
     }
 `;

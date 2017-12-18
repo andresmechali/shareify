@@ -12,6 +12,7 @@ import Settings from '../Profile/Settings';
 import Offer from '../Offer';
 import Profile from '../Profile';
 import Item from '../Item';
+import Conversation from '../Conversation';
 
 const App = () => (
     <div>
@@ -26,6 +27,7 @@ const App = () => (
             <Route path="/settings" component={requireAuth(Settings)} />
             <Route path="/profile" component={requireAuth(Profile)} />
             <Route path="/item/:id" component={requireAuth(Item)} />
+            <Route path="/conversation/:id" component={requireAuth(Conversation)} />
         </main>
     </div>
 );
