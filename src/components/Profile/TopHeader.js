@@ -63,10 +63,14 @@ class TopHeader extends React.Component {
                                             text='Requested'
                                             className={this.state.active==='requested'?'active':''}
                                         />
-                                        <Li link={`/profile/messages/${this.props.lastConversationId}`}
-                                            text='Messages'
-                                            className={this.state.active==='messages'?'active':''}
-                                        />
+                                        {this.props.lastConversationId
+                                            ? <Li link={`/profile/messages/${this.props.lastConversationId}`}
+                                                  text='Messages'
+                                                  className={this.state.active==='messages'?'active':''}
+                                            />
+                                            : 'Messages'
+                                        }
+
                                     </ul>
                                 </div>
                             </div>
