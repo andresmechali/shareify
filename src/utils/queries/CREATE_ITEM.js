@@ -14,6 +14,10 @@ const CREATE_ITEM = gql`
         $views: [String]!
         $viewCount: Int!
         $type: String!
+        $activated: [String!]
+        $deleted: [String!]
+        $reviews: [String!]
+        $transactions: [String!]
     ) {
         createItem(
             name: $name
@@ -28,6 +32,10 @@ const CREATE_ITEM = gql`
             views: $views
             viewCount: $viewCount
             type: $type
+            activated: $activated
+            deleted: $deleted
+            reviews: $reviews
+            transactions: $transactions
         )
         {
             token
@@ -44,6 +52,8 @@ const CREATE_ITEM = gql`
                     _id
                 }
                 created
+                activated
+                deleted
             }
         }
     }

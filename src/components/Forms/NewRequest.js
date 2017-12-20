@@ -6,7 +6,6 @@ import axios from 'axios';
 import { withApollo } from 'react-apollo';
 
 import CREATE_ITEM from '../../utils/queries/CREATE_ITEM';
-import CREATE_ACTIVITY from '../../utils/queries/CREATE_ACTIVITY';
 
 import jwt from 'jsonwebtoken';
 import classNames from 'classnames';
@@ -140,6 +139,10 @@ class NewRequest extends React.Component {
                     views: [],
                     viewCount: 0,
                     type: "request",
+                    activated: [],
+                    deleted: [],
+                    reviews: [],
+                    transactions: [],
                 }
             })
                 .then(({data}) => {
@@ -153,25 +156,6 @@ class NewRequest extends React.Component {
                         sessionStorage.setItem('token', data.createItem.token);
                         this.props.setCurrentUser(jwt.decode(data.createItem.token));
                     }
-                    // Register activity for log
-                    this.props.client.mutate({
-                        mutation: CREATE_ACTIVITY,
-                        variables: {
-                            type: ITEM,
-                            user: this.props.auth.user._id,
-                            activityId: data.createItem.item._id,
-                            viewed: false,
-                            date: new Date().toISOString(),
-                            item: data.createItem.item._id,
-
-                        }
-                    })
-                        .then(({activity}) => {
-                                this.props.push('/profile/main');
-                        })
-                        .catch(activityError => {
-                            console.log(activityError);
-                        })
                 })
                 .catch((error) => {
                     this.props.addFlashMessage({

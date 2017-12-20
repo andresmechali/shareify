@@ -63,7 +63,6 @@ const USER_QUERY = gql`
                     _id
                 }
             }
-            rating
             activity {
                 _id
             }

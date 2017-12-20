@@ -69,6 +69,16 @@ class Item extends React.Component {
         this.setState({contact: {visible: true}})
     }
 
+    deleteItem(e) {
+        this.props.client.mutate({
+            mutation: '',
+            variables: {
+                _id: this.state.item._id,
+                date: new Date().toISOString(),
+            }
+        })
+    }
+
     render() {
         if (this.state.loading) {
             return <Loading />
@@ -139,8 +149,8 @@ class Item extends React.Component {
                                     />
                                 </div>
                             </div>
-                            {this.state.item.user._id !== this.props.auth.user._id?
-                                <div className="ui-block">
+                            {this.state.item.user._id !== this.props.auth.user._id
+                                ? <div className="ui-block">
                                     <div className="ui-block-content">
                                         <button onClick={this.showContact.bind(this)} className="btn btn-lg btn-blue full-width">Contact</button>
                                         <Contact
@@ -149,7 +159,12 @@ class Item extends React.Component {
                                             auth={this.props.auth}
                                         />
                                     </div>
-                                </div> : ""
+                                </div>
+                                : <div className="ui-block">
+                                    <div className="ui-block-content">
+                                        <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                    </div>
+                                </div>
                             }
 
                         </div>
