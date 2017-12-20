@@ -49,7 +49,7 @@ class Profile extends React.Component {
                 this.setState({
                     user: res.data.userById,
                     loading: false,
-                    lastConversationId: lastConversationId? lastConversationId._id : false,
+                    lastConversationId: lastConversationId? lastConversationId._id : "",
                 })
             })
             .catch(err => {
