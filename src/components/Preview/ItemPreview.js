@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Map from '../../components/Maps/Map';
 
-class OfferPreview extends React.Component {
+class ItemPreview extends React.Component {
     render() {
         return (
             <div className="col-xl-4 order-xl-1 col-lg-4 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
@@ -44,7 +44,7 @@ class OfferPreview extends React.Component {
                                     style={{width: "100%"}}
                                     onClick={this.props.onSubmit}
                             >
-                                Offer
+                                {this.props.buttonMessage}
                             </button>
                         </h5>
                     </div>
@@ -54,7 +54,7 @@ class OfferPreview extends React.Component {
     }
 }
 
-OfferPreview.propTypes = {
+ItemPreview.propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
@@ -62,6 +62,7 @@ OfferPreview.propTypes = {
     longitude: PropTypes.number.isRequired,
     radiusOfSearch: PropTypes.number.isRequired,
     onSubmit: PropTypes.func.isRequired,
+    buttonMessage: PropTypes.string.isRequired,
 };
 
-export default OfferPreview;
+export default ItemPreview;

@@ -45,6 +45,10 @@ const USER_QUERY = gql`
                 longitude
                 description
                 picturePath
+                created
+                user {
+                    _id
+                }
             }
             requested {
                 _id
@@ -54,6 +58,10 @@ const USER_QUERY = gql`
                 longitude
                 description
                 picturePath
+                created
+                user {
+                    _id
+                }
             }
             rating
             activity {
@@ -61,6 +69,50 @@ const USER_QUERY = gql`
             }
             conversations {
                 _id
+                lastDate
+                userFrom {
+                    _id
+                    firstName
+                    lastName
+                    username
+                }
+                userTo {
+                    _id
+                    firstName
+                    lastName
+                    username
+                }
+                messages {
+                    _id
+                    userFrom {
+                        _id
+                        firstName
+                        lastName
+                        username
+                    }
+                    userTo {
+                        _id
+                        firstName
+                        lastName
+                        username
+                    }
+                    conversation {
+                        _id
+                    }
+                    item {
+                        _id
+                        name
+                        user {
+                            _id
+                        }
+                    }
+                    date
+                    read
+                }
+                item {
+                    _id
+                    name
+                }
             }
         }
     }

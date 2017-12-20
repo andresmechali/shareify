@@ -12,6 +12,7 @@ const ChangePassword = props => {
                 <TopHeader
                     user={props.user}
                     active='settings'
+                    lastConversationId={props.lastConversationId}
                 />
             </div>
             <div className="row">
@@ -43,6 +44,7 @@ ChangePassword.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
     deleteFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
+    lastConversationId: PropTypes.string.isRequired,
 };
 
 export default ChangePassword;

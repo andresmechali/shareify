@@ -15,9 +15,11 @@ import Loading from '../../components/Loading/Bounce';
 
 import Main from './Main';
 import Settings from './Settings';
+import Activity from '../../components/Profile/Activity';
 import ChangePassword from "./ChangePassword";
 import Conversation from '../../containers/Conversation';
 import Offer from '../../containers/Offer';
+import Request from '../../containers/Request';
 
 class Profile extends React.Component {
 
@@ -27,6 +29,7 @@ class Profile extends React.Component {
             user: {},
             loading: true,
             active: 'main',
+            lastConversationId: '',
         }
     }
 
@@ -36,9 +39,17 @@ class Profile extends React.Component {
             variables: {_id: this.props.auth.user._id},
         })
             .then(res => {
+                let lastConversationId = res.data.userById.conversations.slice().sort(
+                    function compare(a, b) {
+                        if (a.lastDate < b.lastDate) return 1;
+                        if (a.lastDate > b.lastDate) return -1;
+                        return 0;
+                    }
+                )[0];
                 this.setState({
                     user: res.data.userById,
-                    loading: false
+                    loading: false,
+                    lastConversationId: lastConversationId._id
                 })
             })
             .catch(err => {
@@ -64,7 +75,17 @@ class Profile extends React.Component {
                         exact={true}
                         component={() => <Main
                                             user={this.state.user}
+                                            lastConversationId={this.state.lastConversationId}
                                          />}
+                    />
+
+                    <Route
+                        path='/profile/activity'
+                        exact={true}
+                        component={() => <Activity
+                            user={this.state.user}
+                            lastConversationId={this.state.lastConversationId}
+                        />}
                     />
 
                     <Route
@@ -78,6 +99,7 @@ class Profile extends React.Component {
                                             setCurrentUser={this.props.setCurrentUser}
                                             addFlashMessage={this.props.addFlashMessage}
                                             deleteFlashMessage={this.props.deleteFlashMessage}
+                                            lastConversationId={this.state.lastConversationId}
                                          />}
                     />
 
@@ -92,6 +114,7 @@ class Profile extends React.Component {
                             setCurrentUser={this.props.setCurrentUser}
                             addFlashMessage={this.props.addFlashMessage}
                             deleteFlashMessage={this.props.deleteFlashMessage}
+                            lastConversationId={this.state.lastConversationId}
                         />}
                     />
 
@@ -106,6 +129,7 @@ class Profile extends React.Component {
                             setCurrentUser={this.props.setCurrentUser}
                             addFlashMessage={this.props.addFlashMessage}
                             deleteFlashMessage={this.props.deleteFlashMessage}
+                            lastConversationId={this.state.lastConversationId}
                         />}
                     />
 
@@ -113,6 +137,12 @@ class Profile extends React.Component {
                         path='/offer/new'
                         exact={true}
                         component={() => <Offer />}
+                    />
+
+                    <Route
+                        path='/ask/new'
+                        exact={true}
+                        component={() => <Request />}
                     />
 
                 </div>

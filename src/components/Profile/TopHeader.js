@@ -46,9 +46,9 @@ class TopHeader extends React.Component {
                                             text='Settings'
                                             className={this.state.active==='settings'?'active':''}
                                         />
-                                        <Li link='/profile/notifications'
-                                            text='Notifications'
-
+                                        <Li link='/profile/activity'
+                                            text='Activity'
+                                            className={this.state.active==='activity'?'active':''}
                                         />
                                     </ul>
                                 </div>
@@ -63,7 +63,7 @@ class TopHeader extends React.Component {
                                             text='Requested'
                                             className={this.state.active==='requested'?'active':''}
                                         />
-                                        <Li link='/profile/messages'
+                                        <Li link={`/profile/messages/${this.props.lastConversationId}`}
                                             text='Messages'
                                             className={this.state.active==='messages'?'active':''}
                                         />
@@ -84,6 +84,7 @@ class TopHeader extends React.Component {
 TopHeader.propTypes = {
     user: PropTypes.object.isRequired,
     active: PropTypes.string.isRequired,
+    lastConversationId: PropTypes.string.isRequired,
 };
 
 export default TopHeader

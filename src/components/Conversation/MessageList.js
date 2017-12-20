@@ -8,6 +8,8 @@ import classNames from 'classnames';
 import CREATE_MESSAGE from "../../utils/queries/CREATE_MESSAGE";
 import CREATE_ACTIVITY from "../../utils/queries/CREATE_ACTIVITY";
 import {MESSAGE} from "../../utils/activityTypes";
+import VIEW_ACTIVITY from "../../utils/queries/VIEW_ACTIVITY";
+import ACTIVITY_QUERY from "../../utils/queries/ACTIVITY_QUERY";
 
 class MessageList extends React.Component {
     constructor(props) {
@@ -37,7 +39,28 @@ class MessageList extends React.Component {
     }
 
     componentDidUpdate() {
+
         this.elem.scrollIntoView({behavior: "smooth"});
+
+        this.props.client.query({
+            query: ACTIVITY_QUERY,
+            variables: {
+                _id: this.props.user._id
+            }
+        })
+            .then(res => {
+                const activityIdList = [];
+                res.data.activityByUserIdMessage.forEach(act => {activityIdList.push(act._id)});
+                this.props.client.mutate({
+                    mutation: VIEW_ACTIVITY,
+                    variables: {
+                        activityId: activityIdList,
+                    }
+                })
+            })
+            .catch(activityErr => {
+                console.log(activityErr)
+            });
     }
 
     onChange(e) {

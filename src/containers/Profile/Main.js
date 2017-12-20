@@ -5,7 +5,7 @@ import TopHeader from '../../components/Profile/TopHeader';
 import About from '../../components/Profile/About';
 import OfferedByYou from '../../components/Profile/OfferedByYou';
 import RequestedByYou from '../../components/Profile/RequestedByYou';
-import Activity from '../../components/Profile/Activity';
+import Notifications from '../../components/Profile/Notifications';
 import LastOffered from '../../components/Profile/LastOffered';
 import LastRequested from '../../components/Profile/LastRequested';
 
@@ -17,9 +17,9 @@ const Main = (props) => {
                 <TopHeader
                     user={props.user}
                     active='main'
+                    lastConversationId={props.lastConversationId}
                 />
             </div>
-
 
             <div className="row">
 
@@ -31,7 +31,7 @@ const Main = (props) => {
                 </div>
 
                 <div className="col-xl-6 order-xl-2 col-lg-6 order-lg-1 col-md-6 col-sm-12 col-xs-12">
-                    <Activity user={props.user}/>
+                    <Notifications user={props.user}/>
 
                     <LastOffered user={props.user}/>
 
@@ -55,6 +55,7 @@ const Main = (props) => {
 
 Main.propTypes = {
     user: PropTypes.object.isRequired,
+    lastConversationId: PropTypes.string.isRequired,
 };
 
 export default Main;

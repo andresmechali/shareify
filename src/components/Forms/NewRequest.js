@@ -19,7 +19,7 @@ import Input from '../../components/Inputs/Input';
 import ItemPreview from '../Preview/ItemPreview';
 import PlacesSearchBox from '../../components/Maps/PlacesSearchBox';
 
-class NewOffer extends React.Component {
+class NewRequest extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -139,7 +139,7 @@ class NewOffer extends React.Component {
                     active: true,
                     views: [],
                     viewCount: 0,
-                    type: "offer",
+                    type: "request",
                 }
             })
                 .then(({data}) => {
@@ -190,14 +190,14 @@ class NewOffer extends React.Component {
                 <div className="col-xl-8 order-xl-2 col-lg-8 order-lg-2 col-md-12 order-md-1 col-sm-12 col-xs-12">
                     <div className="ui-block">
                         <div className="ui-block-title">
-                            <h5 className="bold">Offer something you are not using</h5>
+                            <h5 className="bold">Ask for something you need</h5>
                         </div>
                         <div className="ui-block-content">
                             <form onSubmit={this.onSubmit}>
                                 <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <Input name='name'
-                                               label= 'What do you want to offer?'
+                                               label= 'What do you need?'
                                                type='text'
                                                errors={this.state.errors}
                                                focus={this.state.focus}
@@ -206,7 +206,7 @@ class NewOffer extends React.Component {
                                                onFocus={this.onFocus}
                                                onBlur={this.onBlur}
                                                autoFocus={true}
-                                               placeholder="What do you want to offer?"
+                                               placeholder="What do you need?"
                                         />
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -223,7 +223,7 @@ class NewOffer extends React.Component {
                                                         type="text"
                                                         name="location"
                                                         className="form-control taller-input"
-                                                        placeholder="Where do you have it?"
+                                                        placeholder="Where are you?"
                                                     />}
                                                     containerElement= '<div style={{ height: `400px` }} />'
                                                     name='location'
@@ -281,14 +281,14 @@ class NewOffer extends React.Component {
                     longitude={Number(this.state.longitude)}
                     radiusOfSearch={20}
                     onSubmit={this.onSubmit}
-                    buttonMessage="Offer"
+                    buttonMessage="Ask"
                 />
             </div>
         )
     }
 }
 
-NewOffer.propTypes = {
+NewRequest.propTypes = {
     auth: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,
@@ -296,6 +296,6 @@ NewOffer.propTypes = {
     setCurrentUser: PropTypes.func.isRequired,
 };
 
-NewOffer = withApollo(NewOffer);
+NewRequest = withApollo(NewRequest);
 
-export default NewOffer;
+export default NewRequest;

@@ -31,6 +31,7 @@ const CONVERSATIONS_QUERY = gql`
                     username
                 }
                 messages {
+                    _id
                     userFrom {
                         _id
                         firstName
