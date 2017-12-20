@@ -53,8 +53,9 @@ class Profile extends React.Component {
                 })
             })
             .catch(err => {
-                console.log('error:');
-                console.log(err)
+                console.log(err);
+                this.props.push('/login');
+
             })
     }
 
