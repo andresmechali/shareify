@@ -1,31 +1,37 @@
 import gql from 'graphql-tag';
 
-const CREATE_MESSAGE = gql`
-    mutation createMessage(
-        $conversation: String!
+const REQUEST_ITEM = gql`
+    mutation createRequest(
         $item: String!
         $userFrom: String!
         $userTo: String!
         $message: String!
         $date: String!
-        $read: Boolean!
+        $active: Boolean!
+        $viewed: Boolean!
+        $accepted: Boolean!
     ) 
     {
-        createMessage(
-            conversation: $conversation
+        createRequest(
             item: $item
             userFrom: $userFrom
             userTo: $userTo
             message: $message
             date: $date
-            read: $read
-        ) {
+            active: $active
+            viewed: $viewed
+            accepted: $accepted
+        )
+        {
             token
             user {
                 _id
+                requests {
+                    _id
+                }
             }
         }
     }
 `;
 
-export default CREATE_MESSAGE;
+export default REQUEST_ITEM;

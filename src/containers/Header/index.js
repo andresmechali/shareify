@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { removeCurentUser } from "../../redux/actions/authActions";
+import { removeCurrentUser } from "../../redux/actions/authActions";
 
 import NoUser from './NoUser';
 import User from './User';
@@ -51,7 +51,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        removeCurrentUser: () => dispatch(removeCurentUser())
+        removeCurrentUser: () => dispatch(removeCurrentUser())
     }
 };
 

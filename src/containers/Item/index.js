@@ -12,9 +12,11 @@ import Loading from '../../components/Loading/Bounce';
 import Map from '../../components/Maps/Map';
 
 import Contact from '../../components/Item/Contact';
+import SendRequest from '../../components/Item/SendRequest';
 
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
+import CANCEL_REQUEST from "../../utils/queries/CANCEL_REQUEST";
 
 class Item extends React.Component {
     constructor(props) {
@@ -23,10 +25,18 @@ class Item extends React.Component {
             user: props.auth.user,
             item: {},
             loading: true,
+            message: '',
             contact: {
                 visible: false,
-            }
-        }
+            },
+            request: {
+                visible: false,
+            },
+            requested: false,
+            requestedId: '',
+        };
+
+
     }
 
     componentWillMount() {
@@ -49,8 +59,27 @@ class Item extends React.Component {
                     .then(res => {
                         this.setState({
                             item: res.data.itemById,
-                            loading: false
-                        })
+                            loading: false,
+                        },
+                            () => {
+                                if (this.props.auth.user._id !== this.state.item.user._id) {
+                                    const itemRequestList = [];
+                                    this.state.item.requests.forEach(req => {
+                                        itemRequestList.push(req._id)
+                                    });
+                                    this.props.auth.user.requests.forEach(
+                                        requestId => {
+                                            if (itemRequestList.indexOf(requestId) > -1) {
+                                                this.setState({
+                                                    requested: true,
+                                                    requestedId: requestId,
+                                                })
+                                            }
+                                        }
+                                    )
+                                }
+                            }
+                        )
                     })
                     .catch(err => {
                         console.log('error:');
@@ -65,8 +94,53 @@ class Item extends React.Component {
 
     }
 
-    showContact(e) {
-        this.setState({contact: {visible: true}})
+    onChangeMessage(e) {
+        this.setState({message: e.target.value})
+    }
+
+    toggleContact() {
+        if (this.state.request.visible) {
+            this.toggleRequest()
+        }
+        this.setState({contact: {visible: !this.state.contact.visible}})
+    }
+
+    toggleRequest() {
+        if (this.state.contact.visible) {
+            this.toggleContact()
+        }
+        this.setState({request: {visible: !this.state.request.visible}})
+    }
+
+    cancelRequest() {
+        this.props.client.mutate({
+            mutation: CANCEL_REQUEST,
+            variables: {
+                _id: this.state.requestedId,
+                userFrom: this.props.auth.user._id,
+                userTo: this.state.item.user._id,
+                date: new Date().toISOString(),
+            }
+        })
+            .then(
+                res => {
+                    this.props.setCurrentUser(res.data.cancelRequest.token);
+                    this.setState({
+                        requested: false,
+                        requestedId: "",
+                    })
+                }
+            )
+            .catch( err => {
+                console.log(err)
+            })
+    }
+
+    setRequested(requestedId) {
+        this.setState({
+            requested: true,
+            requestedId: requestedId
+        })
     }
 
     deleteItem(e) {
@@ -75,7 +149,7 @@ class Item extends React.Component {
             variables: {
                 _id: this.state.item._id,
                 date: new Date().toISOString(),
-            }
+            },
         })
     }
 
@@ -87,19 +161,8 @@ class Item extends React.Component {
             return (
                 <div className="container">
                     <div className="row">
-                        <div className="col-xl-8 order-xl-1 col-lg-8 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
-                            <div className="ui-block">
-                                <div className="ui-block-content">
-                                    <img src={require(`../../images/${this.state.item.picturePath}`)}
-                                         alt='item'
-                                         width="100%"
-                                         height="100%"
-                                    />
-                                </div>
 
-                            </div>
-                        </div>
-                        <div className="col-xl-4 order-xl-1 col-lg-4 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                        <div className="col-xl-3 order-xl-1 col-lg-3 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
                             <div className="ui-block">
                                 <div className="ui-block-title">
                                     <h4 className="title bold">
@@ -149,16 +212,52 @@ class Item extends React.Component {
                                     />
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                            <div className="ui-block">
+                                <div className="ui-block-content">
+                                    <img src={require(`../../images/${this.state.item.picturePath}`)}
+                                         alt='item'
+                                         width="100%"
+                                         height="100%"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
                             {this.state.item.user._id !== this.props.auth.user._id
-                                ? <div className="ui-block">
-                                    <div className="ui-block-content">
-                                        <button onClick={this.showContact.bind(this)} className="btn btn-lg btn-blue full-width">Contact</button>
-                                        <Contact
-                                            visible={this.state.contact.visible}
-                                            item={this.state.item}
-                                            auth={this.props.auth}
-                                        />
+                                ? <div>
+                                    <div className="ui-block">
+                                        <div className="ui-block-content">
+                                            <button onClick={this.toggleContact.bind(this)} className="btn btn-lg btn-blue full-width">Ask question</button>
+                                            <Contact
+                                                visible={this.state.contact.visible}
+                                                item={this.state.item}
+                                                auth={this.props.auth}
+                                            />
+                                        </div>
                                     </div>
+
+                                    <div className="ui-block">
+                                        <div className="ui-block-content">
+                                            {this.state.requested
+                                                ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel request</button>
+                                                : <div>
+                                                    <button onClick={this.toggleRequest.bind(this)} className="btn btn-lg btn-green full-width">Request</button>
+                                                    <SendRequest
+                                                        visible={this.state.request.visible}
+                                                        item={this.state.item}
+                                                        user={this.props.auth.user}
+                                                        setCurrentUser={this.props.setCurrentUser}
+                                                        setRequested={this.setRequested.bind(this)}
+                                                    />
+                                                  </div>
+                                            }
+                                        </div>
+                                    </div>
+
                                 </div>
                                 : <div className="ui-block">
                                     <div className="ui-block-content">
@@ -166,7 +265,6 @@ class Item extends React.Component {
                                     </div>
                                 </div>
                             }
-
                         </div>
 
                     </div>
@@ -196,7 +294,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         push: (path) => dispatch(push(path)),
-        setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+        setCurrentUser: (userToken) => dispatch(setCurrentUser(userToken)),
         addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
         deleteFlashMessage: () => dispatch(deleteFlashMessage()),
     }

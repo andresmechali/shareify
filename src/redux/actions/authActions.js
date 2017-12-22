@@ -2,14 +2,23 @@
 import { SET_CURRENT_USER } from './types';
 import { REMOVE_CURRENT_USER } from './types';
 
-export function setCurrentUser(user) {
+import jwt from 'jsonwebtoken';
+
+export function setCurrentUser(userToken) {
+    const decodedUser = jwt.decode(userToken);
+    if (window.localStorage.token) {
+        window.localStorage.setItem('token', userToken)
+    }
+    if (window.sessionStorage.token) {
+        window.sessionStorage.setItem('token', userToken)
+    }
     return {
         type: SET_CURRENT_USER,
-        user
+        user: decodedUser
     }
 }
 
-export function removeCurentUser() {
+export function removeCurrentUser() {
     localStorage.removeItem('token');
     sessionStorage.removeItem('token');
     return {

@@ -13,6 +13,23 @@ const ITEM_QUERY = gql`
             created
             active
             viewCount
+            requests {
+                _id
+                item {
+                    _id
+                }
+                userFrom {
+                    _id
+                }
+                userTo {
+                    _id
+                }
+                date
+                message
+                active
+                viewed
+                
+            }
             user {
                 _id
                 firstName
@@ -64,6 +81,21 @@ const ITEM_QUERY = gql`
                     longitude
                     description
                     picturePath
+                }
+                requests {
+                    _id
+                    item {
+                        _id
+                    }
+                    userFrom {
+                        _id
+                    }
+                    userTo {
+                        _id
+                    }
+                    date
+                    message
+                    active
                 }
             } 
         }

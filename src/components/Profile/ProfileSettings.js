@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import _ from 'lodash';
-import jwt from 'jsonwebtoken';
 
 import validateInput from '../../utils/formValidation';
 import parseGraphQLError from '../../utils/parseGraphQLError';
@@ -112,7 +111,8 @@ class Profile extends React.Component {
                 }, this.omit)
             })
                 .then(({data}) =>{
-                    this.props.setCurrentUser(jwt.decode(data.updateUser.token));
+                console.log(data.updateUser.token);
+                    this.props.setCurrentUser(data.updateUser.token);
                     if (window.sessionStorage.getItem('token')) {
                         window.sessionStorage.setItem('token', data.updateUser.token)
                     }

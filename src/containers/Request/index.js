@@ -43,7 +43,7 @@ const mapDispatchToProps = dispatch => {
         push: (path) => dispatch(push(path)),
         addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
         deleteFlashMessage: () => dispatch(deleteFlashMessage()),
-        setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+        setCurrentUser: (userToken) => dispatch(setCurrentUser(userToken)),
     }
 };
 

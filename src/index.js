@@ -15,8 +15,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
 
-import { setCurrentUser, removeCurentUser } from "./redux/actions/authActions";
-import jwt from 'jsonwebtoken';
+import { setCurrentUser, removeCurrentUser } from "./redux/actions/authActions";
 
 //const httpLink = new HttpLink({ uri: 'https://cool-server.herokuapp.com/graphql' });;
 
@@ -36,7 +35,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 const logoutLink = onError(({ networkError }) => {
     if (networkError) {
         if (networkError.statusCode === 401) {
-            store.dispatch(removeCurentUser())
+            store.dispatch(removeCurrentUser())
         }
     }
 });
@@ -46,9 +45,9 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 });
 
-const token = localStorage.getItem('token') || sessionStorage.getItem('token');
-if (token) {
-    store.dispatch(setCurrentUser(jwt.decode(token)))
+const userToken = localStorage.getItem('token') || sessionStorage.getItem('token');
+if (userToken) {
+    store.dispatch(setCurrentUser(userToken))
 }
 
 ReactDOM.render(

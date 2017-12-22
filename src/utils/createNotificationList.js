@@ -1,4 +1,4 @@
-import { MESSAGE } from '../utils/activityTypes';
+import { MESSAGE, REQUEST } from '../utils/activityTypes';
 
 const createNotificationList = user => {
     let notificationList = [];
@@ -32,10 +32,35 @@ const createNotificationList = user => {
         }
     });
 
+
+    // Requests
+    let requestList = {};
+
+    user.requests.forEach(request => {
+        if (request.userTo._id === user._id) {
+            requestList[request._id] = {
+                type: REQUEST,
+                request: request._id,
+                userFrom: request.userFrom,
+                date: request.date,
+                item: request.item,
+                viewed: request.viewed,
+            };
+        }
+    });
+
+    Object.keys(requestList).forEach(key => {
+        if (requestList[key].viewed === false) {
+            notificationList.push(requestList[key])
+        }
+    });
+
+    // RETURN
+
     notificationList.sort(
         function(a, b) {
-            if (a.date > b.date) return 1;
-            if (a.date < b.date) return -1;
+            if (a.date > b.date) return -1;
+            if (a.date < b.date) return 1;
             return 0;
         }
     );

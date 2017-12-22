@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import createNotificationList from '../../utils/createNotificationList';
 
-import { MESSAGE } from '../../utils/activityTypes';
+import {MESSAGE, REQUEST} from '../../utils/activityTypes';
 
 class Notifications extends React.Component {
     constructor(props) {
@@ -43,6 +43,21 @@ class Notifications extends React.Component {
                                                         quantity: notification.unread,
                                                         message: <a href={`/profile/messages/${notification.userOther._id}`}>{notification.unread === 1? "message" : "messages"}</a>,
                                                         user: <a href={`/user/${notification.userOther._id}`}>{notification.userOther.firstName} {notification.userOther.lastName}</a>
+                                                    }}
+                                                />
+                                                <span className="date">{moment(notification.date).fromNow()}</span>
+                                            </li>
+                                            : ""
+                                        }
+
+                                        {notification.type === REQUEST
+                                            ? <li className="activity">
+                                                <FormattedMessage
+                                                    id="activityRequest"
+                                                    defaultMessage='You have a new {request} for your {item}'
+                                                    values={{
+                                                        request: <a href={`/profile/request/${notification.request}`}>request</a>,
+                                                        item: <a href={`/item/${notification.item._id}`}>{notification.item.name}</a>
                                                     }}
                                                 />
                                                 <span className="date">{moment(notification.date).fromNow()}</span>

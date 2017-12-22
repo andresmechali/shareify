@@ -167,7 +167,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         push: (path) => dispatch(push(path)),
-        setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+        setCurrentUser: (userToken) => dispatch(setCurrentUser(userToken)),
         addFlashMessage: (msg) => dispatch(addFlashMessage(msg)),
         deleteFlashMessage: () => dispatch(deleteFlashMessage()),
     }

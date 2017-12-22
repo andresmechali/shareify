@@ -7,10 +7,7 @@ import { withApollo } from 'react-apollo';
 
 import CREATE_ITEM from '../../utils/queries/CREATE_ITEM';
 
-import jwt from 'jsonwebtoken';
 import classNames from 'classnames';
-
-import { ITEM } from '../../utils/activityTypes';
 
 import validateInput from '../../utils/formValidation';
 import Input from '../../components/Inputs/Input';
@@ -143,6 +140,7 @@ class NewOffer extends React.Component {
                     deleted: [],
                     reviews: [],
                     transactions: [],
+                    requests: [],
                 }
             })
                 .then(({data}) => {
@@ -150,12 +148,13 @@ class NewOffer extends React.Component {
 
                     if (localStorage.getItem('token')) {
                         localStorage.setItem('token', data.createItem.token);
-                        this.props.setCurrentUser(jwt.decode(data.createItem.token));
+                        this.props.setCurrentUser(data.createItem.token);
                     }
                     else if (sessionStorage.getItem('token')) {
                         sessionStorage.setItem('token', data.createItem.token);
-                        this.props.setCurrentUser(jwt.decode(data.createItem.token));
+                        this.props.setCurrentUser(data.createItem.token);
                     }
+                    this.props.push('/profile/main');
                 })
                 .catch((error) => {
                     this.props.addFlashMessage({

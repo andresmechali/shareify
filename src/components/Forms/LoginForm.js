@@ -2,15 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-//import { withApollo } from 'react-apollo';
-
 import Input from '../Inputs/Input';
 import Checkbox from '../Inputs/Checkbox';
 
 import validateInput from '../../utils/formValidation';
 import FlashMessageList from "../FlashMessages/FlashMessageList";
-
-import jwt from 'jsonwebtoken';
 
 class LoginForm extends React.Component {
 
@@ -88,7 +84,7 @@ class LoginForm extends React.Component {
                 }
             })
             .then(({data}) => {
-                this.props.setCurrentUser(jwt.decode(data.signinUser.token));
+                this.props.setCurrentUser(data.signinUser.token);
                 if (this.state.remember) {
                     window.localStorage.setItem('token', data.signinUser.token)
                 }

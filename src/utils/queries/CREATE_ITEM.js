@@ -18,6 +18,7 @@ const CREATE_ITEM = gql`
         $deleted: [String!]
         $reviews: [String!]
         $transactions: [String!]
+        $requests: [String!]
     ) {
         createItem(
             name: $name
@@ -36,6 +37,7 @@ const CREATE_ITEM = gql`
             deleted: $deleted
             reviews: $reviews
             transactions: $transactions
+            requests: $requests
         )
         {
             token

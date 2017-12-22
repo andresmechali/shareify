@@ -5,9 +5,6 @@ import { withApollo } from 'react-apollo';
 
 import CREATE_CONVERSATION from '../../utils/queries/CREATE_CONVERSATION';
 import CREATE_MESSAGE from '../../utils/queries/CREATE_MESSAGE';
-import CREATE_ACTIVITY from '../../utils/queries/CREATE_ACTIVITY';
-
-import { MESSAGE } from '../../utils/activityTypes';
 
 class Contact extends React.Component {
     constructor(props){
@@ -51,23 +48,7 @@ class Contact extends React.Component {
                         }
                     })
                         .then(message => {
-                            this.props.client.mutate({
-                                mutation: CREATE_ACTIVITY,
-                                variables: {
-                                    type: MESSAGE,
-                                    user: this.props.auth.user._id,
-                                    activityId: message.data.createMessage,
-                                    viewed: false,
-                                    date: new Date().toISOString(),
-                                    message: message.data.createMessage,
-                                }
-                            })
-                                .then(activity => {
-                                    this.setState({sent: true});
-                                })
-                                .catch(activityErr => {
-                                    console.log(activityErr)
-                                })
+                            this.setState({sent: true});
                         })
                         .catch(messageErr => {
                             console.log(messageErr)
@@ -94,7 +75,7 @@ class Contact extends React.Component {
                                 value={this.state.message}
                                 onChange={this.onChange}
                             />
-                            <button className="btn btn-lg btn-green full-width"
+                            <button className="btn btn-lg btn-blue full-width"
                                     onClick={this.onSubmit}
                             >
                                 Send

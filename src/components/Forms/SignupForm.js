@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-apollo';
-import gql from 'graphql-tag';
-import jwt from 'jsonwebtoken';
 
 import Input from '../Inputs/Input';
 
 import validateInput from '../../utils/formValidation';
 import FlashMessageList from "../FlashMessages/FlashMessageList";
+import CREATE_USER from "../../utils/queries/CREATE_USER";
 
 class SignupForm extends React.Component {
 
@@ -98,10 +97,11 @@ class SignupForm extends React.Component {
                     conversations: [],
                     reviews: [],
                     transactions: [],
+                    requests: [],
                 }
             })
             .then(({data}) => {
-                this.props.setCurrentUser(jwt.decode(data.createUser.token));
+                this.props.setCurrentUser(data.createUser.token);
                 window.sessionStorage.setItem('token', data.createUser.token)
                 this.props.addFlashMessage({
                     type: 'success',
@@ -230,63 +230,7 @@ class SignupForm extends React.Component {
     }
 }
 
-const createUser = gql`
-    mutation createUser(
-        $username: String!
-        $email: String!
-        $firstName: String!
-        $lastName: String!
-        $password: String!
-        $picturePath: String!
-        $status: String!
-        $offered: [String]
-        $requested: [String]
-        $registered: String!
-        $lastConnection: String!
-        $radiusOfSearch: Int!
-        $isAdmin: Boolean!
-        $isSuperAdmin: Boolean!
-        $activity: [String!]
-        $conversations: [String!]
-        $reviews: [String!]
-        $transactions: [String!]
-    ) {
-        createUser(
-            username: $username
-            email: $email
-            firstName: $firstName
-            lastName: $lastName
-            password: $password
-            picturePath: $picturePath
-            status: $status
-            offered: $offered
-            requested: $requested
-            registered: $registered
-            lastConnection: $lastConnection
-            radiusOfSearch: $radiusOfSearch
-            isAdmin: $isAdmin
-            isSuperAdmin: $isSuperAdmin
-            activity: $activity
-            conversations: $conversations
-            reviews: $reviews
-            transactions: $transactions
-        )
-        {
-            token
-            user {
-                _id
-                username
-                email
-                firstName
-                lastName
-                picturePath
-                status
-            }
-        }
-    }
-`;
-
-SignupForm = graphql(createUser)(SignupForm);
+SignupForm = graphql(CREATE_USER)(SignupForm);
 
 SignupForm.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,

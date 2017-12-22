@@ -113,6 +113,24 @@ const USER_QUERY = gql`
                     name
                 }
             }
+            requests {
+                _id
+                item {
+                    _id
+                    name
+                }
+                userFrom {
+                    _id
+                }
+                userTo {
+                    _id
+                }
+                date
+                message
+                active
+                viewed
+                
+            }
         }
     }
 `;

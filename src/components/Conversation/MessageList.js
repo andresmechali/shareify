@@ -6,10 +6,7 @@ import { withApollo } from 'react-apollo';
 import classNames from 'classnames';
 
 import CREATE_MESSAGE from "../../utils/queries/CREATE_MESSAGE";
-import CREATE_ACTIVITY from "../../utils/queries/CREATE_ACTIVITY";
-import {MESSAGE} from "../../utils/activityTypes";
-import VIEW_ACTIVITY from "../../utils/queries/VIEW_ACTIVITY";
-import ACTIVITY_QUERY from "../../utils/queries/ACTIVITY_QUERY";
+import REQUEST_ITEM from "../../utils/queries/REQUEST_ITEM";
 
 class MessageList extends React.Component {
     constructor(props) {
@@ -18,6 +15,7 @@ class MessageList extends React.Component {
             userOther: null,
             message: '',
             conversation: props.conversation,
+            sent: false, //do it dynamically
         }
     }
 
@@ -41,26 +39,6 @@ class MessageList extends React.Component {
     componentDidUpdate() {
 
         this.elem.scrollIntoView({behavior: "smooth"});
-
-        this.props.client.query({
-            query: ACTIVITY_QUERY,
-            variables: {
-                _id: this.props.user._id
-            }
-        })
-            .then(res => {
-                const activityIdList = [];
-                res.data.activityByUserIdMessage.forEach(act => {activityIdList.push(act._id)});
-                this.props.client.mutate({
-                    mutation: VIEW_ACTIVITY,
-                    variables: {
-                        activityId: activityIdList,
-                    }
-                })
-            })
-            .catch(activityErr => {
-                console.log(activityErr)
-            });
     }
 
     onChange(e) {
@@ -83,82 +61,113 @@ class MessageList extends React.Component {
             }
         })
             .then(message => {
-                this.props.client.mutate({
-                    mutation: CREATE_ACTIVITY,
-                    variables: {
-                        type: MESSAGE,
-                        user: this.props.user._id,
-                        activityId: message.data.createMessage,
-                        viewed: false,
-                        date: new Date().toISOString(),
-                        message: message.data.createMessage,
-                    }
-                })
-                    .then(activity => {
-                        window.location.reload();
-                    })
-                    .catch(activityErr => {
-                        console.log(activityErr)
-                    })
+                this.props.setCurrentUser(message.data.createMessage.token);
+                window.location.reload();
             })
             .catch(messageErr => {
                 console.log(messageErr)
             })
     }
 
+    requestItem() {
+        this.props.client.mutate({
+            mutation: REQUEST_ITEM,
+            variables: {
+                item: this.state.conversation.item._id,
+                userFrom: this.props.user._id,
+                userTo: this.state.userOther._id,
+                message: this.state.message,
+                date: new Date().toISOString(),
+                active: false,
+                viewed: false,
+            },
+        })
+            .then(res => {
+                this.setState({sent: true});
+                this.props.setCurrentUser(res.data.createRequest.token);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     render() {
         return (
-            <div className="ui-block">
-                <div className="ui-block-title">
-                    <h6 className="title bold personal">
-                        {this.state.userOther
-                            ?`${this.state.userOther.firstName} ${this.state.userOther.lastName}`
-                            : 'Loading...'
-                        }
-                    </h6>
+            <div>
+                <div className="ui-block">
+                    <div className="ui-block-title">
+                        <h6 className="title bold activity">
+                            <span>
+                                {this.state.userOther
+                                    ? <a href={`/user/${this.state.userOther._id}`}>{this.state.userOther.firstName} {this.state.userOther.lastName}</a>
+                                    : 'Loading...'
+                                }
+                            </span>
+                            <span className="align-right">
+                                {this.state.conversation.item
+                                    ? <a href={`/item/${this.state.conversation.item._id}`}>{this.state.conversation.item.name}</a>
+                                    : 'Loading...'
+                                }
+                            </span>
+                        </h6>
+                    </div>
+
+                    <div className="ui-block-content">
+                        <ul className="widget w-personal-info">
+                            {
+                                this.props.conversation.messages
+                                    ?this.props.conversation.messages.map((message, key) => {
+                                        return <li
+                                            key={key}
+                                            className={classNames({
+                                                'align-right': message.userFrom.username === this.props.user.username,
+                                                'bold': !message.read,
+                                            })}
+                                        >
+                                            <span>{message.userFrom.firstName}: </span>{message.message}
+                                        </li>
+                                    })
+                                    : ''
+                            }
+                        </ul>
+                        <form
+                            onSubmit={this.sendMessage.bind(this)}
+                            id="inputMessage"
+                            ref={elem => {this.elem = elem}}
+                        >
+                            <input
+                                className="form-control taller-input"
+                                type="text"
+                                placeholder="Reply..."
+                                value={this.state.message}
+                                onChange={this.onChange.bind(this)}
+                            />
+                        </form>
+
+                    </div>
                 </div>
 
-                <div className="ui-block-content">
-                    <ul className="widget w-personal-info">
-                        {
-                            this.props.conversation.messages
-                                ?this.props.conversation.messages.map((message, key) => {
-                                    return <li
-                                        key={key}
-                                        className={classNames({
-                                            'align-right': message.userFrom.username === this.props.user.username,
-                                            'bold': !message.read,
-                                        })}
-                                    >
-                                        <span>{message.userFrom.firstName}: </span>{message.message}
-                                    </li>
-                                })
-                                : ''
-                        }
-                    </ul>
-                    <form
-                        onSubmit={this.sendMessage.bind(this)}
-                        id="inputMessage"
-                        ref={elem => {this.elem = elem}}
-                    >
-                        <input
-                            className="form-control taller-input"
-                            type="text"
-                            placeholder="Reply..."
-                            value={this.state.message}
-                            onChange={this.onChange.bind(this)}
-                        />
-                    </form>
 
-                </div>
+                {this.props.conversation.item
+                    ? this.props.conversation.item.user._id !== this.props.user._id
+                        ? <div className="ui-block">
+                            <div className="ui-block-content">
+                                <button className="btn btn-green btn-lg full-width" onClick={this.requestItem.bind(this)}>Request item</button>
+                            </div>
+                        </div>
+                        : null
+                    : null
+                }
+
             </div>
         )
     }
-};
+}
 
 MessageList.propTypes = {
     user: PropTypes.object.isRequired,
     conversation: PropTypes.object.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
 };
 
 export default withApollo(MessageList);

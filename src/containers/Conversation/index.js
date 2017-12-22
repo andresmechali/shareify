@@ -9,6 +9,7 @@ import Historial from '../../components/Conversation/Historial';
 import MessageList from "../../components/Conversation/MessageList";
 import CONVERSATIONS_QUERY from "../../utils/queries/CONVERSATIONS_QUERY";
 import VIEW_MESSAGE from "../../utils/queries/VIEW_MESSAGE";
+import {setCurrentUser} from "../../redux/actions/authActions";
 
 class Conversation extends React.Component {
 
@@ -94,7 +95,10 @@ class Conversation extends React.Component {
                         <MessageList
                             user={this.props.user}
                             conversation={this.state.conversation}
+                            setCurrentUser={this.props.setCurrentUser}
                         />
+
+
                     </div>
                 </div>
             </div>
@@ -105,6 +109,7 @@ class Conversation extends React.Component {
 Conversation.propTypes = {
     auth: PropTypes.object.isRequired,
     lastConversationId: PropTypes.string.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => {
@@ -113,4 +118,10 @@ const mapStateToProps = state => {
     };
 };
 
-export default withApollo(connect(mapStateToProps)(Conversation));
+const mapDispatchToProps = dispatch => {
+    return {
+        setCurrentUser: (userToken) => {dispatch(setCurrentUser(userToken))}
+    }
+};
+
+export default withApollo(connect(mapStateToProps, mapDispatchToProps)(Conversation));
