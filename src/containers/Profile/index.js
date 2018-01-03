@@ -20,6 +20,8 @@ import ChangePassword from "./ChangePassword";
 import Conversation from '../../containers/Conversation';
 import Offer from '../../containers/Offer';
 import Request from '../../containers/Request';
+import ItemRequest from '../../containers/ItemRequest';
+import Transaction from '../../containers/Transaction';
 
 class Profile extends React.Component {
 
@@ -30,6 +32,8 @@ class Profile extends React.Component {
             loading: true,
             active: 'main',
             lastConversationId: '',
+            lastRequestId: '',
+            lastTransactionId: '',
         }
     }
 
@@ -46,15 +50,31 @@ class Profile extends React.Component {
                         return 0;
                     }
                 )[0];
+                let lastRequestId = res.data.userById.requests.slice().sort(
+                    function compare(a, b) {
+                        if (a.lastDate < b.lastDate) return 1;
+                        if (a.lastDate > b.lastDate) return -1;
+                        return 0;
+                    }
+                )[0];
+                let lastTransactionId = res.data.userById.transactions.slice().sort(
+                    function compare(a, b) {
+                        if (a.lastDate < b.lastDate) return 1;
+                        if (a.lastDate > b.lastDate) return -1;
+                        return 0;
+                    }
+                )[0];
                 this.setState({
                     user: res.data.userById,
                     loading: false,
                     lastConversationId: lastConversationId? lastConversationId._id : "",
+                    lastRequestId: lastRequestId? lastRequestId._id : "",
+                    lastTransactionId: lastTransactionId? lastTransactionId._id : "",
                 })
             })
             .catch(err => {
                 console.log(err);
-                this.props.push('/login');
+                //this.props.push('/login');
 
             })
     }
@@ -77,6 +97,8 @@ class Profile extends React.Component {
                         component={() => <Main
                                             user={this.state.user}
                                             lastConversationId={this.state.lastConversationId}
+                                            lastRequestId={this.state.lastRequestId}
+                                            lastTransactionId={this.state.lastTransactionId}
                                          />}
                     />
 
@@ -86,6 +108,8 @@ class Profile extends React.Component {
                         component={() => <Activity
                             user={this.state.user}
                             lastConversationId={this.state.lastConversationId}
+                            lastRequestId={this.state.lastRequestId}
+                            lastTransactionId={this.state.lastTransactionId}
                         />}
                     />
 
@@ -101,6 +125,8 @@ class Profile extends React.Component {
                                             addFlashMessage={this.props.addFlashMessage}
                                             deleteFlashMessage={this.props.deleteFlashMessage}
                                             lastConversationId={this.state.lastConversationId}
+                                            lastRequestId={this.state.lastRequestId}
+                                            lastTransactionId={this.state.lastTransactionId}
                                          />}
                     />
 
@@ -116,6 +142,8 @@ class Profile extends React.Component {
                             addFlashMessage={this.props.addFlashMessage}
                             deleteFlashMessage={this.props.deleteFlashMessage}
                             lastConversationId={this.state.lastConversationId}
+                            lastRequestId={this.state.lastRequestId}
+                            lastTransactionId={this.state.lastTransactionId}
                         />}
                     />
 
@@ -131,6 +159,42 @@ class Profile extends React.Component {
                             addFlashMessage={this.props.addFlashMessage}
                             deleteFlashMessage={this.props.deleteFlashMessage}
                             lastConversationId={this.state.lastConversationId}
+                            lastRequestId={this.state.lastRequestId}
+                            lastTransactionId={this.state.lastTransactionId}
+                        />}
+                    />
+
+                    <Route
+                        path='/profile/request/:id'
+                        render={(props) => <ItemRequest
+                            {...props}
+                            user={this.state.user}
+                            auth={this.props.auth}
+                            flashMessages={this.props.flashMessages}
+                            push={this.props.push}
+                            setCurrentUser={this.props.setCurrentUser}
+                            addFlashMessage={this.props.addFlashMessage}
+                            deleteFlashMessage={this.props.deleteFlashMessage}
+                            lastConversationId={this.state.lastConversationId}
+                            lastRequestId={this.state.lastRequestId}
+                            lastTransactionId={this.state.lastTransactionId}
+                        />}
+                    />
+
+                    <Route
+                        path='/profile/transaction/:id'
+                        render={(props) => <Transaction
+                            {...props}
+                            user={this.state.user}
+                            auth={this.props.auth}
+                            flashMessages={this.props.flashMessages}
+                            push={this.props.push}
+                            setCurrentUser={this.props.setCurrentUser}
+                            addFlashMessage={this.props.addFlashMessage}
+                            deleteFlashMessage={this.props.deleteFlashMessage}
+                            lastConversationId={this.state.lastConversationId}
+                            lastRequestId={this.state.lastRequestId}
+                            lastTransactionId={this.state.lastTransactionId}
                         />}
                     />
 

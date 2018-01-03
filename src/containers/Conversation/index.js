@@ -79,6 +79,8 @@ class Conversation extends React.Component {
                         user={this.props.user}
                         active='messages'
                         lastConversationId={this.props.lastConversationId}
+                        lastRequestId={this.props.lastRequestId}
+                        lastTransactionId={this.props.lastTransactionId}
                     />
                 </div>
 
@@ -108,8 +110,10 @@ class Conversation extends React.Component {
 
 Conversation.propTypes = {
     auth: PropTypes.object.isRequired,
-    lastConversationId: PropTypes.string.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
+    lastConversationId: PropTypes.string.isRequired,
+    lastTransactionId: PropTypes.string.isRequired,
+    lastRequestId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => {

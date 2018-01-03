@@ -14,6 +14,7 @@ import Request from '../Request';
 import Profile from '../Profile';
 import Item from '../Item';
 import Conversation from '../Conversation';
+import CreateUsers from '../CreateUsers';
 
 const App = () => (
     <div>
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/profile" component={requireAuth(Profile)} />
             <Route path="/item/:id" component={requireAuth(Item)} />
             <Route path="/conversation/:id" component={requireAuth(Conversation)} />
+            <Route exact path="/createusers" component={CreateUsers}/>
         </main>
     </div>
 );

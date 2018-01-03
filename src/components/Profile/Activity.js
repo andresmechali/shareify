@@ -32,6 +32,8 @@ class Activity extends React.Component {
                             user={this.props.user}
                             active='activity'
                             lastConversationId={this.props.lastConversationId}
+                            lastRequestId={this.props.lastRequestId}
+                            lastTransactionId={this.props.lastTransactionId}
                         />
                     </div>
 
@@ -130,7 +132,9 @@ class Activity extends React.Component {
 }
 
 Activity.propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    lastTransactionId: PropTypes.string.isRequired,
+    lastRequestId: PropTypes.string.isRequired,
 };
 
 export default withApollo(Activity);

@@ -118,18 +118,164 @@ const USER_QUERY = gql`
                 item {
                     _id
                     name
+                    description
+                    picturePath
+                    type
+                    reviews {
+                        _id
+                        rate
+                        comment
+                    }
+                    created
+                    viewCount
+                    type
+                    location
                 }
                 userFrom {
                     _id
+                    firstName
+                    lastName
+                    username
+                    email
+                    picturePath
+                    description
+                    lastConnection
+                    reviews {
+                        _id
+                        rate
+                        comment
+                    }
                 }
                 userTo {
                     _id
+                    firstName
+                    lastName
+                    username
                 }
                 date
                 message
                 active
                 viewed
-                
+            }
+            transactions {
+                _id
+                item {
+                    _id
+                    name
+                    description
+                    picturePath
+                    type
+                    reviews {
+                        _id
+                        rate
+                        comment
+                    }
+                    created
+                    viewCount
+                    type
+                    location
+                }
+                userFrom {
+                    _id
+                    firstName
+                    lastName
+                    username
+                    email
+                    picturePath
+                    description
+                    lastConnection
+                    reviews {
+                        _id
+                        rate
+                        comment
+                        userFrom {
+                            _id
+                        }
+                        userTo {
+                            _id
+                        }
+                    }
+                }
+                userTo {
+                    _id
+                    firstName
+                    lastName
+                    username
+                    email
+                    picturePath
+                    description
+                    lastConnection
+                    reviews {
+                        _id
+                        rate
+                        comment
+                        userFrom {
+                            _id
+                        }
+                        userTo {
+                            _id
+                        }
+                    }
+                }
+                dateCreated
+                dateFinished
+                active
+                request {
+                    _id
+                    item {
+                        _id
+                        name
+                        description
+                        picturePath
+                        type
+                        reviews {
+                            _id
+                            rate
+                            comment
+                        }
+                        created
+                        viewCount
+                        type
+                        location
+                    }
+                    userFrom {
+                        _id
+                        firstName
+                        lastName
+                        username
+                        email
+                        picturePath
+                        description
+                        lastConnection
+                        reviews {
+                            _id
+                            rate
+                            comment
+                        }
+                    }
+                    userTo {
+                        _id
+                        firstName
+                        lastName
+                        username
+                    }
+                    date
+                    message
+                    active
+                    viewed
+                    accepted
+                }  
+            }
+            reviews {
+                _id
+                rate
+                comment
+                userFrom {
+                    _id
+                    firstName
+                    lastName
+                    username
+                }
             }
         }
     }

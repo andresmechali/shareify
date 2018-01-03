@@ -55,14 +55,22 @@ class TopHeader extends React.Component {
 
                                 <div className="col-lg-5 ml-auto col-md-5 right-top-menu">
                                     <ul className="profile-menu">
-                                        <Li link='/profile/offered'
-                                            text='Offered'
-                                            className={this.state.active==='offered'?'active':''}
-                                        />
-                                        <Li link='/profile/requested'
-                                            text='Requested'
-                                            className={this.state.active==='requested'?'active':''}
-                                        />
+                                        {this.props.lastRequestId !== ""
+                                            ? <Li link={`/profile/request/${this.props.lastRequestId}`}
+                                                  text='Requests'
+                                                  className={this.state.active==='requests'?'active':''}
+                                            />
+                                            : 'Requests'
+                                        }
+
+                                        {this.props.lastTransactionId !== ""
+                                            ? <Li link={`/profile/transaction/${this.props.lastTransactionId}`}
+                                                  text='Transactions'
+                                                  className={this.state.active==='transactions'?'active':''}
+                                            />
+                                            : 'Transactions'
+                                        }
+
                                         {this.props.lastConversationId !== ""
                                             ? <Li link={`/profile/messages/${this.props.lastConversationId}`}
                                                   text='Messages'
@@ -89,6 +97,8 @@ TopHeader.propTypes = {
     user: PropTypes.object.isRequired,
     active: PropTypes.string.isRequired,
     lastConversationId: PropTypes.string.isRequired,
+    lastTransactionId: PropTypes.string.isRequired,
+    lastRequestId: PropTypes.string.isRequired,
 };
 
 export default TopHeader

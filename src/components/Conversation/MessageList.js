@@ -78,8 +78,9 @@ class MessageList extends React.Component {
                 userTo: this.state.userOther._id,
                 message: this.state.message,
                 date: new Date().toISOString(),
-                active: false,
+                active: true,
                 viewed: false,
+                accepted: false,
             },
         })
             .then(res => {

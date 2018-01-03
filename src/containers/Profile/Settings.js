@@ -15,6 +15,8 @@ const Settings = props => {
                     user={props.user}
                     active='settings'
                     lastConversationId={props.lastConversationId}
+                    lastRequestId={props.lastRequestId}
+                    lastTransactionId={props.lastTransactionId}
                 />
             </div>
             <div className="row">
@@ -61,6 +63,8 @@ Settings.propTypes = {
     deleteFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
     lastConversationId: PropTypes.string.isRequired,
+    lastTransactionId: PropTypes.string.isRequired,
+    lastRequestId: PropTypes.string.isRequired,
 };
 
 export default Settings;

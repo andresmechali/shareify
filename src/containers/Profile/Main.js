@@ -18,6 +18,8 @@ const Main = (props) => {
                     user={props.user}
                     active='main'
                     lastConversationId={props.lastConversationId}
+                    lastRequestId={props.lastRequestId}
+                    lastTransactionId={props.lastTransactionId}
                 />
             </div>
 
@@ -56,6 +58,8 @@ const Main = (props) => {
 Main.propTypes = {
     user: PropTypes.object.isRequired,
     lastConversationId: PropTypes.string.isRequired,
+    lastTransactionId: PropTypes.string.isRequired,
+    lastRequestId: PropTypes.string.isRequired,
 };
 
 export default Main;

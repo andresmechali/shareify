@@ -17,6 +17,7 @@ import SendRequest from '../../components/Item/SendRequest';
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
 import CANCEL_REQUEST from "../../utils/queries/CANCEL_REQUEST";
+import ReviewStars from "../../components/User/ReviewStars";
 
 class Item extends React.Component {
     constructor(props) {
@@ -34,6 +35,7 @@ class Item extends React.Component {
             },
             requested: false,
             requestedId: '',
+            activeTransaction: false,
         };
 
 
@@ -62,6 +64,14 @@ class Item extends React.Component {
                             loading: false,
                         },
                             () => {
+
+                                // check if there is an active transaction for this user and item
+                                this.state.item.transactions.forEach(transactionObj => {
+                                    if (transactionObj.userFrom._id === this.props.auth.user._id && transactionObj.active) {
+                                        this.setState({activeTransaction: transactionObj._id})
+                                    }
+                                });
+
                                 if (this.props.auth.user._id !== this.state.item.user._id) {
                                     const itemRequestList = [];
                                     this.state.item.requests.forEach(req => {
@@ -70,10 +80,17 @@ class Item extends React.Component {
                                     this.props.auth.user.requests.forEach(
                                         requestId => {
                                             if (itemRequestList.indexOf(requestId) > -1) {
-                                                this.setState({
-                                                    requested: true,
-                                                    requestedId: requestId,
-                                                })
+
+                                                this.state.item.requests.forEach(itemReq => {
+                                                    if (itemReq._id === requestId) {
+                                                        if (itemReq.active) {
+                                                            this.setState({
+                                                                requested: true,
+                                                                requestedId: requestId,
+                                                            })
+                                                        }
+                                                    }
+                                                });
                                             }
                                         }
                                     )
@@ -173,11 +190,7 @@ class Item extends React.Component {
                                 <div className="ui-block-content">
                                     <div>
                                         by <a href={`/user/${this.state.item.user._id}`}>{this.state.item.user.firstName} {this.state.item.user.lastName} </a>
-                                        <span className="fa fa-star checked" />
-                                        <span className="fa fa-star checked" />
-                                        <span className="fa fa-star checked" />
-                                        <span className="fa fa-star checked" />
-                                        <span className="fa fa-star" />
+                                        <ReviewStars reviews={this.props.auth.user.reviews} ratingLabel={false}/>
                                     </div>
                                     <div>
                                         <span className="bold">Created: </span>
@@ -196,9 +209,11 @@ class Item extends React.Component {
                                 </div>
                             </div>
                             <div className="ui-block">
+                                <div className="ui-block-title bold">
+                                    Location
+                                </div>
                                 <div className="ui-block-content">
                                     <div>
-                                        <span className="bold">Location: </span>
                                         {this.state.item.location}
                                     </div>
                                     <Map
@@ -228,37 +243,48 @@ class Item extends React.Component {
 
                         <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
                             {this.state.item.user._id !== this.props.auth.user._id
-                                ? <div>
-                                    <div className="ui-block">
+                                ? this.state.activeTransaction
+                                    ? <div className="ui-block" style={{textAlign: "center"}}>
+                                        <div className="ui-block-content bold">
+                                            This item is currently lent
+                                        </div>
                                         <div className="ui-block-content">
-                                            <button onClick={this.toggleContact.bind(this)} className="btn btn-lg btn-blue full-width">Ask question</button>
-                                            <Contact
-                                                visible={this.state.contact.visible}
-                                                item={this.state.item}
-                                                auth={this.props.auth}
-                                            />
+                                            <a href={`/profile/transaction/${this.state.activeTransaction}`} className="btn btn-lg btn-blue full-width">Transaction</a>
                                         </div>
                                     </div>
-
-                                    <div className="ui-block">
-                                        <div className="ui-block-content">
-                                            {this.state.requested
-                                                ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel request</button>
-                                                : <div>
-                                                    <button onClick={this.toggleRequest.bind(this)} className="btn btn-lg btn-green full-width">Request</button>
-                                                    <SendRequest
-                                                        visible={this.state.request.visible}
-                                                        item={this.state.item}
-                                                        user={this.props.auth.user}
-                                                        setCurrentUser={this.props.setCurrentUser}
-                                                        setRequested={this.setRequested.bind(this)}
-                                                    />
-                                                  </div>
-                                            }
+                                    : <div>
+                                        <div className="ui-block">
+                                            <div className="ui-block-content">
+                                                <button onClick={this.toggleContact.bind(this)} className="btn btn-lg btn-blue full-width">Ask question</button>
+                                                <Contact
+                                                    visible={this.state.contact.visible}
+                                                    item={this.state.item}
+                                                    auth={this.props.auth}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </div>
+                                        <div className="ui-block">
+                                            <div className="ui-block-content" style={{textAlign: "center"}}>
+                                                {this.state.requested
+                                                    ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel request</button>
+                                                    : this.state.item.active
+                                                        ? <div>
+                                                            <button onClick={this.toggleRequest.bind(this)} className="btn btn-lg btn-green full-width">Request</button>
+                                                            <SendRequest
+                                                                visible={this.state.request.visible}
+                                                                item={this.state.item}
+                                                                user={this.props.auth.user}
+                                                                setCurrentUser={this.props.setCurrentUser}
+                                                                setRequested={this.setRequested.bind(this)}
+                                                            />
+                                                          </div>
+                                                        : <div className="bold">This item is currently lent</div>
+                                                }
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 : <div className="ui-block">
                                     <div className="ui-block-content">
                                         <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>

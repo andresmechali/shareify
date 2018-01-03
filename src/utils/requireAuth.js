@@ -14,7 +14,7 @@ export default function(ComposedComponent) {
                     type: 'error',
                     text: 'Please login'
                 });
-                this.props.push('/login');
+                //this.props.push('/login');
             }
         }
 

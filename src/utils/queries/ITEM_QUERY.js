@@ -30,6 +30,16 @@ const ITEM_QUERY = gql`
                 viewed
                 
             }
+            transactions {
+                _id
+                userFrom {
+                    _id
+                }
+                userTo {
+                    _id
+                }
+                active
+            }
             user {
                 _id
                 firstName
@@ -96,6 +106,19 @@ const ITEM_QUERY = gql`
                     date
                     message
                     active
+                }
+                transactions {
+                    _id
+                    userFrom {
+                        _id
+                    }
+                    userTo {
+                        _id
+                    }
+                    active
+                    item {
+                        _id
+                    }
                 }
             } 
         }
