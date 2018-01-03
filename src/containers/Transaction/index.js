@@ -13,7 +13,7 @@ import TransactionUser from "../../components/Transaction/TransactionUser";
 import TransactionItem from "../../components/Transaction/TransactionItem";
 import Menu from "../../components/Transaction/Menu";
 
-import filterActive from '../../utils/filterActive';
+//import filterActive from '../../utils/filterActive';
 import RETURN_ITEM from "../../utils/queries/RETURN_ITEM";
 import REVIEW_QUERY from "../../utils/queries/REVIEW_QUERY";
 import Review from "../../components/Transaction/Review";
@@ -23,8 +23,8 @@ class Transaction extends React.Component {
     constructor(props) {
         super(props);
         let activeTransaction = {};
-        console.log(filterActive(props.user.transactions));
-        console.log(filterActive(props.user.requests));
+        //console.log(filterActive(props.user.transactions));
+        //console.log(filterActive(props.user.requests));
         props.user.transactions.forEach(transaction => {
                 if (transaction._id === props.match.params.id) {
                     activeTransaction = transaction

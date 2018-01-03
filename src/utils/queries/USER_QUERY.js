@@ -156,6 +156,7 @@ const USER_QUERY = gql`
                 message
                 active
                 viewed
+                accepted
             }
             transactions {
                 _id
@@ -169,11 +170,20 @@ const USER_QUERY = gql`
                         _id
                         rate
                         comment
+                        userFrom {
+                            _id
+                        }
+                        userTo {
+                            _id
+                        }
                     }
                     created
                     viewCount
                     type
                     location
+                    user {
+                        _id
+                    }
                 }
                 userFrom {
                     _id
@@ -271,6 +281,12 @@ const USER_QUERY = gql`
                 rate
                 comment
                 userFrom {
+                    _id
+                    firstName
+                    lastName
+                    username
+                }
+                userTo {
                     _id
                     firstName
                     lastName

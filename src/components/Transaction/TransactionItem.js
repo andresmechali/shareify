@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import moment from 'moment';
 
-import ReviewStars from '../../components/User/ReviewStars';
 
 const TransactionItem = (props) => {
     return (
@@ -21,15 +20,6 @@ const TransactionItem = (props) => {
                     {props.activeTransaction.item.description
                         ? <div><span className="bold">Description:</span> {props.activeTransaction.item.description}</div>
                         : ""
-                    }
-
-                    {props.activeTransaction.item.reviews.length === 0
-                        ? <div><span className="bold">No reviews yet</span></div>
-                        : <div>
-                            <ReviewStars
-                                reviews={props.activeTransaction.item.reviews}
-                            />
-                        </div>
                     }
 
                     <div><span className="bold">Location:</span> {props.activeTransaction.item.location}</div>

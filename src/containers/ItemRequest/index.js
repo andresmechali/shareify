@@ -27,9 +27,16 @@ class ItemRequest extends React.Component {
                 }
             }
         );
+        let activeTransaction = '';
+        props.user.transactions.forEach(transaction => {
+            if (transaction.request._id === activeRequest._id) {
+                activeTransaction = transaction._id
+            }
+        });
         this.state = {
             requests: props.user.requests,
             request: activeRequest,
+            transaction: activeTransaction,
         }
     }
 
@@ -62,7 +69,6 @@ class ItemRequest extends React.Component {
                 })
                     .then(newTransaction => {
                         this.props.setCurrentUser(newTransaction.data.createTransaction.token);
-                        console.log(newTransaction.data);
                         this.props.push('/profile/transaction/' + newTransaction.data.createTransaction.user.transactions[newTransaction.data.createTransaction.user.transactions.length - 1]._id)
                     })
                     .catch(err => {
@@ -141,11 +147,29 @@ class ItemRequest extends React.Component {
                     </div>
 
                     <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 col-xs-12">
-                        <Respond
-                            onAccept={this.onAccept.bind(this)}
-                            onReject={this.onReject.bind(this)}
-                            activeRequest={this.state.request}
-                        />
+                        {console.log(this.state.request)}
+                        {this.state.request.active
+                            ? <Respond
+                                onAccept={this.onAccept.bind(this)}
+                                onReject={this.onReject.bind(this)}
+                                activeRequest={this.state.request}
+                            />
+                            : this.state.request.accepted
+                                ? <div className="ui-block" style={{textAlign: "center"}}>
+                                    <div className="ui-block-content bold">
+                                        This request has been <span style={{color: "green"}}>accepted</span>
+                                    </div>
+                                    <div className="ui-block-content">
+                                        <a href={`/profile/transaction/${this.state.transaction}`} className="btn btn-lg btn-blue full-width">Transaction</a>
+                                    </div>
+                                </div>
+                                : <div className="ui-block" style={{textAlign: "center"}}>
+                                    <div className="ui-block-content bold">
+                                        This request has been <span style={{color: "red"}}>rejected</span>
+                                    </div>
+                                </div>
+                        }
+
                     </div>
                 </div>
             </div>

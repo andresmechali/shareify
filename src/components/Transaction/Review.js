@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const Review = (props) => {
-    console.log(props.review);
     return (
         <div className="ui-block">
             <div className="ui-block-title">

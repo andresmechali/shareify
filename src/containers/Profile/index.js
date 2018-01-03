@@ -52,15 +52,15 @@ class Profile extends React.Component {
                 )[0];
                 let lastRequestId = res.data.userById.requests.slice().sort(
                     function compare(a, b) {
-                        if (a.lastDate < b.lastDate) return 1;
-                        if (a.lastDate > b.lastDate) return -1;
+                        if (a.date < b.date) return 1;
+                        if (a.date > b.date) return -1;
                         return 0;
                     }
                 )[0];
                 let lastTransactionId = res.data.userById.transactions.slice().sort(
                     function compare(a, b) {
-                        if (a.lastDate < b.lastDate) return 1;
-                        if (a.lastDate > b.lastDate) return -1;
+                        if (a.dateCreated < b.dateCreated) return 1;
+                        if (a.dateCreated > b.dateCreated) return -1;
                         return 0;
                     }
                 )[0];

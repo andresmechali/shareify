@@ -58,7 +58,6 @@ class Password extends React.Component {
         });
 
         if (!isValid) {
-            console.log("is not valid");
             this.setState({ errors });
         }
 

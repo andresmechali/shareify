@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import moment from 'moment';
 
-import ReviewStars from '../../components/User/ReviewStars';
-
 const RequestItem = (props) => {
     return (
         <div className="ui-block">
@@ -21,16 +19,6 @@ const RequestItem = (props) => {
                     {props.activeRequest.item.description
                         ? <div><span className="bold">Description:</span> {props.activeRequest.item.description}</div>
                         : ""
-                    }
-
-                    {props.activeRequest.item.reviews.length !== 0
-                        ? <div><span className="bold">No reviews yet</span></div>
-                        : <div>
-                            <ReviewStars
-                                reviews={props.activeRequest.item.reviews}
-                                userOtherId={props.activeRequest.item.user._id}
-                            />
-                        </div>
                     }
 
                     <div><span className="bold">Location:</span> {props.activeRequest.item.location}</div>

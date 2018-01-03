@@ -2155,3 +2155,7 @@ button.btn {
 span.star-icon {
   float: right;
 }
+
+.finished-transaction {
+  color: red;
+}

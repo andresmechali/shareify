@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const ReviewStars = (props) => {
     let reviews = [];
-    console.log(props.userOtherId);
     props.reviews.forEach(review => {
         if (review.userTo._id === props.userOtherId) {
             reviews.push(review);
@@ -15,7 +14,6 @@ const ReviewStars = (props) => {
     });
     const reviewAverage = reviewSum / reviews.length;
 
-    console.log(reviewAverage);
     return (
         <div>
             {props.ratingLabel
@@ -42,7 +40,8 @@ const ReviewStars = (props) => {
                 ? <span className="fa fa-star checked"/>
                 : <span className="fa fa-star"/>
             }
-            <span style={{paddingLeft: "10px"}}>{Math.round(reviewAverage * 10) / 10}</span>
+            <span style={{paddingLeft: "10px"}} className="bold">{Math.round(reviewAverage * 10) / 10}</span>
+            <span style={{paddingLeft: "5px"}}>{`(${reviews.length} ${reviews.length === 1 ? "review" : "reviews"})`}</span>
         </div>
     )
 };

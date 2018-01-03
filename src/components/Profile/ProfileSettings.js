@@ -110,8 +110,7 @@ class Profile extends React.Component {
                     ...this.state
                 }, this.omit)
             })
-                .then(({data}) =>{
-                console.log(data.updateUser.token);
+                .then(({data}) =>{;
                     this.props.setCurrentUser(data.updateUser.token);
                     if (window.sessionStorage.getItem('token')) {
                         window.sessionStorage.setItem('token', data.updateUser.token)

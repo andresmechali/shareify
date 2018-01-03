@@ -120,6 +120,17 @@ const ITEM_QUERY = gql`
                         _id
                     }
                 }
+                reviews {
+                    _id
+                    rate
+                    comment
+                    userFrom {
+                        _id
+                    }
+                    userTo {
+                        _id
+                    }
+                }
             } 
         }
     }

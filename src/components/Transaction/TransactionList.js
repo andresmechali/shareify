@@ -4,6 +4,18 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 const TransactionList = (props) => {
+    let transactions = [];
+    props.transactions.forEach(transaction => {
+        transactions.push(transaction)
+    });
+    transactions.sort(
+        function(a, b) {
+            if (a.dateCreated > b.dateCreated) return -1;
+            if (a.dateCreated < b.dateCreated) return 1;
+            return 0;
+        }
+    );
+
     return (
         <div className="ui-block">
             <div className="ui-block-title">
@@ -15,14 +27,16 @@ const TransactionList = (props) => {
             <div className="ui-block-content">
                 <ul className="widget w-personal-info">
                     {
-                        props.transactions.map((transaction, key) => {
+                        transactions.map((transaction, key) => {
 
                             return (
                                 <li key={key}>
                                     <a
                                         onClick = {props.setTransaction}
                                         id={transaction._id}
-                                        className={classNames({"bold": transaction.userFrom._id === props.activeTransaction.userFrom._id})}
+                                        className={classNames({
+                                            "bold": transaction._id === props.activeTransaction._id,
+                                        })}
                                     >
                                         {
                                             transaction.userTo.username === props.user.username
