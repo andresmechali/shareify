@@ -30,7 +30,7 @@ class Conversation extends React.Component {
         })
             .then(res => {
                 res.data.conversationsByUserId.conversations.forEach(conv => {
-                    if (conv._id === this.props.match.params.id) {
+                    if (conv._id === this.props.match.params.id) {;
                         this.setState(
                             {
                                 conversations: res.data.conversationsByUserId.conversations.slice().sort(
@@ -43,6 +43,7 @@ class Conversation extends React.Component {
                                 conversation: conv,
 
                             }, r => {
+                                console.log(r);
                                 this.props.client.mutate({
                                     mutation: VIEW_MESSAGE,
                                     variables: {

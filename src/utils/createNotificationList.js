@@ -37,7 +37,7 @@ const createNotificationList = user => {
     let requestList = {};
 
     user.requests.forEach(request => {
-        if (request.userTo._id === user._id) {
+        if (request.userTo._id === user._id && request.active) {
             requestList[request._id] = {
                 type: REQUEST,
                 request: request._id,

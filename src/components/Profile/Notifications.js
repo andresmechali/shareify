@@ -31,6 +31,7 @@ class Notifications extends React.Component {
                         <div className="ui-block-content">
                             <ul>
                                 {this.state.notifications.map((notification, key) => (
+
                                     <div key={key}
                                          className="bold"
                                     >
@@ -41,7 +42,7 @@ class Notifications extends React.Component {
                                                     defaultMessage='You have {quantity} new {message} from {user}'
                                                     values={{
                                                         quantity: notification.unread,
-                                                        message: <a href={`/profile/messages/${notification.userOther._id}`}>{notification.unread === 1? "message" : "messages"}</a>,
+                                                        message: <a href={`/profile/messages/${notification.conversation}`}>{notification.unread === 1? "message" : "messages"}</a>,
                                                         user: <a href={`/user/${notification.userOther._id}`}>{notification.userOther.firstName} {notification.userOther.lastName}</a>
                                                     }}
                                                 />
@@ -75,7 +76,13 @@ class Notifications extends React.Component {
             )
         }
         else {
-            return null
+            return (
+                <div className="ui-block">
+                    <div className="ui-block-content">
+                        No new notifications
+                    </div>
+                </div>
+            )
         }
 
     }

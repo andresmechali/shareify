@@ -1,4 +1,5 @@
 import { MESSAGE, ITEM, SIGNUP } from '../utils/activityTypes';
+import {REQUEST, TRANSACTION} from "./activityTypes";
 
 const createActivityList = user => {
     let activityList = [];
@@ -39,6 +40,33 @@ const createActivityList = user => {
             date: item.created,
         })
     });
+
+    // Requests
+    user.requests.forEach(request => {
+        activityList.push({
+            type: REQUEST,
+            request: request,
+            userFrom: request.userFrom,
+            userTo: request.userTo,
+            item: request.item,
+            date: request.date,
+        })
+    });
+
+    // Transactions
+    user.transactions.forEach(transaction => {
+        activityList.push({
+            type: TRANSACTION,
+            transaction: transaction,
+            item: transaction.item,
+            date: transaction.dateCreated,
+            dateFinished: transaction.dateFinished,
+        })
+    });
+
+    // Reviews
+
+    // Settings update
 
     activityList.sort(
         function(a, b) {

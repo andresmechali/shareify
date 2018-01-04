@@ -11,8 +11,7 @@ import { withApollo } from 'react-apollo';
 
 import TopHeader from './TopHeader';
 
-import {ITEM, SIGNUP} from '../../utils/activityTypes';
-import { MESSAGE } from '../../utils/activityTypes';
+import {ITEM, SIGNUP, REQUEST, MESSAGE, TRANSACTION} from '../../utils/activityTypes';
 
 class Activity extends React.Component {
     constructor(props) {
@@ -90,6 +89,44 @@ class Activity extends React.Component {
                                                                 }}
                                                             />
                                                             <span className="date">{moment(activity.message.date).fromNow()}</span>
+                                                        </li>
+                                                        : ""
+                                                    }
+
+                                                    {activity.type === REQUEST
+                                                        ? <li className="activity">
+                                                            <FormattedMessage
+                                                                id="activityRequest"
+                                                                defaultMessage='You {received} a {request} {from} {user} for the {item}'
+                                                                values={{
+                                                                    received: activity.userFrom._id === this.props.user._id ? 'sent' : 'received',
+                                                                    request: <a href={`/profile/request/${activity.request._id}`}>request</a>,
+                                                                    from: activity.userFrom._id === this.props.user._id ? 'to' : 'from',
+                                                                    user: <a href={`/user/${activity.userFrom._id}`}>{activity.userFrom.firstName}</a>,
+                                                                    item: <a href={`/item/${activity.item._id}`}>{activity.item.name}</a>,
+                                                                }}
+                                                            />
+                                                            <span className="date">{moment(activity.date).fromNow()}</span>
+                                                        </li>
+                                                        : ""
+                                                    }
+
+                                                    {activity.type === TRANSACTION
+                                                        ? <li className="activity">
+                                                            <FormattedMessage
+                                                                id="activityTransaction"
+                                                                defaultMessage='You {borrowed} a {item} {from} {user}'
+                                                                values={{
+                                                                    borrowed: activity.item.user._id === this.props.user._id ? 'lent' : 'borrowed',
+                                                                    item: <a href={`/item/${activity.item._id}`}>{activity.item.name}</a>,
+                                                                    from: activity.item.user._id === this.props.user._id ? 'to' : 'from',
+                                                                    user: activity.transaction.userFrom._id === this.props.user._id
+                                                                        ? <a href={`/user/${activity.transaction.userTo._id}`}>{activity.transaction.userTo.firstName}</a>
+                                                                        : <a href={`/user/${activity.transaction.userFrom._id}`}>{activity.transaction.userFrom.firstName}</a>,
+
+                                                                }}
+                                                            />
+                                                            <span className="date">{moment(activity.date).fromNow()}</span>
                                                         </li>
                                                         : ""
                                                     }

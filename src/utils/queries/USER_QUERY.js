@@ -157,6 +157,7 @@ const USER_QUERY = gql`
                 active
                 viewed
                 accepted
+                responseDate
             }
             transactions {
                 _id
