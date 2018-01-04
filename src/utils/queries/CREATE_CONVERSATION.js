@@ -2,7 +2,6 @@ import gql from 'graphql-tag';
 
 const CREATE_CONVERSATION = gql`
     mutation createConversation(
-        $item: String!
         $userFrom: String!
         $userTo: String!
         $messages: [String!]
@@ -10,7 +9,6 @@ const CREATE_CONVERSATION = gql`
     ) 
     {
         createConversation(
-            item: $item
             userFrom: $userFrom
             userTo: $userTo
             messages: $messages

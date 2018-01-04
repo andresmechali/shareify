@@ -80,12 +80,10 @@ class Activity extends React.Component {
                                                         ? <li className="activity">
                                                             <FormattedMessage
                                                                 id="activityMessage"
-                                                                defaultMessage='You sent a {message} to {user} related to {owner} item {item}'
+                                                                defaultMessage='You sent a {message} to {user}'
                                                                 values={{
                                                                     message: <a href={`/profile/messages/${activity.message.conversation._id}`}>message</a>,
                                                                     user: <a href={`/user/${activity.message.userTo._id}`}>{activity.message.userTo.firstName} {activity.message.userTo.lastName}</a>,
-                                                                    owner: activity.message.item.user._id === this.props.user._id ? "your" : "the",
-                                                                    item: <a href={`/item/${activity.message.conversation._id}`}>{activity.message.item.name}</a>,
                                                                 }}
                                                             />
                                                             <span className="date">{moment(activity.message.date).fromNow()}</span>
@@ -135,12 +133,10 @@ class Activity extends React.Component {
                                                         ? <li className="activity">
                                                             <FormattedMessage
                                                                 id="activityMessage"
-                                                                defaultMessage='You received a {message} from {user} related to {owner} item {item}'
+                                                                defaultMessage='{user} sent you a {message}'
                                                                 values={{
                                                                     message: <a href={`/profile/messages/${activity.message.conversation._id}`}>message</a>,
                                                                     user: <a href={`/user/${activity.message.userFrom._id}`}>{activity.message.userFrom.firstName} {activity.message.userFrom.lastName}</a>,
-                                                                    owner: activity.message.item.user._id === this.props.user._id ? "your" : "the",
-                                                                    item: <a href={`/item/${activity.message.conversation._id}`}>{activity.message.item.name}</a>,
                                                                 }}
                                                             />
                                                             <span className="date">{moment(activity.message.date).fromNow()}</span>

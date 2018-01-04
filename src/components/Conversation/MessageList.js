@@ -6,7 +6,6 @@ import { withApollo } from 'react-apollo';
 import classNames from 'classnames';
 
 import CREATE_MESSAGE from "../../utils/queries/CREATE_MESSAGE";
-import REQUEST_ITEM from "../../utils/queries/REQUEST_ITEM";
 
 class MessageList extends React.Component {
     constructor(props) {
@@ -20,8 +19,9 @@ class MessageList extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+        console.log(props);
         if (props.conversation.userFrom) {
-            if (props.conversation.userFrom.username !== props.user.username) {
+            if (props.conversation.userFrom._id !== props.user._id) {
                 this.setState({
                     userOther: props.conversation.userFrom,
                     conversation: props.conversation,
@@ -52,7 +52,6 @@ class MessageList extends React.Component {
             mutation: CREATE_MESSAGE,
             variables: {
                 conversation: this.state.conversation._id,
-                item: this.state.conversation.item._id,
                 userFrom: this.props.user._id,
                 userTo: this.state.userOther._id,
                 message: this.state.message,
@@ -69,29 +68,6 @@ class MessageList extends React.Component {
             })
     }
 
-    requestItem() {
-        this.props.client.mutate({
-            mutation: REQUEST_ITEM,
-            variables: {
-                item: this.state.conversation.item._id,
-                userFrom: this.props.user._id,
-                userTo: this.state.userOther._id,
-                message: this.state.message,
-                date: new Date().toISOString(),
-                active: true,
-                viewed: false,
-                accepted: false,
-            },
-        })
-            .then(res => {
-                this.setState({sent: true});
-                this.props.setCurrentUser(res.data.createRequest.token);
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-
     render() {
         return (
             <div>
@@ -101,12 +77,6 @@ class MessageList extends React.Component {
                             <span>
                                 {this.state.userOther
                                     ? <a href={`/user/${this.state.userOther._id}`}>{this.state.userOther.firstName} {this.state.userOther.lastName}</a>
-                                    : 'Loading...'
-                                }
-                            </span>
-                            <span className="align-right">
-                                {this.state.conversation.item
-                                    ? <a href={`/item/${this.state.conversation.item._id}`}>{this.state.conversation.item.name}</a>
                                     : 'Loading...'
                                 }
                             </span>
@@ -147,18 +117,6 @@ class MessageList extends React.Component {
 
                     </div>
                 </div>
-
-
-                {this.props.conversation.item
-                    ? this.props.conversation.item.user._id !== this.props.user._id
-                        ? <div className="ui-block">
-                            <div className="ui-block-content">
-                                <button className="btn btn-green btn-lg full-width" onClick={this.requestItem.bind(this)}>Request item</button>
-                            </div>
-                        </div>
-                        : null
-                    : null
-                }
 
             </div>
         )

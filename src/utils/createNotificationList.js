@@ -11,7 +11,6 @@ const createNotificationList = user => {
             conversation: conversation._id,
             unread: 0,
             date: conversation.lastDate,
-            item: conversation.item
         };
         if (conversation.userFrom._id !== user._id) {
             conversationList[conversation._id].userOther = conversation.userFrom

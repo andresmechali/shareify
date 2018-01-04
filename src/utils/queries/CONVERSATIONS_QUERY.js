@@ -6,18 +6,6 @@ const CONVERSATIONS_QUERY = gql`
             _id
             conversations {
                 _id
-                item {
-                    _id
-                    name
-                    created
-                    type
-                    user {
-                        _id
-                        firstName
-                        lastName
-                        username
-                    }
-                }
                 userFrom {
                     _id
                     firstName

@@ -98,19 +98,9 @@ const USER_QUERY = gql`
                     conversation {
                         _id
                     }
-                    item {
-                        _id
-                        name
-                        user {
-                            _id
-                        }
-                    }
                     date
                     read
-                }
-                item {
-                    _id
-                    name
+                    message
                 }
             }
             requests {

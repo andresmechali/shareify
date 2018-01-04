@@ -42,8 +42,7 @@ class Conversation extends React.Component {
                                 ),
                                 conversation: conv,
 
-                            }, r => {
-                                console.log(r);
+                            }, () => {
                                 this.props.client.mutate({
                                     mutation: VIEW_MESSAGE,
                                     variables: {

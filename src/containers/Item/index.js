@@ -190,11 +190,14 @@ class Item extends React.Component {
                                 <div className="ui-block-content">
                                     <div>
                                         by <a href={`/user/${this.state.item.user._id}`}>{this.state.item.user.firstName} {this.state.item.user.lastName} </a>
-                                        <ReviewStars
-                                            reviews={this.state.item.user.reviews}
-                                            userOtherId={this.state.item.user._id}
-                                            ratingLabel={false}
-                                        />
+                                        {this.state.item.user.reviews.length > 0
+                                            ? <ReviewStars
+                                                reviews={this.state.item.user.reviews}
+                                                userOtherId={this.state.item.user._id}
+                                                ratingLabel={false}
+                                            />
+                                            : <div>No reviews yet</div>
+                                        }
                                     </div>
                                     <div>
                                         <span className="bold">Created: </span>

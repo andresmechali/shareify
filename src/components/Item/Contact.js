@@ -26,7 +26,6 @@ class Contact extends React.Component {
         this.props.client.mutate({
             mutation: CREATE_CONVERSATION,
             variables: {
-                item: this.props.item._id,
                 userFrom: this.props.auth.user._id,
                 userTo: this.props.item.user._id,
                 messages: [],
@@ -39,7 +38,6 @@ class Contact extends React.Component {
                         mutation: CREATE_MESSAGE,
                         variables: {
                             conversation: conversation.data.createConversation,
-                            item: this.props.item._id,
                             userFrom: this.props.auth.user._id,
                             userTo: this.props.item.user._id,
                             message: this.state.message,

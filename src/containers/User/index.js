@@ -7,11 +7,13 @@ import Loading from '../../components/Loading/Bounce';
 
 import About from '../../components/User/About';
 import Reviews from '../../components/User/Reviews';
-import MessageList from "../../components/Conversation/MessageList";
+import Conversation from "../../components/User/Conversation";
 
 import USER_QUERY from '../../utils/queries/USER_QUERY';
 import LastOffered from "../../components/User/LastOffered";
 import LastRequested from "../../components/User/LastRequested";
+
+import { setCurrentUser } from "../../redux/actions/authActions";
 
 class User extends React.Component {
 
@@ -20,6 +22,7 @@ class User extends React.Component {
         this.state = {
             loading: true,
             thisUser: {},
+            thisConversation: null,
         }
     }
 
@@ -34,7 +37,7 @@ class User extends React.Component {
                 this.setState({
                     loading: false,
                     thisUser: user.data.userById
-                })
+                });
             })
             .catch(err => {
                 this.setState({
@@ -42,6 +45,22 @@ class User extends React.Component {
                     thisUser: false,
                 })
             })
+
+    }
+
+    componentDidUpdate() {
+        // check if there is a conversation between these users
+        if (this.state.thisConversation === null) {
+            let thisConversation = false;
+            if (!this.state.thisConversation) {
+                this.state.thisUser.conversations.forEach(conversation => {
+                    if (conversation.userFrom._id === this.props.user._id || conversation.userTo._id === this.props.user._id) {
+                        thisConversation = conversation
+                    }
+                })
+            }
+            this.setState({thisConversation: thisConversation})
+        }
     }
 
     render() {
@@ -64,10 +83,19 @@ class User extends React.Component {
                         </div>
 
                         <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            <Reviews
-                                user={this.state.thisUser}
-                                reviews={this.state.thisUser.reviews}
-                            />
+                            {this.state.thisUser.reviews.length > 0
+                                ? <Reviews
+                                    user={this.state.thisUser}
+                                    reviews={this.state.thisUser.reviews}
+                                />
+                                : <div className="ui-block">
+                                    <div className="ui-block-title">
+                                        <h6 className="title bold">
+                                            No reviews yet
+                                        </h6>
+                                    </div>
+                                </div>
+                            }
                         </div>
 
                         <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -80,7 +108,22 @@ class User extends React.Component {
                         </div>
 
                         <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            
+                            {this.state.thisConversation === null
+                                ? <Loading/>
+                                : this.state.thisConversation === false
+                                    ? <Conversation
+                                        user={this.props.user}
+                                        userOther={this.state.thisUser}
+                                        conversation={{}}
+                                        setCurrentUser={this.props.setCurrentUser}
+                                    />
+                                    : <Conversation
+                                        user={this.props.user}
+                                        userOther={this.state.thisUser}
+                                        conversation={this.state.thisConversation}
+                                        setCurrentUser={this.props.setCurrentUser}
+                                    />
+                            }
                         </div>
 
                     </div>
@@ -108,4 +151,10 @@ const mapStateToProps = state => {
     }
 };
 
-export default withApollo(connect(mapStateToProps)(User));
+const mapDispatchToProps = dispatch => {
+    return {
+        setCurrentUser: (userToken) => dispatch(setCurrentUser(userToken)),
+    }
+};
+
+export default withApollo(connect(mapStateToProps, mapDispatchToProps)(User));
