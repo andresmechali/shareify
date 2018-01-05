@@ -39,6 +39,7 @@ const USER_QUERY = gql`
             lastLongitude
             offered {
                 _id
+                active
                 name
                 location
                 latitude
@@ -52,6 +53,7 @@ const USER_QUERY = gql`
             }
             requested {
                 _id
+                active
                 name
                 location
                 latitude

@@ -2182,3 +2182,9 @@ span.star-icon {
 .finished-transaction {
   color: red;
 }
+
+.selected-item {
+  border: solid;
+  border-radius: 6px;
+  border-color: darkseagreen;
+}

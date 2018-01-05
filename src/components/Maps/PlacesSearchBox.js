@@ -102,9 +102,9 @@ const PlacesSearchBox = compose(
                         places,
                     });
                     this.props.setState({
-                        latitude: this.state.places[0].geometry.location.lat(),
-                        longitude: this.state.places[0].geometry.location.lng(),
-                        location: this.state.places[0].formatted_address,
+                        latitude: this.state.places[1].geometry.location.lat(),
+                        longitude: this.state.places[1].geometry.location.lng(),
+                        location: this.state.places[1].formatted_address,
                         validLocation: true,
                     });
 

@@ -77,7 +77,7 @@ class NewRequest extends React.Component {
             axios.get("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + coords.latitude + "," + coords.longitude + "&key=AIzaSyA8zfwWQ-K9UXLe64adjv_dn8ELzk6yLdA")
                 .then((res) => {
                     this.setState({
-                        location: res.data.results[0].formatted_address,
+                        location: res.data.results[1].formatted_address,
                         latitude: coords.latitude,
                         longitude: coords.longitude,
                     });

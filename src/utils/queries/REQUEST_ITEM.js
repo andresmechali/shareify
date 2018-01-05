@@ -10,6 +10,8 @@ const REQUEST_ITEM = gql`
         $active: Boolean!
         $viewed: Boolean!
         $accepted: Boolean!
+        $responseDate: String!,
+        $responseMessage: String!
     ) 
     {
         createRequest(
@@ -21,6 +23,8 @@ const REQUEST_ITEM = gql`
             active: $active
             viewed: $viewed
             accepted: $accepted
+            responseDate: $responseDate
+            responseMessage: $responseMessage
         )
         {
             token

@@ -30,6 +30,8 @@ class SendRequest extends React.Component {
                 active: true,
                 viewed: false,
                 accepted: false,
+                responseDate: "",
+                responseMessage: "",
             },
         })
             .then(res => {
@@ -57,6 +59,7 @@ class SendRequest extends React.Component {
                             />
                             <button className="btn btn-lg btn-green full-width"
                                     onClick={this.requestItem.bind(this)}
+                                    style={{marginTop: "13px"}}
                             >
                                 Send
                             </button>

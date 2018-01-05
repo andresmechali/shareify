@@ -13,11 +13,13 @@ import Map from '../../components/Maps/Map';
 
 import Contact from '../../components/Item/Contact';
 import SendRequest from '../../components/Item/SendRequest';
+import SendOffer from '../../components/Item/SendOffer';
 
 import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 import { setCurrentUser } from "../../redux/actions/authActions";
 import CANCEL_REQUEST from "../../utils/queries/CANCEL_REQUEST";
 import ReviewStars from "../../components/User/ReviewStars";
+import OfferPreview from "../../components/Item/OfferPreview";
 
 class Item extends React.Component {
     constructor(props) {
@@ -36,6 +38,8 @@ class Item extends React.Component {
             requested: false,
             requestedId: '',
             activeTransaction: false,
+            selected: false,
+            selectedIsActive: false,
         };
 
 
@@ -160,6 +164,13 @@ class Item extends React.Component {
         })
     }
 
+    setSelected(selectedId, active) {
+        this.setState({
+            selected: selectedId,
+            selectedIsActive: active,
+        })
+    }
+
     deleteItem(e) {
         this.props.client.mutate({
             mutation: '',
@@ -182,9 +193,9 @@ class Item extends React.Component {
                         <div className="col-xl-3 order-xl-1 col-lg-3 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
                             <div className="ui-block">
                                 <div className="ui-block-title">
-                                    <h4 className="title bold">
+                                    <h5 className="h5 bold">
                                         {this.state.item.name}
-                                    </h4>
+                                    </h5>
                                 </div>
 
                                 <div className="ui-block-content">
@@ -236,69 +247,146 @@ class Item extends React.Component {
                             </div>
                         </div>
 
-                        <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
-                            <div className="ui-block">
-                                <div className="ui-block-content">
-                                    <img src={require(`../../images/${this.state.item.picturePath}`)}
-                                         alt='item'
-                                         width="100%"
-                                         height="100%"
-                                    />
+
+                        {this.state.item.type === "offer"
+                            ? <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                                <div className="ui-block">
+                                    <div className="ui-block-content">
+                                        <img src={require(`../../images/${this.state.item.picturePath}`)}
+                                             alt='item'
+                                             width="100%"
+                                             height="100%"
+                                        />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
-                            {this.state.item.user._id !== this.props.auth.user._id
-                                ? this.state.activeTransaction
-                                    ? <div className="ui-block" style={{textAlign: "center"}}>
-                                        <div className="ui-block-content bold">
-                                            This item is currently lent
-                                        </div>
-                                        <div className="ui-block-content">
-                                            <a href={`/profile/transaction/${this.state.activeTransaction}`} className="btn btn-lg btn-blue full-width">Transaction</a>
-                                        </div>
-                                    </div>
-                                    : <div>
-                                        <div className="ui-block">
+                            : <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                                {this.state.item.user._id !== this.props.auth.user._id
+                                    ? this.state.activeTransaction
+                                        ? <div className="ui-block" style={{textAlign: "center"}}>
+                                            <div className="ui-block-content bold">
+                                                This item is currently lent
+                                            </div>
                                             <div className="ui-block-content">
-                                                <button onClick={this.toggleContact.bind(this)} className="btn btn-lg btn-blue full-width">Ask question</button>
-                                                <Contact
-                                                    visible={this.state.contact.visible}
-                                                    item={this.state.item}
-                                                    auth={this.props.auth}
-                                                />
+                                                <a href={`/profile/transaction/${this.state.activeTransaction}`} className="btn btn-lg btn-blue full-width">Transaction</a>
                                             </div>
                                         </div>
+                                        : <div>
+                                            <div className="ui-block">
+                                                <div className="ui-block-content">
+                                                    <button onClick={this.toggleContact.bind(this)} className="btn btn-lg btn-blue full-width">Ask question</button>
+                                                    <Contact
+                                                        visible={this.state.contact.visible}
+                                                        item={this.state.item}
+                                                        auth={this.props.auth}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="ui-block">
+                                                <div className="ui-block-content" style={{textAlign: "center"}}>
+                                                    {this.state.requested
+                                                        ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel request</button>
+                                                        : this.state.item.active
+                                                            ? <div>
+                                                                <button onClick={this.toggleRequest.bind(this)} className="btn btn-lg btn-green full-width">Offer</button>
+                                                                <SendOffer
+                                                                    visible={this.state.request.visible}
+                                                                    item={this.state.item}
+                                                                    user={this.props.auth.user}
+                                                                    setCurrentUser={this.props.setCurrentUser}
+                                                                    setRequested={this.setRequested.bind(this)}
+                                                                    setSelected={this.setSelected.bind(this)}
+                                                                    selectedIsActive={this.state.selectedIsActive}
+                                                                    push={this.props.push}
+                                                                />
+                                                            </div>
+                                                            : <div className="bold">This item is currently lent</div>
+                                                    }
+                                                </div>
+                                            </div>
 
-                                        <div className="ui-block">
-                                            <div className="ui-block-content" style={{textAlign: "center"}}>
-                                                {this.state.requested
-                                                    ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel request</button>
-                                                    : this.state.item.active
-                                                        ? <div>
-                                                            <button onClick={this.toggleRequest.bind(this)} className="btn btn-lg btn-green full-width">Request</button>
-                                                            <SendRequest
-                                                                visible={this.state.request.visible}
-                                                                item={this.state.item}
-                                                                user={this.props.auth.user}
-                                                                setCurrentUser={this.props.setCurrentUser}
-                                                                setRequested={this.setRequested.bind(this)}
-                                                            />
-                                                          </div>
-                                                        : <div className="bold">This item is currently lent</div>
-                                                }
+                                        </div>
+                                    : <div className="ui-block">
+                                        <div className="ui-block-content">
+                                            <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+
+                        }
+
+                        {this.state.item.type === "offer"
+                            ? <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                                {this.state.item.user._id !== this.props.auth.user._id
+                                    ? this.state.activeTransaction
+                                        ? <div className="ui-block" style={{textAlign: "center"}}>
+                                            <div className="ui-block-content bold">
+                                                This item is currently lent
+                                            </div>
+                                            <div className="ui-block-content">
+                                                <a href={`/profile/transaction/${this.state.activeTransaction}`} className="btn btn-lg btn-blue full-width">Transaction</a>
                                             </div>
                                         </div>
+                                        : <div>
+                                            <div className="ui-block">
+                                                <div className="ui-block-content">
+                                                    <button onClick={this.toggleContact.bind(this)} className="btn btn-lg btn-blue full-width">Ask question</button>
+                                                    <Contact
+                                                        visible={this.state.contact.visible}
+                                                        item={this.state.item}
+                                                        auth={this.props.auth}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="ui-block">
+                                                <div className="ui-block-content" style={{textAlign: "center"}}>
+                                                    {this.state.requested
+                                                        ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel request</button>
+                                                        : this.state.item.active
+                                                            ? <div>
+                                                                <button onClick={this.toggleRequest.bind(this)} className="btn btn-lg btn-green full-width">Request</button>
+                                                                <SendRequest
+                                                                    visible={this.state.request.visible}
+                                                                    item={this.state.item}
+                                                                    user={this.props.auth.user}
+                                                                    setCurrentUser={this.props.setCurrentUser}
+                                                                    setRequested={this.setRequested.bind(this)}
+                                                                />
+                                                            </div>
+                                                            : <div className="bold">This item is currently lent</div>
+                                                    }
+                                                </div>
+                                            </div>
 
+                                        </div>
+                                    : <div className="ui-block">
+                                        <div className="ui-block-content">
+                                            <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                        </div>
                                     </div>
-                                : <div className="ui-block">
-                                    <div className="ui-block-content">
-                                        <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                }
+                            </div>
+                            : <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                                {!this.state.selected
+                                    ? <div className="ui-block">
+                                        <div className="ui-block-content">
+                                            <div className="ui-block-title">
+                                                <h5 className="h5 bold">Select an item to offer</h5>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            }
-                        </div>
+                                    : <OfferPreview
+                                        itemId={this.state.selected}
+                                    />
+                                }
+
+                            </div>
+
+                        }
+
+
+
 
                     </div>
                 </div>

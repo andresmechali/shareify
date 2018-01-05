@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import ChooseStars from '../../components/Forms/ChooseStars';
 
 const Menu = (props) => {
+    console.log(props);
     if (props.visible) {
         return (
             <div className="ui-block">
                 <div className="ui-block-title">
                     <h6 className="title bold personal">
-                        {props.user._id === props.activeTransaction.userFrom._id
+                        {props.user._id === props.activeTransaction.item.user._id
                             ? "Get back"
                             : "Return"
                         }
@@ -38,7 +39,7 @@ const Menu = (props) => {
                         className="btn btn-green btn-lg full-width"
                         disabled={props.rate === 0 || props.comment === ""}
                     >
-                        {props.user._id === props.activeTransaction.userFrom._id
+                        {props.user._id === props.activeTransaction.item.user._id
                             ? "Get back"
                             : "Return"
                         }
@@ -59,7 +60,7 @@ const Menu = (props) => {
                 <div className="ui-block-content">
 
                     <button onClick={props.toggleReturn} className="btn btn-green btn-lg full-width">
-                        {props.user._id === props.activeTransaction.userFrom._id
+                        {props.user._id === props.activeTransaction.item.user._id
                             ? "Get back"
                             : "Return"
                         }

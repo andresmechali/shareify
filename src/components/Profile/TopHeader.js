@@ -60,7 +60,7 @@ class TopHeader extends React.Component {
                                                   text='Requests'
                                                   className={this.state.active==='requests'?'active':''}
                                             />
-                                            : 'Requests'
+                                            : <li>No requests</li>
                                         }
 
                                         {this.props.lastTransactionId !== ""
@@ -68,7 +68,7 @@ class TopHeader extends React.Component {
                                                   text='Transactions'
                                                   className={this.state.active==='transactions'?'active':''}
                                             />
-                                            : 'Transactions'
+                                            : <li>No transactions</li>
                                         }
 
                                         {this.props.lastConversationId !== ""
@@ -76,7 +76,7 @@ class TopHeader extends React.Component {
                                                   text='Messages'
                                                   className={this.state.active==='messages'?'active':''}
                                             />
-                                            : 'Messages'
+                                            : <li>No messages</li>
                                         }
 
                                     </ul>

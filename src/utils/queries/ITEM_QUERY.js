@@ -13,6 +13,7 @@ const ITEM_QUERY = gql`
             created
             active
             viewCount
+            type
             requests {
                 _id
                 item {
