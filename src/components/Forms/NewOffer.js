@@ -12,8 +12,13 @@ import classNames from 'classnames';
 import validateInput from '../../utils/formValidation';
 import Input from '../../components/Inputs/Input';
 
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+
 import ItemPreview from '../Preview/ItemPreview';
 import PlacesSearchBox from '../../components/Maps/PlacesSearchBox';
+import UploadImage from "./UploadImage";
+import FlashMessageList from "../FlashMessages/FlashMessageList";
 
 class NewOffer extends React.Component {
     constructor(props) {
@@ -28,7 +33,9 @@ class NewOffer extends React.Component {
             errors: {},
             focus: "",
             flashMessage: "",
-            validLocation: true
+            validLocation: true,
+            image: null,
+            cropButton: true,
         };
         this.onChange = this.onChange.bind(this);
         this.onFocus = this.onFocus.bind(this);
@@ -66,6 +73,21 @@ class NewOffer extends React.Component {
         this.setState({
             remember: !this.state.remember
         })
+    }
+
+    setImage(img) {
+        if (typeof img === "object") {
+            let reader = new FileReader();
+            reader.readAsDataURL(img[0]);
+            reader.onloadend = () => {
+                this.setState({image: reader.result});
+
+            };
+        }
+        else {
+            this.setState({image: null});
+        }
+
     }
 
     onGeoLocate() {
@@ -111,6 +133,8 @@ class NewOffer extends React.Component {
 
         return isValid;
     }
+
+
 
     onSubmit(e) {
         e.preventDefault();
@@ -165,6 +189,14 @@ class NewOffer extends React.Component {
 
                 });
         }
+    }
+
+    cropImage(e) {
+        if (typeof this.refs.cropper.getCroppedCanvas() === 'undefined') {
+            return;
+        }
+        // la foto mas chica que tengo que usar
+        // this.refs.cropper.getCroppedCanvas().toDataUrl()
     }
 
     render() {
@@ -250,6 +282,30 @@ class NewOffer extends React.Component {
                                                 onBlur={this.onBlur}
                                             />
                                         </div>
+                                        <UploadImage
+                                            setImage={this.setImage.bind(this)}
+                                            addFlashMessage={this.props.addFlashMessage}
+                                            deleteFlashMessage={this.props.deleteFlashMessage}
+                                            flashMessages={this.props.flashMessages}
+                                        />
+                                        {this.props.flashMessages
+                                            ? <FlashMessageList messages={this.props.flashMessages}/> : ""
+                                        }
+                                        {this.state.image
+                                            ? <section>
+                                                <Cropper
+                                                    src={this.state.image}
+                                                    style={{height:"300px", width: "100%"}}
+                                                    ref='cropper'
+                                                    aspectRatio={1}
+                                                    guides={false}
+                                                />
+                                            </section>
+
+                                            : ''
+                                        }
+
+
                                     </div>
                                 </div>
                             </form>
@@ -277,6 +333,7 @@ NewOffer.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
     deleteFlashMessage: PropTypes.func.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
+    flashMessages: PropTypes.array.isRequired,
 };
 
 NewOffer = withApollo(NewOffer);

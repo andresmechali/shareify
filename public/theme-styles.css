@@ -2188,3 +2188,17 @@ span.star-icon {
   border-radius: 6px;
   border-color: darkseagreen;
 }
+
+.dropzone p {
+  font-size: 15px;
+}
+
+.dropzone {
+  border-width: 2px;
+  border-color: rgb(102, 102, 102);
+  border-style: dashed;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 15px;
+}

@@ -18,6 +18,7 @@ class Offer extends React.Component {
                     addFlashMessage={this.props.addFlashMessage}
                     deleteFlashMessage={this.props.deleteFlashMessage}
                     setCurrentUser={this.props.setCurrentUser}
+                    flashMessages={this.props.flashMessages}
                 />
             </div>
         )
@@ -34,7 +35,8 @@ Offer.propTypes = {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        flashMessages: state.flashMessages,
     }
 };
 
