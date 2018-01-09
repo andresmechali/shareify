@@ -19,6 +19,7 @@ import ItemPreview from '../Preview/ItemPreview';
 import PlacesSearchBox from '../../components/Maps/PlacesSearchBox';
 import UploadImage from "./UploadImage";
 import FlashMessageList from "../FlashMessages/FlashMessageList";
+import IMG_PATH from "../../utils/IMG_PATH";
 import BASE_PATH from "../../utils/BASE_PATH";
 
 class NewOffer extends React.Component {
@@ -107,10 +108,11 @@ class NewOffer extends React.Component {
                 const blobImage = this.dataURItoBlob(reader.result);
                 let fd = new FormData();
                 fd.append("image", blobImage);
-                axios.post(BASE_PATH + '/upload/photo',
+                axios.post(IMG_PATH + '/upload/photo',
                     fd, {
                     headers: {
-                            'Content-Type': 'multipart/form-data'
+                            'Content-Type': 'multipart/form-data',
+                            'Access-Control-Allow-Origin': '*',
                         }
                     }
                 )
@@ -213,6 +215,9 @@ class NewOffer extends React.Component {
                         localStorage.setItem('token', data.createItem.token);
                         this.props.setCurrentUser(data.createItem.token);
                     }
+
+
+
                     else if (sessionStorage.getItem('token')) {
                         sessionStorage.setItem('token', data.createItem.token);
                         this.props.setCurrentUser(data.createItem.token);
@@ -242,7 +247,7 @@ class NewOffer extends React.Component {
         e.preventDefault();
 
         const image = this.refs.try.files[0];
-        axios.post(BASE_PATH + '/upload/photo',
+        axios.post(IMG_PATH + '/upload/photo',
             {image: image}
 
         )

@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import RemoteImage from 'react-remote-image';
+import Loading from '../../components/Loading/Bounce';
+import IMG_PATH from "../../utils/IMG_PATH";
+
 const LastOffered = (props) => {
     return (
         <div className="ui-block">
@@ -17,9 +21,36 @@ const LastOffered = (props) => {
                             {props.user.offered.slice(0, 9).map((item, key) => (
                                 <li key={key}>
                                     <a href={`/item/${item._id}`}>
-                                        <img src={require(`../../images/${item.picturePath}`)}
-                                             alt=""
+                                        {
+                                            //<img src={require(`http://localhost:3001/images/${item.picturePath}`)}
+                                            //alt=""
+                                            //    />
+                                        }
+                                        <RemoteImage
+                                            //src={`http://localhost:3001/images/${item.picturePath}`}
+                                            src={`${IMG_PATH}/images/${item.picturePath}`}
+                                            renderLoading= {() => (
+                                                <div className="image--loading">
+                                                    <Loading />
+                                                </div>
+                                            )}
+                                            renderFetched={image => {
+                                                return (
+                                                    <div className="image-container">
+                                                        <img src={image.src} alt=""/>
+                                                    </div>
+                                                )
+                                            }}
+                                            renderFailure={(error, retry) => {
+                                                return (
+                                                    <div className="image-container">
+                                                        <img src={require(`../../images/no-image.png`)} alt=""/>
+                                                    </div>
+                                                )
+                                            }}
+                                            alt="asd"
                                         />
+
                                     </a>
                                 </li>
                             ))}
