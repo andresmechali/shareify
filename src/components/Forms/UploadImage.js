@@ -4,7 +4,8 @@ import Dropzone from 'react-dropzone';
 
 import FlashMessageList from "../FlashMessages/FlashMessageList";
 
-const MAX_SIZE = 3 * 1024 * 1024;
+const MB = 1024 * 1024;
+const MAX_SIZE = 3 * MB;
 
 class UploadImage extends React.Component {
     constructor() {
@@ -30,6 +31,7 @@ class UploadImage extends React.Component {
                             this.setState({ accepted, rejected });
                             if (accepted.length > 0) {
                                 this.props.setImage(accepted)
+                                console.log(accepted[0]);
                             }
                             if (rejected.length > 0) {
                                 if (rejected[0].size > MAX_SIZE) {
@@ -49,6 +51,7 @@ class UploadImage extends React.Component {
                     >
                         <p>Drop an image here, or click to select file</p>
                         <p>Only JPEG and PNG images will be accepted</p>
+                        <p>Maximum size: 3 MB</p>
                     </Dropzone>
                 </div>
 

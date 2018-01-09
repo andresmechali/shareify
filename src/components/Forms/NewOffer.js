@@ -19,6 +19,7 @@ import ItemPreview from '../Preview/ItemPreview';
 import PlacesSearchBox from '../../components/Maps/PlacesSearchBox';
 import UploadImage from "./UploadImage";
 import FlashMessageList from "../FlashMessages/FlashMessageList";
+import BASE_PATH from "../../utils/BASE_PATH";
 
 class NewOffer extends React.Component {
     constructor(props) {
@@ -35,7 +36,7 @@ class NewOffer extends React.Component {
             flashMessage: "",
             validLocation: true,
             image: null,
-            cropButton: true,
+            filename: false,
         };
         this.onChange = this.onChange.bind(this);
         this.onFocus = this.onFocus.bind(this);
@@ -75,12 +76,50 @@ class NewOffer extends React.Component {
         })
     }
 
+    dataURItoBlob(dataURI) {
+        // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ia], {type:mimeString});
+    }
+
     setImage(img) {
         if (typeof img === "object") {
             let reader = new FileReader();
             reader.readAsDataURL(img[0]);
+
+
             reader.onloadend = () => {
                 this.setState({image: reader.result});
+                const blobImage = this.dataURItoBlob(reader.result);
+                let fd = new FormData();
+                fd.append("image", blobImage);
+                axios.post(BASE_PATH + '/upload/photo',
+                    fd, {
+                    headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                )
+                    .then(res => {
+                        this.setState({filename: res.data.filename})
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
 
             };
         }
@@ -154,7 +193,7 @@ class NewOffer extends React.Component {
                     longitude: this.state.longitude,
                     description: this.state.description,
                     userId: this.props.auth.user._id,
-                    picturePath: 'item-no-image.jpeg',
+                    picturePath: this.state.filename,//'item-no-image.jpeg',
                     created: new Date().toISOString(),
                     active: true,
                     views: [],
@@ -199,9 +238,27 @@ class NewOffer extends React.Component {
         // this.refs.cropper.getCroppedCanvas().toDataUrl()
     }
 
+    sendImage(e) {
+        e.preventDefault();
+
+        const image = this.refs.try.files[0];
+        axios.post(BASE_PATH + '/upload/photo',
+            {image: image}
+
+        )
+            .then(res => {
+                console.log(res);
+            })
+    }
+
     render() {
         return (
             <div className="row">
+                <form method="post" encType="multipart/form-data" onSubmit={this.sendImage.bind(this)}>
+                    <input type="hidden" name="msgtype" value="2"/>
+                    <input type="file" name="avatar" ref="try" />
+                    <input type="submit" value="Upload" />
+                </form>
                 <div className="col-xl-8 order-xl-2 col-lg-8 order-lg-2 col-md-12 order-md-1 col-sm-12 col-xs-12">
                     <div className="ui-block">
                         <div className="ui-block-title">
@@ -282,6 +339,10 @@ class NewOffer extends React.Component {
                                                 onBlur={this.onBlur}
                                             />
                                         </div>
+
+
+
+
                                         <UploadImage
                                             setImage={this.setImage.bind(this)}
                                             addFlashMessage={this.props.addFlashMessage}
