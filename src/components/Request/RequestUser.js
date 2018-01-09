@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ReviewStars from '../../components/User/ReviewStars';
+import Image from '../Image';
 
 const RequestUser = (props) => {
     console.log(props);
@@ -17,7 +18,11 @@ const RequestUser = (props) => {
 
                 <div className="ui-block-content">
                     <ul className="widget w-personal-info">
-                        <img src={require(`../../images/${props.activeRequest.userFrom.picturePath}`)} width="100%" height="100%" alt=""/>
+                        <Image
+                            src={props.activeRequest.userFrom.picturePath}
+                            width="100%"
+                            height="100%"
+                        />
 
                         {props.activeRequest.userFrom.description
                             ? <div><span className="bold">Description:</span> {props.activeRequest.userFrom.description}</div>

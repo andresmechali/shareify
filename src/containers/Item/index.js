@@ -20,6 +20,7 @@ import { setCurrentUser } from "../../redux/actions/authActions";
 import CANCEL_REQUEST from "../../utils/queries/CANCEL_REQUEST";
 import ReviewStars from "../../components/User/ReviewStars";
 import OfferPreview from "../../components/Item/OfferPreview";
+import Image from '../../components/Image';
 
 class Item extends React.Component {
     constructor(props) {
@@ -252,10 +253,10 @@ class Item extends React.Component {
                             ? <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
                                 <div className="ui-block">
                                     <div className="ui-block-content">
-                                        <img src={require(`../../images/${this.state.item.picturePath}`)}
-                                             alt='item'
-                                             width="100%"
-                                             height="100%"
+                                        <Image
+                                            src={this.state.item.picturePath}
+                                            width="100%"
+                                            height="100%"
                                         />
                                     </div>
                                 </div>

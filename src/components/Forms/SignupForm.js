@@ -84,7 +84,7 @@ class SignupForm extends React.Component {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     password: this.state.password,
-                    picturePath: 'no-image.jpg',
+                    picturePath: 'no-image.png',
                     status: 'NEW MEMBER',
                     offered: [],
                     requested: [],

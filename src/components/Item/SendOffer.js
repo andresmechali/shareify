@@ -9,6 +9,7 @@ import REQUEST_ITEM from "../../utils/queries/REQUEST_ITEM";
 import USER_QUERY from "../../utils/queries/USER_QUERY";
 
 import Loading from '../../components/Loading/Bounce';
+import Image from "../Image/index";
 
 class SendOffer extends React.Component {
     constructor(props){
@@ -97,9 +98,8 @@ class SendOffer extends React.Component {
                                                     style={{paddingBottom: "10px", paddingTop: "10px"}}
                                         >
                                                 <div className="playlist-thumb" id={`${item._id} ${item.active}`} onClick={this.selectItem.bind(this)}>
-                                                    <img
-                                                        src={require(`../../images/${item.picturePath}`)}
-                                                        alt=""
+                                                    <Image
+                                                        src={item.picturePath}
                                                         width="30px"
                                                         height="30px"
                                                         id={`${item._id} ${item.active}`}

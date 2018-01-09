@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 
-import FlashMessageList from "../FlashMessages/FlashMessageList";
+import classNames from 'classnames';
 
 const MB = 1024 * 1024;
 const MAX_SIZE = 3 * MB;
@@ -21,7 +21,7 @@ class UploadImage extends React.Component {
             <section>
                 <div>
                     <Dropzone
-                        className="dropzone"
+                        className={classNames("dropzone", {"dropzone-missing": this.props.missing})}
                         accept="image/jpeg, image/png"
                         maxSize={MAX_SIZE}
                         multiple={false}
@@ -66,6 +66,7 @@ UploadImage.propTypes = {
     addFlashMessage: PropTypes.func.isRequired,
     deleteFlashMessage: PropTypes.func.isRequired,
     flashMessages: PropTypes.array.isRequired,
+    missing: PropTypes.bool.isRequired,
 };
 
 export default UploadImage;

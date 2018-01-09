@@ -6,6 +6,7 @@ import { withApollo } from 'react-apollo';
 import ITEM_QUERY from "../../utils/queries/ITEM_QUERY";
 
 import Loading from '../../components/Loading/Bounce';
+import Image from '../Image';
 
 class OfferPreview extends React.Component {
 
@@ -66,9 +67,9 @@ class OfferPreview extends React.Component {
                         <h5 className="h5 bold">{this.state.item.name}</h5>
                     </div>
                     <div className="ui-block-content">
-                        <img src={require(`../../images/${this.state.item.picturePath}`)}
-                             style={{height:"80%", width: "80%", paddingLeft: "10%", paddingTop: "5%"}}
-                             alt=""
+                        <Image
+                            src={this.state.item.picturePath}
+                            style={{height:"80%", width: "80%", paddingLeft: "10%", paddingTop: "5%"}}
                         />
                         <div>
                             <span className="bold">Description: </span>

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import ReviewStars from '../../components/User/ReviewStars';
 
+import Image from '../Image';
+
 const TransactionUser = (props) => {
     const userOther = props.user._id === props.activeTransaction.userFrom._id ? props.activeTransaction.userTo : props.activeTransaction.userFrom;
 
@@ -17,7 +19,11 @@ const TransactionUser = (props) => {
 
                 <div className="ui-block-content">
                     <ul className="widget w-personal-info">
-                        <img src={require(`../../images/${userOther.picturePath}`)} width="100%" height="100%" alt=""/>
+                        <Image
+                            src={userOther.picturePath}
+                            width="100%"
+                            height="100%"
+                        />
 
                         {userOther.description
                             ? <div><span className="bold">Description:</span> {userOther.description}</div>

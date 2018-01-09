@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Li from '../List/Li';
+import Image from '../Image';
 
 class TopHeader extends React.Component {
     constructor(props) {
@@ -20,10 +21,10 @@ class TopHeader extends React.Component {
 
                                 <div className="top-header-author">
                                     <a className="author-thumb">
-                                        <img src={require(`../../images/${this.props.user.picturePath}`)}
-                                             alt="profile"
-                                             width="124px"
-                                             height="124px"
+                                        <Image
+                                            src={this.props.user.picturePath}
+                                            width="124px"
+                                            height="124px"
                                         />
                                     </a>
                                     <div className="author-content">

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { withApollo } from 'react-apollo';
 import LAST_OFFERED from '../../utils/queries/LAST_OFFERED';
+import Image from '../Image';
 
 class LastOffered extends React.Component {
     constructor(props) {
@@ -43,8 +44,8 @@ class LastOffered extends React.Component {
                             {this.state.lastOffers.slice(0, 9).map((item, key) => (
                                 <li key={key}>
                                     <a href={`/item/${item._id}`}>
-                                        <img src={require(`../../images/${item.picturePath}`)}
-                                             alt=""
+                                        <Image
+                                            src={item.picturePath}
                                         />
                                     </a>
                                 </li>

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from '../Image';
 
 const LastOffered = (props) => {
     return (
@@ -17,8 +18,8 @@ const LastOffered = (props) => {
                             {props.user.offered.map((item, key) => (
                                 <li key={key}>
                                     <a href={`/item/${item._id}`}>
-                                        <img src={require(`../../images/${item.picturePath}`)}
-                                             alt=""
+                                        <Image
+                                            src={item.picturePath}
                                         />
                                     </a>
                                 </li>

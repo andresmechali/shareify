@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Image from '../Image';
+
 const LastRequested = (props) => {
     return (
         <div className="ui-block">
@@ -16,8 +18,8 @@ const LastRequested = (props) => {
                         {props.user.requested.slice(0, 9).map((item, key) => (
                             <li key={key}>
                                 <a>
-                                    <img src={require(`../../images/${item.picturePath}`)}
-                                         alt=""
+                                    <Image
+                                        src={item.picturePath}
                                     />
                                 </a>
                             </li>

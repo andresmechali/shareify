@@ -2202,3 +2202,7 @@ span.star-icon {
   border-radius: 5px;
   padding: 15px;
 }
+
+.dropzone-missing {
+  border-color: crimson;
+}

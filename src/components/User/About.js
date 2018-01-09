@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Image from '../Image';
 
 const About = (props) => {
     return (
@@ -11,9 +11,8 @@ const About = (props) => {
 
             <div className="ui-block-content">
                 <ul className="widget w-personal-info">
-                    <img
-                        src={require(`../../images/${props.user.picturePath}`)}
-                        alt=""
+                    <Image
+                        src={props.user.picturePath}
                         width="100%"
                         height="100%"
                     />

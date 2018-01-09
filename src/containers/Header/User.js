@@ -2,18 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Dropdown from './Dropdown';
+import Image from '../../components/Image';
 
 const User = (props) => {
     return (
         <div className="control-block">
             <div className="author-page author vcard inline-items more">
                 <div className="author-thumb">
-                    <img
-                        src={require(`../../images/${props.image}`)}
+                    <Image
+                        src={props.image}
                         height="36"
                         width="36"
-                        alt="Profile"
-                        className="avatar"/>
+                        className="avatar"
+                    />
                 </div>
                 <a className="author-name fn">
                     <div className="author-title">

@@ -2,7 +2,7 @@
 const percentageCompleted = (user) => {
     const total = 29;
     let completed = 10;
-    if (user.picturePath !== 'no-image.jpg') {
+    if (user.picturePath !== 'no-image.png') {
         completed = completed + 3
     }
     if (user.dateOfBirth) {

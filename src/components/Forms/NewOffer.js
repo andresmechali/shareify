@@ -20,7 +20,6 @@ import PlacesSearchBox from '../../components/Maps/PlacesSearchBox';
 import UploadImage from "./UploadImage";
 import FlashMessageList from "../FlashMessages/FlashMessageList";
 import IMG_PATH from "../../utils/IMG_PATH";
-import BASE_PATH from "../../utils/BASE_PATH";
 
 class NewOffer extends React.Component {
     constructor(props) {
@@ -36,7 +35,7 @@ class NewOffer extends React.Component {
             focus: "",
             flashMessage: "",
             validLocation: true,
-            image: null,
+            image: false,
             filename: false,
         };
         this.onChange = this.onChange.bind(this);
@@ -101,28 +100,8 @@ class NewOffer extends React.Component {
         if (typeof img === "object") {
             let reader = new FileReader();
             reader.readAsDataURL(img[0]);
-
-
             reader.onloadend = () => {
                 this.setState({image: reader.result});
-                const blobImage = this.dataURItoBlob(reader.result);
-                let fd = new FormData();
-                fd.append("image", blobImage);
-                axios.post(IMG_PATH + '/upload/photo',
-                    fd, {
-                    headers: {
-                            'Content-Type': 'multipart/form-data',
-                            'Access-Control-Allow-Origin': '*',
-                        }
-                    }
-                )
-                    .then(res => {
-                        this.setState({filename: res.data.filename})
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    });
-
             };
         }
         else {
@@ -149,8 +128,6 @@ class NewOffer extends React.Component {
                     console.log(error)
                 })
 
-            //console.log(this.refs.searchBox.props)
-            //console.log(this.refs.searchBox.props)
         })
     }
 
@@ -166,6 +143,11 @@ class NewOffer extends React.Component {
         if (!this.state.validLocation) {
             isValid = false;
             errors['location'] = 'Invalid location';
+        }
+
+        if (!this.state.image) {
+            isValid = false;
+            errors['image'] = 'Missing image'
         }
 
         if (!isValid) {
@@ -186,84 +168,79 @@ class NewOffer extends React.Component {
             this.setState({
                 isLoading: true,
             });
-            this.props.client.mutate({
-                mutation: CREATE_ITEM,
-                variables: {
-                    name: this.state.name,
-                    location: this.state.location,
-                    latitude: this.state.latitude,
-                    longitude: this.state.longitude,
-                    description: this.state.description,
-                    userId: this.props.auth.user._id,
-                    picturePath: this.state.filename,//'item-no-image.jpeg',
-                    created: new Date().toISOString(),
-                    active: true,
-                    views: [],
-                    viewCount: 0,
-                    type: "offer",
-                    activated: [],
-                    deleted: [],
-                    reviews: [],
-                    transactions: [],
-                    requests: [],
+
+            const blobImage = this.dataURItoBlob(this.refs.cropper.getCroppedCanvas().toDataURL());
+            let fd = new FormData();
+            fd.append("image", blobImage);
+            axios.post(IMG_PATH + '/upload/photo',
+                fd, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        'Access-Control-Allow-Origin': '*',
+                    }
                 }
-            })
-                .then(({data}) => {
-                    this.setState({isLoading: false});
+            )
+                .then(res => {
+                    this.props.client.mutate({
+                        mutation: CREATE_ITEM,
+                        variables: {
+                            name: this.state.name,
+                            location: this.state.location,
+                            latitude: this.state.latitude,
+                            longitude: this.state.longitude,
+                            description: this.state.description,
+                            userId: this.props.auth.user._id,
+                            picturePath: res.data.filename,//'item-no-image.jpeg',
+                            created: new Date().toISOString(),
+                            active: true,
+                            views: [],
+                            viewCount: 0,
+                            type: "offer",
+                            activated: [],
+                            deleted: [],
+                            reviews: [],
+                            transactions: [],
+                            requests: [],
+                        }
+                    })
+                        .then(({data}) => {
+                            this.setState({isLoading: false});
 
-                    if (localStorage.getItem('token')) {
-                        localStorage.setItem('token', data.createItem.token);
-                        this.props.setCurrentUser(data.createItem.token);
-                    }
+                            if (localStorage.getItem('token')) {
+                                localStorage.setItem('token', data.createItem.token);
+                                this.props.setCurrentUser(data.createItem.token);
+                            }
 
 
 
-                    else if (sessionStorage.getItem('token')) {
-                        sessionStorage.setItem('token', data.createItem.token);
-                        this.props.setCurrentUser(data.createItem.token);
-                    }
-                    this.props.push('/profile/main');
+                            else if (sessionStorage.getItem('token')) {
+                                sessionStorage.setItem('token', data.createItem.token);
+                                this.props.setCurrentUser(data.createItem.token);
+                            }
+                            this.props.push('/profile/main');
+                        })
+                        .catch((error) => {
+                            this.props.addFlashMessage({
+                                type: 'error',
+                                text: error.message
+                            });
+                            this.setState({flashMessage: 'error', isLoading: false})
+
+                        });
+
                 })
-                .catch((error) => {
-                    this.props.addFlashMessage({
-                        type: 'error',
-                        text: error.message
-                    });
-                    this.setState({flashMessage: 'error', isLoading: false})
-
+                .catch(err => {
+                    console.log(err);
                 });
+
+
+
         }
-    }
-
-    cropImage(e) {
-        if (typeof this.refs.cropper.getCroppedCanvas() === 'undefined') {
-            return;
-        }
-        // la foto mas chica que tengo que usar
-        // this.refs.cropper.getCroppedCanvas().toDataUrl()
-    }
-
-    sendImage(e) {
-        e.preventDefault();
-
-        const image = this.refs.try.files[0];
-        axios.post(IMG_PATH + '/upload/photo',
-            {image: image}
-
-        )
-            .then(res => {
-                console.log(res);
-            })
     }
 
     render() {
         return (
             <div className="row">
-                <form method="post" encType="multipart/form-data" onSubmit={this.sendImage.bind(this)}>
-                    <input type="hidden" name="msgtype" value="2"/>
-                    <input type="file" name="avatar" ref="try" />
-                    <input type="submit" value="Upload" />
-                </form>
                 <div className="col-xl-8 order-xl-2 col-lg-8 order-lg-2 col-md-12 order-md-1 col-sm-12 col-xs-12">
                     <div className="ui-block">
                         <div className="ui-block-title">
@@ -353,9 +330,13 @@ class NewOffer extends React.Component {
                                             addFlashMessage={this.props.addFlashMessage}
                                             deleteFlashMessage={this.props.deleteFlashMessage}
                                             flashMessages={this.props.flashMessages}
+                                            missing={!!this.state.errors.image}
                                         />
                                         {this.props.flashMessages
-                                            ? <FlashMessageList messages={this.props.flashMessages}/> : ""
+                                            ? <FlashMessageList
+                                                messages={this.props.flashMessages}
+                                                deleteFlashMessage={this.props.deleteFlashMessage}
+                                            /> : ""
                                         }
                                         {this.state.image
                                             ? <section>
