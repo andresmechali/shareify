@@ -27,8 +27,10 @@ class Activity extends React.Component {
             return(
                 <div>
                     <div className="row">
+                        {console.log(this.props)}
                         <TopHeader
                             user={this.props.user}
+                            auth={this.props.auth}
                             active='activity'
                             lastConversationId={this.props.lastConversationId}
                             lastRequestId={this.props.lastRequestId}
@@ -166,6 +168,7 @@ class Activity extends React.Component {
 
 Activity.propTypes = {
     user: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     lastTransactionId: PropTypes.string.isRequired,
     lastRequestId: PropTypes.string.isRequired,
 };

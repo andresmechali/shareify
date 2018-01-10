@@ -26,6 +26,7 @@
     "react-modal": "^3.1.2",
     "react-redux": "^5.0.6",
     "react-remote-image": "^0.4.0",
+    "react-responsive-modal": "^2.0.0",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.8",
     "react-scripts": "1.0.17",

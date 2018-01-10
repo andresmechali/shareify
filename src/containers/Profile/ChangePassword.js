@@ -11,6 +11,7 @@ const ChangePassword = props => {
             <div className="row">
                 <TopHeader
                     user={props.user}
+                    auth={props.auth}
                     active='settings'
                     lastConversationId={props.lastConversationId}
                     lastRequestId={props.lastRequestId}
@@ -41,6 +42,7 @@ const ChangePassword = props => {
 
 ChangePassword.propTypes = {
     user: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     push: PropTypes.func.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
     addFlashMessage: PropTypes.func.isRequired,

@@ -2206,3 +2206,11 @@ span.star-icon {
 .dropzone-missing {
   border-color: crimson;
 }
+
+.author-thumb.header-image {
+  cursor: pointer;
+}
+
+.author-thumb.header-image:hover{
+  opacity: 0.7;
+}

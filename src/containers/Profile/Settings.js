@@ -11,12 +11,14 @@ const Settings = props => {
     return (
         <div>
             <div className="row">
+                {console.log(props)}
                 <TopHeader
                     user={props.user}
                     active='settings'
                     lastConversationId={props.lastConversationId}
                     lastRequestId={props.lastRequestId}
                     lastTransactionId={props.lastTransactionId}
+                    auth={props.auth}
                 />
             </div>
             <div className="row">

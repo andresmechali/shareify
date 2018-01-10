@@ -112,6 +112,7 @@ class Transaction extends React.Component {
                 <div className="row">
                     <TopHeader
                         user={this.props.user}
+                        auth={this.props.auth}
                         active='transactions'
                         lastConversationId={this.props.lastConversationId}
                         lastRequestId={this.props.lastRequestId}

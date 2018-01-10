@@ -81,6 +81,7 @@ class Conversation extends React.Component {
                         lastConversationId={this.props.lastConversationId}
                         lastRequestId={this.props.lastRequestId}
                         lastTransactionId={this.props.lastTransactionId}
+                        auth={this.props.auth}
                     />
                 </div>
 

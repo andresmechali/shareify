@@ -96,6 +96,7 @@ class Profile extends React.Component {
                         exact={true}
                         component={() => <Main
                                             user={this.state.user}
+                                            auth={this.props.auth}
                                             lastConversationId={this.state.lastConversationId}
                                             lastRequestId={this.state.lastRequestId}
                                             lastTransactionId={this.state.lastTransactionId}
@@ -110,6 +111,7 @@ class Profile extends React.Component {
                             lastConversationId={this.state.lastConversationId}
                             lastRequestId={this.state.lastRequestId}
                             lastTransactionId={this.state.lastTransactionId}
+                            auth={this.props.auth}
                         />}
                     />
 

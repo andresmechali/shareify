@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Modal from 'react-responsive-modal';
+
 import Li from '../List/Li';
 import Image from '../Image';
 
@@ -8,19 +10,45 @@ class TopHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            active: props.active
+            active: props.active,
+            modal: false,
         }
     }
+
+    openModal() {
+        this.setState({modal: true})
+    }
+
+    closeModal() {
+        this.setState({modal: false})
+    }
+
     render() {
         return (
             <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <Modal
+                    open={this.state.modal}
+                    onClose={this.closeModal.bind(this)}
+                    little
+                >
+                    <Image
+                        src={this.props.user.picturePath}
+                        width="250px"
+                        height="250px"
+                    />
+                    {this.props.user._id === this.props.auth.user._id
+                        ? <button className="btn btn-submit full-width">Change picture</button>
+                        : ""
+                    }
+
+                </Modal>
                 <div className="ui-block">
                     <div className="top-header">
                         <div className="profile-section">
                             <div className="row">
 
                                 <div className="top-header-author">
-                                    <a className="author-thumb">
+                                    <a className="author-thumb header-image" onClick={this.openModal.bind(this)}>
                                         <Image
                                             src={this.props.user.picturePath}
                                             width="124px"
@@ -96,6 +124,7 @@ class TopHeader extends React.Component {
 
 TopHeader.propTypes = {
     user: PropTypes.object.isRequired,
+    auth: PropTypes.object.isRequired,
     active: PropTypes.string.isRequired,
     lastConversationId: PropTypes.string.isRequired,
     lastTransactionId: PropTypes.string.isRequired,

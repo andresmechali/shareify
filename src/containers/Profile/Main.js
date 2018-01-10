@@ -16,6 +16,7 @@ const Main = (props) => {
             <div className="row">
                 <TopHeader
                     user={props.user}
+                    auth={props.auth}
                     active='main'
                     lastConversationId={props.lastConversationId}
                     lastRequestId={props.lastRequestId}

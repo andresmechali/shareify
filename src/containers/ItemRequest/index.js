@@ -116,6 +116,7 @@ class ItemRequest extends React.Component {
                 <div className="row">
                     <TopHeader
                         user={this.props.user}
+                        auth={this.props.auth}
                         active='requests'
                         lastConversationId={this.props.lastConversationId}
                         lastRequestId={this.props.lastRequestId}
