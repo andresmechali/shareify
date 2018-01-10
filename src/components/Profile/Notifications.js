@@ -53,11 +53,12 @@ class Notifications extends React.Component {
 
                                         {notification.type === REQUEST
                                             ? <li className="activity">
+                                                {console.log(notification)}
                                                 <FormattedMessage
                                                     id="activityRequest"
                                                     defaultMessage='You have a new {request} for your {item}'
                                                     values={{
-                                                        request: <a href={`/profile/request/${notification.request}`}>request</a>,
+                                                        request: <a href={`/profile/request/${notification.request}`}>{notification.item.type === 'offer' ? "request" : "offer"}</a>,
                                                         item: <a href={`/item/${notification.item._id}`}>{notification.item.name}</a>
                                                     }}
                                                 />

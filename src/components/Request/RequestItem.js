@@ -5,6 +5,9 @@ import moment from 'moment';
 import Image from '../Image';
 
 const RequestItem = (props) => {
+    if (props.activeRequest.item.type === 'request') {
+        console.log(props.activeRequest);
+    }
     return (
         <div className="ui-block">
             <div className="ui-block-title">

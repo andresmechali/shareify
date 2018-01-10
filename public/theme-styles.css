@@ -1731,7 +1731,7 @@ ul {
 a {
   transition: all .15s ease; }
   a:hover {
-    color: #ff5e3a !important;
+    color: #ff5e3a;
     text-decoration: none !important;
   }
 
@@ -2213,4 +2213,63 @@ span.star-icon {
 
 .author-thumb.header-image:hover{
   opacity: 0.7;
+}
+
+.single-request.mini li {
+  line-height: 40px;
+  background-color: slategray;
+  padding-left: 20px;
+  border-radius: 5px;
+}
+
+.single-request.mini a {
+  color: #fff; !important;
+}
+
+.single-request.mini a:hover {
+  color: #fff; !important;
+}
+
+.single-request.mini li:first-child {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.single-request.mini li:last-child {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+
+
+.single-request.big li {
+  background-color: #4f5357;
+  padding: 20px 30px 20px;
+  border-radius: 7px;
+}
+
+.single-request.big a {
+  color: #fff; !important;
+}
+
+.single-request.big a:hover {
+  color: #fff; !important;
+}
+
+.single-request.big li:first-child {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.single-request.big li:last-child {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.request-title {
+  font-size: 20px;
+}
+
+.request-description {
+  font-style: italic;
 }

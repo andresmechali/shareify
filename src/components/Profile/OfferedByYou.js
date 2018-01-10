@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Link } from 'react-router-dom';
+
 import Image from '../Image';
 
 const LastOffered = (props) => {
@@ -10,6 +12,18 @@ const LastOffered = (props) => {
                 <h6 className="title bold">
                     Offered by you
                 </h6>
+                {props.user.offered.length > 0 ?
+                    <span>
+                        <Link
+                            to="/offer/new"
+                            className="btn btn-lg-2 btn-blue align-right"
+                            style={{float: "right"}}
+                        >
+                            +
+                        </Link>
+                    </span>
+                    : ""
+                }
             </div>
 
             <div className="ui-block-content">

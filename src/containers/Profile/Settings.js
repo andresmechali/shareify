@@ -11,7 +11,6 @@ const Settings = props => {
     return (
         <div>
             <div className="row">
-                {console.log(props)}
                 <TopHeader
                     user={props.user}
                     active='settings'
@@ -35,6 +34,16 @@ const Settings = props => {
                                   className="btn btn-change-password btn-lg full-width"
                             >
                                 Change password
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="ui-block">
+                        <div className="ui-block-content">
+                            <Link to="/profile/settings/picture"
+                                  className="btn btn-green btn-lg full-width"
+                            >
+                                Change picture
                             </Link>
                         </div>
                     </div>

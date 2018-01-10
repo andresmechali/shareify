@@ -30,8 +30,7 @@ class UploadImage extends React.Component {
                             this.props.deleteFlashMessage();
                             this.setState({ accepted, rejected });
                             if (accepted.length > 0) {
-                                this.props.setImage(accepted)
-                                console.log(accepted[0]);
+                                this.props.setImage(accepted);
                             }
                             if (rejected.length > 0) {
                                 if (rejected[0].size > MAX_SIZE) {

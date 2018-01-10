@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Image from '../Image';
+import { Link } from 'react-router-dom';
+
+import RequestSmall from "./RequestSmall";
 
 const LastRequested = (props) => {
     return (
@@ -10,17 +12,27 @@ const LastRequested = (props) => {
                 <h6 className="title bold">
                     Requested by you
                 </h6>
+                {props.user.offered.length > 0 ?
+                    <span>
+                        <Link
+                            to="/ask/new"
+                            className="btn btn-lg-2 btn-green"
+                            style={{float: "right"}}
+                        >
+                            +
+                        </Link>
+                    </span>
+                    : ""
+                }
             </div>
 
             <div className="ui-block-content">
                 {props.user.requested.length > 0?
-                    <ul className="widget w-last-photo js-zoom-gallery">
+                    <ul className="single-request mini">
                         {props.user.requested.slice(0, 9).map((item, key) => (
                             <li key={key}>
-                                <a>
-                                    <Image
-                                        src={item.picturePath}
-                                    />
+                                <a href={`/item/${item._id}`}>
+                                    <RequestSmall item={item}/>
                                 </a>
                             </li>
                         ))}

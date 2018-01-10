@@ -22,6 +22,7 @@ import Offer from '../../containers/Offer';
 import Request from '../../containers/Request';
 import ItemRequest from '../../containers/ItemRequest';
 import Transaction from '../../containers/Transaction';
+import ChangeImage from "./ChangeImage";
 
 class Profile extends React.Component {
 
@@ -34,6 +35,7 @@ class Profile extends React.Component {
             lastConversationId: '',
             lastRequestId: '',
             lastTransactionId: '',
+            image: '',
         }
     }
 
@@ -77,6 +79,19 @@ class Profile extends React.Component {
                 //this.props.push('/login');
 
             })
+    }
+
+    setImage(img) {
+        if (typeof img === "object") {
+            let reader = new FileReader();
+            reader.readAsDataURL(img[0]);
+            reader.onloadend = () => {
+                this.setState({image: reader.result});
+            };
+        }
+        else {
+            this.setState({image: ''});
+        }
     }
 
     render() {
@@ -146,6 +161,25 @@ class Profile extends React.Component {
                             lastConversationId={this.state.lastConversationId}
                             lastRequestId={this.state.lastRequestId}
                             lastTransactionId={this.state.lastTransactionId}
+                        />}
+                    />
+
+                    <Route
+                        path='/profile/settings/picture'
+                        exact={true}
+                        component={() => <ChangeImage
+                            user={this.state.user}
+                            auth={this.props.auth}
+                            flashMessages={this.props.flashMessages}
+                            push={this.props.push}
+                            setCurrentUser={this.props.setCurrentUser}
+                            addFlashMessage={this.props.addFlashMessage}
+                            deleteFlashMessage={this.props.deleteFlashMessage}
+                            lastConversationId={this.state.lastConversationId}
+                            lastRequestId={this.state.lastRequestId}
+                            lastTransactionId={this.state.lastTransactionId}
+                            setImage={this.setImage.bind(this)}
+                            image={this.state.image}
                         />}
                     />
 

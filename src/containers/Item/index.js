@@ -286,7 +286,7 @@ class Item extends React.Component {
                                             <div className="ui-block">
                                                 <div className="ui-block-content" style={{textAlign: "center"}}>
                                                     {this.state.requested
-                                                        ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel request</button>
+                                                        ? <button onClick={this.cancelRequest.bind(this)} className="btn btn-lg btn-danger full-width">Cancel offer</button>
                                                         : this.state.item.active
                                                             ? <div>
                                                                 <button onClick={this.toggleRequest.bind(this)} className="btn btn-lg btn-green full-width">Offer</button>
@@ -368,21 +368,22 @@ class Item extends React.Component {
                                     </div>
                                 }
                             </div>
-                            : <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
-                                {!this.state.selected
-                                    ? <div className="ui-block">
-                                        <div className="ui-block-content">
-                                            <div className="ui-block-title">
-                                                <h5 className="h5 bold">Select an item to offer</h5>
+                            : this.state.item.user._id !== this.props.auth.user._id
+                                ? <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
+                                    {!this.state.selected
+                                        ? <div className="ui-block">
+                                            <div className="ui-block-content">
+                                                <div className="ui-block-title">
+                                                    <h5 className="h5 bold">Select an item to offer</h5>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    : <OfferPreview
-                                        itemId={this.state.selected}
-                                    />
-                                }
-
-                            </div>
+                                        : <OfferPreview
+                                            itemId={this.state.selected}
+                                        />
+                                    }
+                                </div>
+                                : ""
 
                         }
 

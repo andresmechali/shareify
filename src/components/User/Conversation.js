@@ -53,6 +53,7 @@ class MessageList extends React.Component {
                         })
                             .then(message => {
                                 this.setState({sent: true});
+                                window.location.reload()
                             })
                             .catch(messageErr => {
                                 console.log(messageErr)

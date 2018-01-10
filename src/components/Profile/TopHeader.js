@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 import Modal from 'react-responsive-modal';
+import 'cropperjs/dist/cropper.css';
+
+import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMessages";
 
 import Li from '../List/Li';
 import Image from '../Image';
@@ -12,16 +17,23 @@ class TopHeader extends React.Component {
         this.state = {
             active: props.active,
             modal: false,
+            changeMenu: false,
+            errors: {},
         }
     }
 
     openModal() {
-        this.setState({modal: true})
+        this.setState({modal: true});
     }
 
     closeModal() {
-        this.setState({modal: false})
+        this.setState({modal: false});
     }
+
+    changeImage() {
+        this.props.push('/profile/settings/picture')
+    }
+
 
     render() {
         return (
@@ -33,13 +45,15 @@ class TopHeader extends React.Component {
                 >
                     <Image
                         src={this.props.user.picturePath}
-                        width="250px"
-                        height="250px"
+                        width="100%"
+                        height="100%"
                     />
+
                     {this.props.user._id === this.props.auth.user._id
-                        ? <button className="btn btn-submit full-width">Change picture</button>
+                        ? <button className="btn btn-submit full-width" onClick={this.changeImage.bind(this)}>Change picture</button>
                         : ""
                     }
+
 
                 </Modal>
                 <div className="ui-block">
@@ -126,9 +140,27 @@ TopHeader.propTypes = {
     user: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     active: PropTypes.string.isRequired,
+    push: PropTypes.func.isRequired,
     lastConversationId: PropTypes.string.isRequired,
     lastTransactionId: PropTypes.string.isRequired,
     lastRequestId: PropTypes.string.isRequired,
+    flashMessages: PropTypes.array.isRequired,
+    addFlashMessage: PropTypes.func.isRequired,
+    deleteFlashMessage: PropTypes.func.isRequired,
 };
 
-export default TopHeader
+const mapStateToProps = (state) => {
+    return {
+        flashMessages: state.flashMessages,
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addFlashMessage: (m) => dispatch(addFlashMessage(m)),
+        deleteFlashMessage: () => dispatch(deleteFlashMessage()),
+        push: (path) => dispatch(push(path)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TopHeader);

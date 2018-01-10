@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { withApollo } from 'react-apollo';
 import LAST_REQUESTED from '../../utils/queries/LAST_REQUESTED';
-import Image from '../Image';
+import RequestBig from "./RequestBig";
 
 class LastRequested extends React.Component {
     constructor(props) {
@@ -40,13 +40,11 @@ class LastRequested extends React.Component {
                     </div>
 
                     <div className="ui-block-content">
-                        <ul className="widget w-last-photo js-zoom-gallery">
-                            {this.state.lastRequests.slice(0, 9).map((item, key) => (
+                        <ul className="single-request big">
+                            {this.state.lastRequests.map((item, key) => (
                                 <li key={key}>
                                     <a href={`/item/${item._id}`}>
-                                        <Image
-                                            src={item.picturePath}
-                                        />
+                                        <RequestBig item={item}/>
                                     </a>
                                 </li>
                             ))}
