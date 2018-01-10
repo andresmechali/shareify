@@ -2,26 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07287256-9ff5-4f67-a47f-aec09681a286" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Item/SendOffer.js" afterPath="$PROJECT_DIR$/src/components/Item/SendOffer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Profile/LastOffered.js" afterPath="$PROJECT_DIR$/src/components/Profile/LastOffered.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Profile/LastRequested.js" afterPath="$PROJECT_DIR$/src/components/Profile/LastRequested.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Profile/RequestBig.js" afterPath="$PROJECT_DIR$/src/components/Profile/RequestBig.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Profile/RequestedByYou.js" afterPath="$PROJECT_DIR$/src/components/Profile/RequestedByYou.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Request/RequestUser.js" afterPath="$PROJECT_DIR$/src/components/Request/RequestUser.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Transaction/Menu.js" afterPath="$PROJECT_DIR$/src/components/Transaction/Menu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Transaction/TransactionUser.js" afterPath="$PROJECT_DIR$/src/components/Transaction/TransactionUser.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/User/LastRequested.js" afterPath="$PROJECT_DIR$/src/components/User/LastRequested.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/User/ReviewStars.js" afterPath="$PROJECT_DIR$/src/components/User/ReviewStars.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/User/Reviews.js" afterPath="$PROJECT_DIR$/src/components/User/Reviews.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/User/SingleReview.js" afterPath="$PROJECT_DIR$/src/components/User/SingleReview.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Item/index.js" afterPath="$PROJECT_DIR$/src/containers/Item/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/Transaction/index.js" afterPath="$PROJECT_DIR$/src/containers/Transaction/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/containers/User/index.js" afterPath="$PROJECT_DIR$/src/containers/User/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/IMG_PATH.js" afterPath="$PROJECT_DIR$/src/utils/IMG_PATH.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/queries/ACTIVATE_ITEM.js" afterPath="$PROJECT_DIR$/src/utils/queries/ACTIVATE_ITEM.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/queries/DELETE_ITEM.js" afterPath="$PROJECT_DIR$/src/utils/queries/DELETE_ITEM.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -102,8 +83,8 @@
       <file leaf-file-name="IMG_PATH.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/utils/IMG_PATH.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="2" lean-forward="false" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+            <state relative-caret-position="36">
+              <caret line="2" column="55" lean-forward="true" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -633,12 +614,12 @@
       <updated>1510051146431</updated>
       <workItem from="1510051147721" duration="39750000" />
       <workItem from="1510428964570" duration="234393000" />
-      <workItem from="1513089167356" duration="307847000" />
+      <workItem from="1513089167356" duration="308453000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="581990000" />
+    <option name="totallyTimeSpent" value="582596000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="-4" width="1857" height="1092" extended-state="6" />
@@ -1103,8 +1084,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/IMG_PATH.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="2" lean-forward="false" selection-start-line="1" selection-start-column="2" selection-end-line="1" selection-end-column="2" />
+        <state relative-caret-position="36">
+          <caret line="2" column="55" lean-forward="true" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
           <folding />
         </state>
       </provider>
