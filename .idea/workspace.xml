@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07287256-9ff5-4f67-a47f-aec09681a286" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/IMG_PATH.js" afterPath="$PROJECT_DIR$/src/utils/IMG_PATH.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Maps/PlacesSearchBox.js" afterPath="$PROJECT_DIR$/src/components/Maps/PlacesSearchBox.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,16 +21,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="528">
               <caret line="390" column="45" lean-forward="false" selection-start-line="390" selection-start-column="45" selection-end-line="390" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DELETE_ITEM.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils/queries/DELETE_ITEM.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="5" column="22" lean-forward="false" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -80,11 +70,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IMG_PATH.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IMG_PATH.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils/IMG_PATH.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="36">
               <caret line="2" column="55" lean-forward="true" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PlacesSearchBox.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/Maps/PlacesSearchBox.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="106" column="53" lean-forward="false" selection-start-line="106" selection-start-column="53" selection-end-line="106" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -133,8 +133,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>datauri</find>
-      <find>cropp</find>
       <find>import loa</find>
       <find>Image</find>
       <find>import \{ l</find>
@@ -163,6 +161,8 @@
       <find>last offers</find>
       <find>ask for somethi</find>
       <find>localh</find>
+      <find>this.state.places</find>
+      <find>places</find>
     </findStrings>
     <replaceStrings>
       <replace>email</replace>
@@ -188,7 +188,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/utils/BASE_PATH.js" />
         <option value="$PROJECT_DIR$/src/utils/percentageCompleted.js" />
         <option value="$PROJECT_DIR$/src/components/Forms/SignupForm.js" />
         <option value="$PROJECT_DIR$/src/components/Transaction/TransactionItem.js" />
@@ -239,6 +238,7 @@
         <option value="$PROJECT_DIR$/src/components/Profile/RequestedByYou.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
         <option value="$PROJECT_DIR$/src/utils/IMG_PATH.js" />
+        <option value="$PROJECT_DIR$/src/components/Maps/PlacesSearchBox.js" />
       </list>
     </option>
   </component>
@@ -614,12 +614,12 @@
       <updated>1510051146431</updated>
       <workItem from="1510051147721" duration="39750000" />
       <workItem from="1510428964570" duration="234393000" />
-      <workItem from="1513089167356" duration="308453000" />
+      <workItem from="1513089167356" duration="309360000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="582596000" />
+    <option name="totallyTimeSpent" value="583503000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="292" y="-4" width="1857" height="1092" extended-state="6" />
@@ -656,16 +656,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/Cards/ItemOffered.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="16" column="94" lean-forward="false" selection-start-line="16" selection-start-column="94" selection-end-line="16" selection-end-column="94" />
-          <folding>
-            <element signature="e#0#26#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/containers/Conversation/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="818">
@@ -1086,6 +1076,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="36">
           <caret line="2" column="55" lean-forward="true" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/Maps/PlacesSearchBox.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="106" column="53" lean-forward="false" selection-start-line="106" selection-start-column="53" selection-end-line="106" selection-end-column="53" />
           <folding />
         </state>
       </provider>
