@@ -97,14 +97,14 @@ const PlacesSearchBox = compose(
                 },
                 onPlacesChanged: () => {
                     const places = refs.searchBox.getPlaces();
-                    console.log(places);
+                    console.log(places[0]);
                     this.setState({
                         places,
                     });
                     this.props.setState({
-                        latitude: this.state.places[0].geometry.location.lat(),
-                        longitude: this.state.places[0].geometry.location.lng(),
-                        location: this.state.places[0].formatted_address,
+                        latitude: places[0].geometry.location.lat(),
+                        longitude: places[0].geometry.location.lng(),
+                        location: places[0].formatted_address,
                         validLocation: true,
                     });
 
