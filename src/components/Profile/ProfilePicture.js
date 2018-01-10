@@ -56,6 +56,7 @@ class ProfilePicture extends React.Component {
                         }
                     })
                         .then(updated => {
+                            this.props.setCurrentUser(updated.data.changeUserPicture.token);
                             window.location.reload();
                         })
                         .catch(e => {
@@ -141,6 +142,7 @@ ProfilePicture.propTypes = {
     flashMessages: PropTypes.array.isRequired,
     setImage: PropTypes.func.isRequired,
     image: PropTypes.string.isRequired,
+    setCurrentUser: PropTypes.func.isRequired,
 };
 
 export default withApollo(ProfilePicture);

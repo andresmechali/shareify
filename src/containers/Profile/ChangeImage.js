@@ -65,6 +65,7 @@ class ChangeImage extends React.Component {
                         deleteFlashMessage={this.props.deleteFlashMessage}
                         setImage={this.props.setImage}
                         image={this.props.image}
+                        setCurrentUser={this.props.setCurrentUser}
                     />
                 </div>
             </div>
