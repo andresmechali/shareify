@@ -21,6 +21,8 @@ import CANCEL_REQUEST from "../../utils/queries/CANCEL_REQUEST";
 import ReviewStars from "../../components/User/ReviewStars";
 import OfferPreview from "../../components/Item/OfferPreview";
 import Image from '../../components/Image';
+import DELETE_ITEM from "../../utils/queries/DELETE_ITEM";
+import ACTIVATE_ITEM from "../../utils/queries/ACTIVATE_ITEM";
 
 class Item extends React.Component {
     constructor(props) {
@@ -39,7 +41,7 @@ class Item extends React.Component {
             requested: false,
             requestedId: '',
             activeTransaction: false,
-            selected: false,
+            selected: "",
             selectedIsActive: false,
         };
 
@@ -174,13 +176,29 @@ class Item extends React.Component {
 
     deleteItem(e) {
         this.props.client.mutate({
-            mutation: '',
+            mutation: DELETE_ITEM,
             variables: {
                 _id: this.state.item._id,
                 date: new Date().toISOString(),
             },
+        }).then(res => {
+            window.location.reload()
         })
     }
+
+    activateItem(e) {
+        this.props.client.mutate({
+            mutation: ACTIVATE_ITEM,
+            variables: {
+                _id: this.state.item._id,
+                date: new Date().toISOString(),
+            },
+        }).then(res => {
+            window.location.reload()
+        })
+    }
+
+
 
     render() {
         if (this.state.loading) {
@@ -293,6 +311,7 @@ class Item extends React.Component {
                                                                 <SendOffer
                                                                     visible={this.state.request.visible}
                                                                     item={this.state.item}
+                                                                    selected={this.state.selected}
                                                                     user={this.props.auth.user}
                                                                     setCurrentUser={this.props.setCurrentUser}
                                                                     setRequested={this.setRequested.bind(this)}
@@ -309,7 +328,10 @@ class Item extends React.Component {
                                         </div>
                                     : <div className="ui-block">
                                         <div className="ui-block-content">
-                                            <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                            {this.state.item.active
+                                                ? <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                                : <button onClick={this.activateItem.bind(this)} className="btn btn-lg btn-green full-width">Reactivate</button>
+                                            }
                                         </div>
                                     </div>
                                 }
@@ -363,14 +385,17 @@ class Item extends React.Component {
                                         </div>
                                     : <div className="ui-block">
                                         <div className="ui-block-content">
-                                            <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                            {this.state.item.active
+                                                ? <button onClick={this.deleteItem.bind(this)} className="btn btn-lg btn-danger full-width">Delete</button>
+                                                : <button onClick={this.activateItem.bind(this)} className="btn btn-lg btn-green full-width">Reactivate</button>
+                                            }
                                         </div>
                                     </div>
                                 }
                             </div>
                             : this.state.item.user._id !== this.props.auth.user._id
                                 ? <div className="col-xl-6 order-xl-1 col-lg-6 order-lg-1 col-md-12 order-md-2 col-sm-12 col-xs-12 responsive-display-none">
-                                    {!this.state.selected
+                                    {this.state.selected === ""
                                         ? <div className="ui-block">
                                             <div className="ui-block-content">
                                                 <div className="ui-block-title">

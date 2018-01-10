@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import ChooseStars from '../../components/Forms/ChooseStars';
 
 const Menu = (props) => {
-    console.log(props);
     if (props.visible) {
         return (
             <div className="ui-block">
@@ -58,6 +57,10 @@ const Menu = (props) => {
                 </div>
 
                 <div className="ui-block-content">
+
+                    <div style={{marginBottom: "15px"}}>
+                        Please click here when the item has been returned
+                    </div>
 
                     <button onClick={props.toggleReturn} className="btn btn-green btn-lg full-width">
                         {props.user._id === props.activeTransaction.item.user._id

@@ -12,7 +12,7 @@ const LastRequested = (props) => {
                 <h6 className="title bold">
                     Requested by you
                 </h6>
-                {props.user.offered.length > 0 ?
+                {props.user.requested.length > 0 ?
                     <span>
                         <Link
                             to="/ask/new"

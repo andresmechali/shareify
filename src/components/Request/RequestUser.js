@@ -35,7 +35,7 @@ const RequestUser = (props) => {
                                     reviews={props.user.reviews}
                                     userOtherId={userOther._id}
                                 />
-                                <a href={`/profile/user/${props.user._id}`}>See more</a>
+                                <a href={`/user/${props.user._id}`}>See more</a>
                             </div>
                         }
                     </ul>

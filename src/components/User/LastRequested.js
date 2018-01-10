@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Image from '../Image';
+import RequestSmall from "../Profile/RequestSmall";
 
 const LastRequested = (props) => {
     return (
@@ -15,13 +15,11 @@ const LastRequested = (props) => {
             <div className="ui-block-content">
                 {props.user.requested.length > 0?
                     <div>
-                        <ul className="widget w-last-photo js-zoom-gallery">
-                            {props.user.requested.map((item, key) => (
+                        <ul className="single-request mini">
+                            {props.user.requested.slice(0, 9).map((item, key) => (
                                 <li key={key}>
                                     <a href={`/item/${item._id}`}>
-                                        <Image
-                                            src={item.picturePath}
-                                        />
+                                        <RequestSmall item={item}/>
                                     </a>
                                 </li>
                             ))}

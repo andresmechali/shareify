@@ -3,9 +3,9 @@ import gql from 'graphql-tag';
 const DELETE_ITEM = gql`
     mutation deleteItem(
         $_id: String!
-        $date: String
+        $date: String!
     ) {
-        createItem(
+        deleteItem(
             _id: $_id
             date: $date
         )

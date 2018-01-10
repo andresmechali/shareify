@@ -86,6 +86,7 @@ class Transaction extends React.Component {
 
     onChangeRate(e) {
         const value = parseInt(e.target.id, 10);
+        console.log(value);
         if (value !== this.state.rate) {
             this.setState({rate: value})
         }

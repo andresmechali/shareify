@@ -71,6 +71,12 @@ class User extends React.Component {
                 </div>
             )
         }
+        let reviewsTo = [];
+        this.state.thisUser.reviews.forEach(review => {
+            if (review.userTo._id === this.state.thisUser._id) {
+                reviewsTo.push(review);
+            }
+        });
         if (this.state.thisUser) {
             return (
                 <div className="container">
@@ -83,7 +89,7 @@ class User extends React.Component {
                         </div>
 
                         <div className="col-xl-3 order-xl-3 col-lg-3 order-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            {this.state.thisUser.reviews.length > 0
+                            {this.state.thisUser.reviews.length > 0 && reviewsTo.length > 0
                                 ? <Reviews
                                     user={this.state.thisUser}
                                     reviews={this.state.thisUser.reviews}

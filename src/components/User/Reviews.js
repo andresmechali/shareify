@@ -15,7 +15,10 @@ const Reviews = (props) => {
     reviewsTo.forEach(review => {
         reviewSum = reviewSum + review.rate;
     });
-    const reviewAverage = reviewSum / reviewsTo.length;
+    let reviewAverage = 0;
+    if (reviewsTo.length > 0) {
+        reviewAverage = reviewSum / reviewsTo.length;
+    }
     return (
         <div>
             <div className="ui-block">

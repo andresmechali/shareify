@@ -30,7 +30,13 @@ class LastRequested extends React.Component {
     }
 
     render() {
-        if (this.state.lastRequests.length > 0){
+        let activeLength = 0;
+        this.state.lastRequests.forEach(item => {
+            if (item.active) {
+                activeLength ++;
+            }
+        });
+        if (activeLength > 0){
             return(
                 <div className="ui-block">
                     <div className="ui-block-title">
@@ -41,13 +47,18 @@ class LastRequested extends React.Component {
 
                     <div className="ui-block-content">
                         <ul className="single-request big">
-                            {this.state.lastRequests.map((item, key) => (
-                                <li key={key}>
-                                    <a href={`/item/${item._id}`}>
-                                        <RequestBig item={item}/>
-                                    </a>
-                                </li>
-                            ))}
+                            {this.state.lastRequests.map((item, key) => {
+                                if (item.active) {
+                                    return (
+                                        <li key={key}>
+                                            <a href={`/item/${item._id}`}>
+                                                <RequestBig item={item}/>
+                                            </a>
+                                        </li>
+                                    )
+                                }
+                                return null;
+                            })}
                         </ul>
                     </div>
                 </div>

@@ -45,7 +45,7 @@ class SendOffer extends React.Component {
         this.props.client.mutate({
             mutation: REQUEST_ITEM,
             variables: {
-                item: this.props.item._id,
+                item: this.props.selected,
                 userFrom: this.props.user._id,
                 userTo: this.props.item.user._id,
                 message: this.state.message,
@@ -160,6 +160,7 @@ class SendOffer extends React.Component {
 SendOffer.propTypes = {
     visible: PropTypes.bool.isRequired,
     item: PropTypes.object.isRequired,
+    selected: PropTypes.string.isRequired,
     user: PropTypes.object.isRequired,
     setCurrentUser: PropTypes.func.isRequired,
     setRequested: PropTypes.func.isRequired,

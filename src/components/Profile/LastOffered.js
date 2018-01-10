@@ -30,7 +30,14 @@ class LastOffered extends React.Component {
     }
 
     render() {
-        if (this.state.lastOffers.length > 0){
+        let activeLength = 0;
+        this.state.lastOffers.forEach(item => {
+            if (item.active) {
+                activeLength ++;
+            }
+        });
+
+        if (activeLength > 0){
             return(
                 <div className="ui-block">
                     <div className="ui-block-title">
@@ -41,15 +48,21 @@ class LastOffered extends React.Component {
 
                     <div className="ui-block-content">
                         <ul className="widget w-last-photo js-zoom-gallery">
-                            {this.state.lastOffers.slice(0, 9).map((item, key) => (
-                                <li key={key}>
-                                    <a href={`/item/${item._id}`}>
-                                        <Image
-                                            src={item.picturePath}
-                                        />
-                                    </a>
-                                </li>
-                            ))}
+                            {this.state.lastOffers.map((item, key) => {
+                                if (item.active) {
+                                    return (
+                                        <li key={key}>
+                                            <a href={`/item/${item._id}`}>
+                                                <Image
+                                                    src={item.picturePath}
+                                                />
+                                            </a>
+                                        </li>
+                                    )
+                                }
+                                return null;
+
+                            })}
                         </ul>
                     </div>
                 </div>

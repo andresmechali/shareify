@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 const ReviewStars = (props) => {
     let reviews = [];
     props.reviews.forEach(review => {
-        if (review.userTo._id === props.userOtherId) {
-            reviews.push(review);
-        }
+        //if (review.userTo._id === props.userOtherId) {
+        reviews.push(review);
+        //}
     });
     let reviewSum = 0;
     reviews.forEach(review => {
