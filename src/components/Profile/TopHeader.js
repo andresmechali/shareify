@@ -13,7 +13,7 @@ import Image from '../Image';
 
 import aws from 'aws-sdk';
 
-console.log(process.env.S3_BUCKET);
+console.log(process.env);
 
 const s3 = new aws.S3();
 console.log(s3);
