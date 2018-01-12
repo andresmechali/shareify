@@ -8,6 +8,7 @@
     "apollo-link": "^1.0.0",
     "apollo-link-error": "^1.0.1",
     "apollo-link-http": "^1.1.0",
+    "aws-sdk": "^2.181.0",
     "axios": "^0.17.0",
     "classnames": "^2.2.5",
     "graphql": "^0.11.7",

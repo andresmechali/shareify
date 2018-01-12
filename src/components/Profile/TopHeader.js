@@ -11,6 +11,13 @@ import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMe
 import Li from '../List/Li';
 import Image from '../Image';
 
+import aws from 'aws-sdk';
+
+console.log(process.env.S3_BUCKET);
+
+const s3 = new aws.S3();
+console.log(s3);
+
 class TopHeader extends React.Component {
     constructor(props) {
         super(props);
