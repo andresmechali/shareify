@@ -11,12 +11,17 @@ import { addFlashMessage, deleteFlashMessage } from "../../redux/actions/flashMe
 import Li from '../List/Li';
 import Image from '../Image';
 
+import runtimeEnv from '@mars/heroku-js-runtime-env';
 import aws from 'aws-sdk';
 
-console.log(process);
+const env = runtimeEnv();
+
+console.log(env);
+
+//console.log(process);
 
 const s3 = new aws.S3();
-console.log(s3);
+//console.log(s3);
 
 class TopHeader extends React.Component {
     constructor(props) {
