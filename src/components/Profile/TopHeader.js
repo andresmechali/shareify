@@ -18,7 +18,7 @@ const env = runtimeEnv();
 
 console.log(env);
 
-//console.log(process);
+console.log(process);
 
 const s3 = new aws.S3();
 //console.log(s3);
